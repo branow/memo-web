@@ -10,10 +10,9 @@ create table if not exists user (
 
 create table if not exists verification_token (
     user_id int primary key,
-    expiration datetime not null default now(),
+    expiration datetime not null,
     token varchar(36) not null,
-    constraint fk_verification_token_user
-        foreign key (user_id) references user(user_id)
+    constraint fk_verification_token_user foreign key (user_id) references user(user_id)
 );
 
 create table if not exists access_type (
@@ -71,7 +70,7 @@ create table if not exists study_type(
 
 create table if not exists score(
     score_id int primary key auto_increment,
-    score tinyint not null check ( score >= 0 && score <= 100),
+    score tinyint not null check (score >= 0 && score <= 100),
     datetime datetime not null default now(),
     study_type int not null,
     flashcard int not null,
