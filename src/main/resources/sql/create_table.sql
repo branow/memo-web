@@ -5,7 +5,7 @@ create table if not exists user (
     description varchar(300),
     email varchar(320) not null unique,
     password varchar(60) not null,
-    enable bit not null default 0
+    enabled bit not null default 0
 );
 
 create table if not exists verification_token (
@@ -13,6 +13,7 @@ create table if not exists verification_token (
     expiration datetime not null,
     token varchar(36) not null,
     constraint fk_verification_token_user foreign key (user_id) references user(user_id)
+        on update cascade on delete cascade
 );
 
 create table if not exists access_type (
@@ -26,8 +27,10 @@ create table if not exists module (
     description varchar(3000),
     access int not null,
     user int not null,
-    constraint fk_module_access_type foreign key (access) references access_type(access_id),
+    constraint fk_module_access_type foreign key (access) references access_type(access_id)
+        on update cascade,
     constraint fk_module_user foreign key (user) references user(user_id)
+        on update cascade on delete cascade
 );
 
 create table if not exists collection (
@@ -35,6 +38,7 @@ create table if not exists collection (
     collection_name varchar(100) not null,
     module int not null,
     constraint fk_collection_module foreign key (module) references module(module_id)
+        on update cascade on delete cascade
 );
 
 create table if not exists media (
@@ -49,8 +53,10 @@ create table if not exists formatted_text(
     format varchar(2000),
     audio int,
     image int,
-    constraint fk_formatted_text_media_audio foreign key (audio) references media(media_id),
+    constraint fk_formatted_text_media_audio foreign key (audio) references media(media_id)
+        on update cascade,
     constraint fk_formatted_text_media_image foreign key (image) references media(media_id)
+        on update cascade
 );
 
 create table if not exists flashcard(
@@ -58,9 +64,12 @@ create table if not exists flashcard(
     front_side int not null unique,
     back_side int not null unique,
     collection int not null,
-    constraint fk_flashcard_formatted_text_front foreign key (front_side) references formatted_text(text_id),
-    constraint fk_flashcard_formatted_text_back foreign key (back_side) references formatted_text(text_id),
+    constraint fk_flashcard_formatted_text_front foreign key (front_side) references formatted_text(text_id)
+        on update cascade,
+    constraint fk_flashcard_formatted_text_back foreign key (back_side) references formatted_text(text_id)
+        on update cascade,
     constraint fk_flashcard_collection foreign key (collection) references collection(collection_id)
+        on update cascade on delete cascade
 );
 
 create table if not exists study_type(
@@ -74,8 +83,10 @@ create table if not exists score(
     datetime datetime not null default now(),
     study_type int not null,
     flashcard int not null,
-    constraint fk_score_study_type foreign key (study_type) references study_type(study_id),
+    constraint fk_score_study_type foreign key (study_type) references study_type(study_id)
+        on update cascade,
     constraint fk_score_flashcard foreign key (flashcard) references flashcard(flashcard_id)
+        on update cascade on delete cascade
 );
 
 
