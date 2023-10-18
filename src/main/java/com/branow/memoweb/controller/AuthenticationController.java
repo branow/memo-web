@@ -32,7 +32,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/enable")
-    public ResponseEntity<?> login(@RequestBody VerificationTokenDto dto) {
+    public ResponseEntity<?> enable(@RequestBody VerificationTokenDto dto) {
         return wrap(() -> authenticationService.enableUser(dto), HttpStatus.ACCEPTED);
     }
 

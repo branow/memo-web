@@ -1,4 +1,4 @@
-package com.branow.memoweb.service;
+package com.branow.memoweb.service.impl;
 
 import com.branow.memoweb.model.User;
 import lombok.RequiredArgsConstructor;
