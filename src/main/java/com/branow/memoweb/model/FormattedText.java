@@ -3,6 +3,7 @@ package com.branow.memoweb.model;
 
 import com.branow.memoweb.model.auxilary.TextFormat;
 import com.branow.memoweb.service.TextFormatConverter;
+import com.branow.memoweb.service.impl.TextFormatConverterImpl;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,11 +18,12 @@ import lombok.NoArgsConstructor;
 public class FormattedText {
 
     @Id
-    private Integer formattedTextId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer textId;
 
     private String text;
 
-    @Convert(converter = TextFormatConverter.class)
+    @Convert(converter = TextFormatConverterImpl.class)
     private TextFormat format;
 
     @ManyToOne

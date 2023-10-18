@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class Media {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer mediaId;
     private byte[] media;
     private String hash;

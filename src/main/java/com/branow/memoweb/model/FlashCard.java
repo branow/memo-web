@@ -16,6 +16,7 @@ import java.util.List;
 public class FlashCard {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer flashCardId;
 
     @OneToOne

@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class AccessType {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer accessTypeId;
 
     @Enumerated(EnumType.STRING)

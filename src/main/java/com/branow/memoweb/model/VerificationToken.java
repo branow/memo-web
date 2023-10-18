@@ -29,7 +29,7 @@ public class VerificationToken {
 
     private String token;
 
-    private LocalDateTime expirationTime;
+    private LocalDateTime expiration;
 
     @MapsId
     @OneToOne
@@ -39,7 +39,7 @@ public class VerificationToken {
 
     @PrePersist
     private void setExpirationTime() {
-        expirationTime = calcExpirationTime();
+        expiration = calcExpirationTime();
     }
 
 }
