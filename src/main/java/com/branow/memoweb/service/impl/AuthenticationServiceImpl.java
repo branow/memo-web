@@ -6,7 +6,6 @@ import com.branow.memoweb.mapper.UserMapper;
 import com.branow.memoweb.model.User;
 import com.branow.memoweb.model.VerificationToken;
 import com.branow.memoweb.service.AuthenticationService;
-import com.branow.memoweb.service.JwtTokenService;
 import com.branow.memoweb.service.UserService;
 import com.branow.memoweb.service.VerificationTokenService;
 import lombok.RequiredArgsConstructor;
