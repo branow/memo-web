@@ -6,14 +6,13 @@ import com.branow.memoweb.dto.verificationtoken.VerificationTokenDto;
 import com.branow.memoweb.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.branow.memoweb.controller.ResponseWrapper.wrap;
+import static com.branow.memoweb.controller.response.ResponseWrapper.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -23,22 +22,22 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterUserDto dto) {
-        return wrap(() -> authenticationService.register(dto), HttpStatus.ACCEPTED);
+        return wrapPost(() -> authenticationService.register(dto));
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginUserDto dto) {
-        return wrap(() -> authenticationService.login(dto), HttpStatus.ACCEPTED);
+        return wrapPost(() -> authenticationService.login(dto));
     }
 
     @PostMapping("/enable")
     public ResponseEntity<?> enable(@RequestBody VerificationTokenDto dto) {
-        return wrap(() -> authenticationService.enableUser(dto), HttpStatus.ACCEPTED);
+        return wrapPost(() -> authenticationService.enableUser(dto));
     }
 
     @GetMapping("/user")
     public ResponseEntity<?> getUser(HttpServletRequest request) {
-        return wrap(() -> {
+        return wrapGet(() -> {
             String bearer = "bearer ";
             String headAuth = request.getHeader("Authorization");
             if (headAuth != null && headAuth.startsWith(bearer)) {
@@ -47,7 +46,7 @@ public class AuthenticationController {
             } else {
                 throw new IllegalStateException("Illegal Authorization header: " + headAuth);
             }
-        }, HttpStatus.OK);
+        });
     }
 
 }

@@ -1,4 +1,4 @@
-package com.branow.memoweb.controller;
+package com.branow.memoweb.controller.response;
 
 public interface Responsible<T> {
 
