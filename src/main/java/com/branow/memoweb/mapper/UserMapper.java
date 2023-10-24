@@ -1,8 +1,8 @@
 package com.branow.memoweb.mapper;
 
-import com.branow.memoweb.dto.authentication.RegisterUserDto;
-import com.branow.memoweb.dto.authentication.UserDto;
-import com.branow.memoweb.dto.authentication.UserJwtDto;
+import com.branow.memoweb.dto.user.RegisterUserDto;
+import com.branow.memoweb.dto.user.UserDto;
+import com.branow.memoweb.dto.user.UserJwtDto;
 import com.branow.memoweb.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

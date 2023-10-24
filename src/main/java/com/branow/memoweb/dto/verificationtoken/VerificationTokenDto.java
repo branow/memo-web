@@ -1,4 +1,4 @@
-package com.branow.memoweb.dto.authentication;
+package com.branow.memoweb.dto.verificationtoken;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class UserJwtDto {
+public class VerificationTokenDto {
 
-    private UserDto user;
-    private String jwt;
+    private String token;
 
 }

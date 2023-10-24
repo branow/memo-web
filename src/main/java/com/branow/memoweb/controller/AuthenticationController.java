@@ -1,8 +1,8 @@
 package com.branow.memoweb.controller;
 
-import com.branow.memoweb.dto.authentication.LoginUserDto;
-import com.branow.memoweb.dto.authentication.RegisterUserDto;
-import com.branow.memoweb.dto.authentication.VerificationTokenDto;
+import com.branow.memoweb.dto.user.LoginUserDto;
+import com.branow.memoweb.dto.user.RegisterUserDto;
+import com.branow.memoweb.dto.verificationtoken.VerificationTokenDto;
 import com.branow.memoweb.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

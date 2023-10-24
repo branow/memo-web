@@ -1,4 +1,4 @@
-package com.branow.memoweb.dto.authentication;
+package com.branow.memoweb.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

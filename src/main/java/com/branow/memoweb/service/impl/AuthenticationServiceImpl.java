@@ -1,6 +1,10 @@
 package com.branow.memoweb.service.impl;
 
-import com.branow.memoweb.dto.authentication.*;
+import com.branow.memoweb.dto.user.LoginUserDto;
+import com.branow.memoweb.dto.user.RegisterUserDto;
+import com.branow.memoweb.dto.user.UserDto;
+import com.branow.memoweb.dto.user.UserJwtDto;
+import com.branow.memoweb.dto.verificationtoken.VerificationTokenDto;
 import com.branow.memoweb.exception.VerificationTokenExpiredException;
 import com.branow.memoweb.mapper.UserMapper;
 import com.branow.memoweb.model.User;
