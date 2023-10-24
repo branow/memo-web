@@ -1,17 +1,13 @@
 package com.branow.memoweb.dto.user;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
-@Builder
-public class UserJwtDto {
-
-    private UserPrivateShortDto user;
-    private String jwt;
-
+public class UserLoginDto {
+    private String email;
+    private String password;
 }

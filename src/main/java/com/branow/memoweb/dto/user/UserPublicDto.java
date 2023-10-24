@@ -9,11 +9,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDto {
+public class UserPublicDto {
 
     private Integer userId;
     private String username;
-    private String email;
     private String description;
-    private Boolean enable;
+    private Integer daysStreak;
+    private Integer createdCards;
+    private Integer cardsStudied;
+
 }

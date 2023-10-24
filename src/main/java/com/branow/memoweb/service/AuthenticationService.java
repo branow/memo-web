@@ -1,18 +1,15 @@
 package com.branow.memoweb.service;
 
-import com.branow.memoweb.dto.user.LoginUserDto;
-import com.branow.memoweb.dto.user.RegisterUserDto;
-import com.branow.memoweb.dto.user.UserDto;
-import com.branow.memoweb.dto.user.UserJwtDto;
+import com.branow.memoweb.dto.user.*;
 import com.branow.memoweb.dto.verificationtoken.VerificationTokenDto;
 
 public interface AuthenticationService {
-    UserJwtDto login(LoginUserDto dto);
+    UserJwtDto login(UserLoginDto dto);
 
-    VerificationTokenDto register(RegisterUserDto dto);
+    VerificationTokenDto register(UserRegisterDto dto);
 
     UserJwtDto enableUser(VerificationTokenDto verificationToken);
 
-    UserDto getUser(String jwt);
+    UserPrivateShortDto getUser(String jwt);
 
 }

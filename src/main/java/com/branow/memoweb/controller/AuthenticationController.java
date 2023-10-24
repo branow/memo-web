@@ -1,7 +1,7 @@
 package com.branow.memoweb.controller;
 
-import com.branow.memoweb.dto.user.LoginUserDto;
-import com.branow.memoweb.dto.user.RegisterUserDto;
+import com.branow.memoweb.dto.user.UserLoginDto;
+import com.branow.memoweb.dto.user.UserRegisterDto;
 import com.branow.memoweb.dto.verificationtoken.VerificationTokenDto;
 import com.branow.memoweb.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,12 +21,12 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterUserDto dto) {
+    public ResponseEntity<?> register(@RequestBody UserRegisterDto dto) {
         return wrapPost(() -> authenticationService.register(dto));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginUserDto dto) {
+    public ResponseEntity<?> login(@RequestBody UserLoginDto dto) {
         return wrapPost(() -> authenticationService.login(dto));
     }
 

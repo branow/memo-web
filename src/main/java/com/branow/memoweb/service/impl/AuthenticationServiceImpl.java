@@ -1,9 +1,6 @@
 package com.branow.memoweb.service.impl;
 
-import com.branow.memoweb.dto.user.LoginUserDto;
-import com.branow.memoweb.dto.user.RegisterUserDto;
-import com.branow.memoweb.dto.user.UserDto;
-import com.branow.memoweb.dto.user.UserJwtDto;
+import com.branow.memoweb.dto.user.*;
 import com.branow.memoweb.dto.verificationtoken.VerificationTokenDto;
 import com.branow.memoweb.exception.VerificationTokenExpiredException;
 import com.branow.memoweb.mapper.UserMapper;
@@ -31,7 +28,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     @Override
-    public UserJwtDto login(LoginUserDto dto) {
+    public UserJwtDto login(UserLoginDto dto) {
         UsernamePasswordAuthenticationToken token =
                 new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword());
         Authentication auth = authenticationManager.authenticate(token);
@@ -41,7 +38,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public VerificationTokenDto register(RegisterUserDto dto) {
+    public VerificationTokenDto register(UserRegisterDto dto) {
         User user = userService.save(userMapper.toUser(dto));
         VerificationToken token = verificationTokenService.createToken(user);
         return VerificationTokenDto.builder()
@@ -64,8 +61,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public UserDto getUser(String jwt) {
+    public UserPrivateShortDto getUser(String jwt) {
         String email = jwtTokenService.getSubject(jwt);
-        return userMapper.toUserDto(userService.getByEmail(email));
+        return userMapper.toUserPrivateShortDto(userService.getByEmail(email));
     }
 }
