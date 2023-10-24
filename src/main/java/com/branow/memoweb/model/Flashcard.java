@@ -13,11 +13,11 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-public class FlashCard {
+public class Flashcard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer flashCardId;
+    private Integer flashcardId;
 
     @OneToOne
     @JoinColumn(name = "front_side")
@@ -28,7 +28,7 @@ public class FlashCard {
     private FormattedText backSide;
 
     @OneToMany
-    @JoinColumn(name = "flash_card")
+    @JoinColumn(name = "flashcard")
     private List<Score> scores;
 
 }

@@ -23,6 +23,6 @@ public class Collection {
 
     @OneToMany
     @JoinColumn(name = "collection")
-    private List<FlashCard> flashCards;
+    private List<Flashcard> flashCards;
 
 }

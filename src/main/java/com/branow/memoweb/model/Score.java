@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
@@ -16,15 +17,21 @@ import java.time.LocalDateTime;
 @Entity
 public class Score {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer scoreId;
-
+    @EmbeddedId
+    private ScoreId scoreId;
     private Integer score;
+    private LocalDateTime studyTime;
+    private LocalDateTime resetTime;
+    private Integer studyRepetition;
 
-    private LocalDateTime date;
+    @Embeddable
+    public static class ScoreId implements Serializable {
 
-    @ManyToOne()
-    @JoinColumn(name = "studyType")
-    private StudyType studyType;
+        private Integer flashcard;
+        @ManyToOne
+        @JoinColumn(name = "studyType")
+        private StudyType studyType;
+
+    }
+
 }
