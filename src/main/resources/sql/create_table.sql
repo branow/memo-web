@@ -24,7 +24,7 @@ create table if not exists access_type (
 create table if not exists module (
     module_id int primary key auto_increment,
     module_name varchar(100) not null,
-    description varchar(3000),
+    description varchar(500),
     access int not null,
     user int not null,
     constraint fk_module_access_type foreign key (access) references access_type(access_id)
@@ -78,11 +78,13 @@ create table if not exists study_type(
 );
 
 create table if not exists score(
-    score_id int primary key auto_increment,
+    flashcard int,
+    study_type int,
     score tinyint not null check (score >= 0 && score <= 100),
-    datetime datetime not null default now(),
-    study_type int not null,
-    flashcard int not null,
+    studyTime datetime not null default now(),
+    resetTime datetime not null,
+    studyRepetition int not null,
+    primary key (flashcard, study_type),
     constraint fk_score_study_type foreign key (study_type) references study_type(study_id)
         on update cascade,
     constraint fk_score_flashcard foreign key (flashcard) references flashcard(flashcard_id)
