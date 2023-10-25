@@ -1,7 +1,6 @@
 package com.branow.memoweb.dto.module;
 
-import com.branow.memoweb.dto.accesstype.AccessTypeDto;
-import com.branow.memoweb.dto.collection.CollectionDto;
+import com.branow.memoweb.dto.collection.CollectionShortDto;
 import com.branow.memoweb.dto.score.ScoreSimpleDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,10 +18,8 @@ public class ModuleSimpleDto {
     private Integer moduleId;
     private String moduleName;
     private String shortDescription;
-    private AccessTypeDto accessType;
-    private List<CollectionDto> collections;
-    private Integer sizeCard;
-    private Integer sizeCollection;
+    private String access;
+    private List<CollectionShortDto> collections;
     private ScoreSimpleDto score;
 
 }

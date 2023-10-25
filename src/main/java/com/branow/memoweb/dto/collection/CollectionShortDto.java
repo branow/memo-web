@@ -1,6 +1,5 @@
 package com.branow.memoweb.dto.collection;
 
-import com.branow.memoweb.dto.score.ScoreSimpleDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,11 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CollectionSimpleDto {
+public class CollectionShortDto {
 
     private Integer collectionId;
     private String collectionName;
     private Integer size;
-    private ScoreSimpleDto score;
 
 }
