@@ -2,7 +2,7 @@ package com.branow.memoweb.service.impl;
 
 import com.branow.memoweb.dto.user.UserPrivateShortDto;
 import com.branow.memoweb.dto.user.UserPublicDto;
-import com.branow.memoweb.exception.UserNotFoundException;
+import com.branow.memoweb.exception.entitynotfound.UserNotFoundException;
 import com.branow.memoweb.model.User;
 import com.branow.memoweb.repository.UserRepository;
 import com.branow.memoweb.service.UserService;
@@ -20,19 +20,19 @@ public class UserServiceImpl implements UserService {
 
     public User getByEmail(String email) {
         return userRepository.findUserByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User with such email not found: " + email));
+                .orElseThrow(() -> new UserNotFoundException("email", email));
     }
 
     @Override
     public UserPrivateShortDto getPrivateShortByEmail(String email) {
         return userRepository.findUserPrivateShortDtoByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User with such email not found: " + email));
+                .orElseThrow(() -> new UserNotFoundException("email", email));
     }
 
     @Override
     public UserPublicDto getPublicDtoById(Integer id) {
         return userRepository.findUserPublicDtoById(id)
-                .orElseThrow(() -> new UserNotFoundException("User with such email not found: " + id));
+                .orElseThrow(() -> new UserNotFoundException("id", id));
     }
 
     @Override

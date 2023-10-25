@@ -50,7 +50,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public UserJwtDto enableUser(VerificationTokenDto dto) {
         VerificationToken token = verificationTokenService.getByToken(dto.getToken());
         if (token.getExpiration().isBefore(LocalDateTime.now())) {
-            throw new VerificationTokenExpiredException("Verification token expired: " + token.getExpiration());
+            throw new VerificationTokenExpiredException(token);
         }
         User user = token.getUser();
         verificationTokenService.delete(token);

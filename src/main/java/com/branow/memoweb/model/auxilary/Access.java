@@ -1,7 +1,7 @@
 package com.branow.memoweb.model.auxilary;
 
 
-import com.branow.memoweb.exception.AccessTypeNotFoundException;
+import com.branow.memoweb.exception.entitynotfound.AccessTypeNotFoundException;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -14,7 +14,7 @@ public enum Access {
         Optional<Access> res = Arrays.stream(Access.values())
                 .filter(e -> e.toString().equals(name))
                 .findAny();
-        return res.orElseThrow(() -> new AccessTypeNotFoundException("Access not found: " + name));
+        return res.orElseThrow(() -> new AccessTypeNotFoundException("name", name));
     }
 
     private final String value;

@@ -1,6 +1,6 @@
 package com.branow.memoweb.model.auxilary;
 
-import com.branow.memoweb.exception.StudyTypeNotFoundException;
+import com.branow.memoweb.exception.entitynotfound.StudyTypeNotFoundException;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -13,7 +13,7 @@ public enum StudyTypeName {
         Optional<StudyTypeName> res = Arrays.stream(StudyTypeName.values())
                 .filter(e -> e.toString().equals(name))
                 .findAny();
-        return res.orElseThrow(() -> new StudyTypeNotFoundException("StudyTypeName not found: " + name));
+        return res.orElseThrow(() -> new StudyTypeNotFoundException("name", name));
     }
 
     private final String value;
