@@ -20,6 +20,6 @@ public class ModuleSimpleDto {
     private String shortDescription;
     private String access;
     private List<CollectionShortDto> collections;
-    private ScoreSimpleDto score;
+    private List<ScoreSimpleDto> scores;
 
 }

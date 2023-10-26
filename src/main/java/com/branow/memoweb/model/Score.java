@@ -24,6 +24,10 @@ public class Score {
     private LocalDateTime resetTime;
     private Integer studyRepetition;
 
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
     @Embeddable
     public static class ScoreId implements Serializable {
 

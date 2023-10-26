@@ -12,6 +12,6 @@ public interface ModuleService {
 
     List<Integer> getIdAllByUserId(Integer userId);
 
-    List<Integer> getIdAllByUserIdWithPublicAccess(Integer userId);
+    List<Integer> getIdWithPublicAccessAllByUserId(Integer userId);
 
 }
