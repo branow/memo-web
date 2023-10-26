@@ -90,4 +90,4 @@ load data local infile 'src/main/resources/sql/data/score.csv'
     optionally enclosed by '"'
     lines terminated by '\r\n'
     ignore 1 lines
-    (flashcard, study_type, score, studyTime, resetTime, studyRepetition);
+    (flashcard, study_type, score, study_time, reset_time, study_repetition);

@@ -81,9 +81,9 @@ create table if not exists score(
     flashcard int,
     study_type int,
     score tinyint not null check (score >= 0 && score <= 100),
-    studyTime datetime not null default now(),
-    resetTime datetime not null,
-    studyRepetition int not null,
+    study_time datetime not null default now(),
+    reset_time datetime not null,
+    study_repetition int not null,
     primary key (flashcard, study_type),
     constraint fk_score_study_type foreign key (study_type) references study_type(study_id)
         on update cascade,
