@@ -18,9 +18,14 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>com.brano</groupId>
+            <artifactId>formatted-print</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
             <groupId>com.branow</groupId>
             <artifactId>memo-score-calculator</artifactId>
-            <version>1.0</version>
+            <version>1.1</version>
         </dependency>
         <dependency>
             <groupId>jakarta.validation</groupId>
