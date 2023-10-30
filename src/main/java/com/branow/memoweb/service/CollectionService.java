@@ -7,6 +7,6 @@ import java.util.List;
 
 @Service
 public interface CollectionService {
-    List<CollectionShortDto> getCollectionShortDtoAllByModuleId(Integer moduleId);
+    List<CollectionShortDto> getShortDtoAllByModuleId(Integer moduleId);
 
 }

@@ -27,7 +27,7 @@ public class ModuleServiceImpl implements ModuleService {
     @Override
     public ModuleSimpleDto getSimpleDtoById(Integer id) {
         ModuleShortDto moduleShortDto = repository.findModuleShortDtoById(id);
-        List<CollectionShortDto> collections = collectionService.getCollectionShortDtoAllByModuleId(id);
+        List<CollectionShortDto> collections = collectionService.getShortDtoAllByModuleId(id);
         List<ScoreSimpleDto> scores = scoreService.getScoreSimpleDtoAllByModuleId(id);
         return mapper.toModuleSimpleDto(moduleShortDto, collections, scores);
     }
