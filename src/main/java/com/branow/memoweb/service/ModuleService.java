@@ -1,6 +1,6 @@
 package com.branow.memoweb.service;
 
-import com.branow.memoweb.dto.module.ModuleSimpleDto;
+import com.branow.memoweb.dto.module.ModuleGeneralDetailsDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public interface ModuleService {
 
-    ModuleSimpleDto getSimpleDtoById(Integer id);
+    ModuleGeneralDetailsDto getSimpleDtoById(Integer id);
 
     List<Integer> getIdAllByUserId(Integer userId);
 

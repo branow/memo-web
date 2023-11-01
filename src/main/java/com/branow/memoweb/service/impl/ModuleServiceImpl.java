@@ -1,9 +1,10 @@
 package com.branow.memoweb.service.impl;
 
-import com.branow.memoweb.dto.collection.CollectionShortDto;
-import com.branow.memoweb.dto.module.ModuleShortDto;
-import com.branow.memoweb.dto.module.ModuleSimpleDto;
-import com.branow.memoweb.dto.score.ScoreSimpleDto;
+import com.branow.memoweb.dto.collection.CollectionShortDetailsDto;
+import com.branow.memoweb.dto.module.ModuleGeneralDetailsDto;
+import com.branow.memoweb.dto.module.ModuleShortDetailsRepositoryDto;
+import com.branow.memoweb.dto.score.ScoreAggregatedDto;
+import com.branow.memoweb.exception.entitynotfound.ModuleNotFoundException;
 import com.branow.memoweb.mapper.ModuleMapper;
 import com.branow.memoweb.repository.ModuleRepository;
 import com.branow.memoweb.service.CollectionService;
@@ -25,11 +26,12 @@ public class ModuleServiceImpl implements ModuleService {
 
 
     @Override
-    public ModuleSimpleDto getSimpleDtoById(Integer id) {
-        ModuleShortDto moduleShortDto = repository.findModuleShortDtoById(id);
-        List<CollectionShortDto> collections = collectionService.getShortDtoAllByModuleId(id);
-        List<ScoreSimpleDto> scores = scoreService.getScoreSimpleDtoAllByModuleId(id);
-        return mapper.toModuleSimpleDto(moduleShortDto, collections, scores);
+    public ModuleGeneralDetailsDto getSimpleDtoById(Integer id) {
+        ModuleShortDetailsRepositoryDto dto = repository.findModuleShortDetailsDtoById(id)
+                .orElseThrow(() -> new ModuleNotFoundException("module id", id));
+        List<CollectionShortDetailsDto> collections = collectionService.getShortDetailsDtoAllByModuleId(id);
+        List<ScoreAggregatedDto> scores = scoreService.getSimpleDtoAllByModuleId(id);
+        return mapper.toModuleSimpleDto(dto, collections, scores);
     }
 
     @Override
