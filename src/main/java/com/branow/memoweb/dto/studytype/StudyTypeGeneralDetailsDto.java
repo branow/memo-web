@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class StudyTypeSimpleDto {
+public class StudyTypeGeneralDetailsDto {
 
-    private Integer studyTypeId;
+    private Integer studyId;
     private String studyType;
 
 }

@@ -18,9 +18,9 @@ public class StudyType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer studyTypeId;
+    private Integer studyId;
 
     @Enumerated(EnumType.STRING)
-    private StudyTypeName studyTypeName;
+    private StudyTypeName studyName;
 
 }

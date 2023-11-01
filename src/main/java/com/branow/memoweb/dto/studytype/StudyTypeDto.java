@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class StudyTypeDto {
 
-    private Integer studyTypeId;
-    private StudyTypeName studyTypeName;
+    private Integer studyId;
+    private StudyTypeName studyName;
 
 }
