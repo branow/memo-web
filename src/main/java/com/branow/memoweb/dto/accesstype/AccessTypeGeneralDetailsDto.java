@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AccessTypeSimpleDto {
+public class AccessTypeGeneralDetailsDto {
 
     private Integer accessTypeId;
     private String access;
