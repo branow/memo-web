@@ -1,3 +1,4 @@
+set global local_infile = 1;
 
 load data local infile 'src/main/resources/sql/data/user.csv'
     into table user
