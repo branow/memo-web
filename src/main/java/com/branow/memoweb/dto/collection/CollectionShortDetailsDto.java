@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CollectionShortDto {
+public class CollectionShortDetailsDto {
 
     private Integer collectionId;
     private String collectionName;
