@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SingleScoreDto implements Score {
+public class ScoreSingleDto implements Score {
 
     private int score;
     private LocalDateTime time;

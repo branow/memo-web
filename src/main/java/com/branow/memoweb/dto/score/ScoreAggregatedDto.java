@@ -1,7 +1,6 @@
 package com.branow.memoweb.dto.score;
 
-import com.branow.memoscorecalculator.Score;
-import com.branow.memoscorecalculator.ScoreFullParams;
+import com.branow.memoweb.dto.studytype.StudyTypeDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,11 +12,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ScoreParamDto implements ScoreFullParams {
+public class ScoreAggregatedDto {
 
-    private String studyName;
-    private Score lastScore;
+    private StudyTypeDto studyType;
+    private Integer score;
     private LocalDateTime resetTime;
-    private int studyRepetition;
 
 }
