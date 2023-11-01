@@ -39,6 +39,8 @@ public class WebSecurityConfig {
             auth.requestMatchers(HttpMethod.POST, "/enable").permitAll();
             auth.requestMatchers(HttpMethod.GET, "/user").authenticated();
 
+            auth.requestMatchers(HttpMethod.POST, "/email").permitAll();
+
             auth.requestMatchers(HttpMethod.GET, "/module/id-all-by-user-id/*").authenticated();
             auth.requestMatchers(HttpMethod.GET, "/module/id-with-public-access-all-by-user-id/*").permitAll();
             auth.requestMatchers(HttpMethod.GET, "/module/simple-by-id/*").permitAll();
