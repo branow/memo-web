@@ -1,6 +1,7 @@
 package com.branow.memoweb.service;
 
 import com.branow.memoweb.dto.user.*;
+import com.branow.memoweb.dto.verificationtoken.EmailTokenDto;
 import com.branow.memoweb.dto.verificationtoken.VerificationTokenDto;
 
 public interface AuthenticationService {
@@ -11,5 +12,7 @@ public interface AuthenticationService {
     UserJwtDto enableUser(VerificationTokenDto verificationToken);
 
     UserPrivateShortDto getUser(String jwt);
+
+    VerificationTokenDto regenerateToken(EmailTokenDto dto);
 
 }

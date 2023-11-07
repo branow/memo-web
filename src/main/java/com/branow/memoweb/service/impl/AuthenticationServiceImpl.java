@@ -1,6 +1,7 @@
 package com.branow.memoweb.service.impl;
 
 import com.branow.memoweb.dto.user.*;
+import com.branow.memoweb.dto.verificationtoken.EmailTokenDto;
 import com.branow.memoweb.dto.verificationtoken.VerificationTokenDto;
 import com.branow.memoweb.exception.VerificationTokenExpiredException;
 import com.branow.memoweb.mapper.UserMapper;
@@ -64,5 +65,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public UserPrivateShortDto getUser(String jwt) {
         String email = jwtTokenService.getSubject(jwt);
         return userMapper.toUserPrivateShortDto(userService.getByEmail(email));
+    }
+
+    @Override
+    public VerificationTokenDto regenerateToken(EmailTokenDto dto) {
+        User user = userService.getByEmail(dto.getEmail());
+        verificationTokenService.deleteByToken(dto.getToken());
+        VerificationToken token = verificationTokenService.createToken(user);
+        return VerificationTokenDto.builder()
+                .token(token.getToken())
+                .build();
     }
 }

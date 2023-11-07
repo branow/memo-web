@@ -14,7 +14,7 @@ import java.util.UUID;
 @Service
 public class VerificationTokenServiceImpl implements VerificationTokenService {
 
-    private final VerificationTokenRepository verificationTokenRepository;
+    private final VerificationTokenRepository repository;
 
     @Override
     public VerificationToken createToken(User user) {
@@ -22,19 +22,23 @@ public class VerificationTokenServiceImpl implements VerificationTokenService {
                 .token(UUID.randomUUID().toString())
                 .user(user)
                 .build();
-        System.out.println(token);
-        verificationTokenRepository.save(token);
+        repository.save(token);
         return token;
     }
 
     @Override
     public VerificationToken getByToken(String token) {
-        return verificationTokenRepository.findVerificationTokenByToken(token)
+        return repository.findVerificationTokenByToken(token)
                 .orElseThrow(() -> new VerificationTokenNotFoundException("token", token));
     }
 
     @Override
     public void delete(VerificationToken verificationToken) {
-        verificationTokenRepository.delete(verificationToken);
+        repository.delete(verificationToken);
+    }
+
+    @Override
+    public void deleteByToken(String verificationToken) {
+        repository.deleteByToken(verificationToken);
     }
 }

@@ -10,4 +10,7 @@ public interface VerificationTokenService {
     VerificationToken getByToken(String verificationToken);
 
     void delete(VerificationToken verificationToken);
+
+    void deleteByToken(String verificationToken);
+
 }
