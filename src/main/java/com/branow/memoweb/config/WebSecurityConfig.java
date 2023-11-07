@@ -37,6 +37,7 @@ public class WebSecurityConfig {
             auth.requestMatchers(HttpMethod.POST, "/register").permitAll();
             auth.requestMatchers(HttpMethod.POST, "/login").permitAll();
             auth.requestMatchers(HttpMethod.POST, "/enable").permitAll();
+            auth.requestMatchers(HttpMethod.POST, "/regenerate-token").permitAll();
             auth.requestMatchers(HttpMethod.GET, "/user").authenticated();
 
             auth.requestMatchers(HttpMethod.POST, "/email").permitAll();

@@ -16,7 +16,7 @@ public class AccessType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer accessTypeId;
+    private Integer accessId;
 
     @Enumerated(EnumType.STRING)
     private Access access;

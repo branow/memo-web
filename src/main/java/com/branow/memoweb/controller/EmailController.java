@@ -4,14 +4,12 @@ import com.branow.memoweb.dto.email.EmailDto;
 import com.branow.memoweb.service.EmailSenderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static com.branow.memoweb.controller.response.ResponseWrapper.wrapPost;
 
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/email")
 @RestController
 public class EmailController {
@@ -22,7 +20,7 @@ public class EmailController {
     public ResponseEntity<?> send(@RequestBody EmailDto emailDto) {
         return wrapPost(() -> {
             emailSenderService.send(emailDto);
-            return "Did";
+            return "Email was send successfully";
         });
     }
 

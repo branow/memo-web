@@ -30,7 +30,7 @@ public class JwtTokenService {
 
     public String generateJwt(User user) {
         Instant now = Instant.now();
-        Instant expired = LocalDateTime.now().plus(10, ChronoUnit.MINUTES)
+        Instant expired = LocalDateTime.now().plus(5, ChronoUnit.DAYS)
                 .atZone(ZoneId.systemDefault()).toInstant();
 
         String scope = user.getAuthorities().stream()
