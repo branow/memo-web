@@ -12,4 +12,7 @@ public interface CollectionRepository extends JpaRepository<Collection, Integer>
     @Query(value = "call get_collection_short_details_all_by_module_id(?1)", nativeQuery = true)
     List<CollectionShortDetailsRepositoryDto> findCollectionShortDetailsDtoAllByModuleId(Integer moduleId);
 
+    @Query("select c from Module m join m.collections c where m.moduleId = ?1")
+    List<Collection> findAllByModuleId(Integer moduleId);
+
 }

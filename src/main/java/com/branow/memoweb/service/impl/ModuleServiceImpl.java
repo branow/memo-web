@@ -2,13 +2,11 @@ package com.branow.memoweb.service.impl;
 
 import com.branow.memoweb.dto.collection.CollectionGeneralDetailsDto;
 import com.branow.memoweb.dto.collection.CollectionShortDetailsDto;
-import com.branow.memoweb.dto.module.ModuleDetailsDto;
-import com.branow.memoweb.dto.module.ModuleDetailsRepositoryDto;
-import com.branow.memoweb.dto.module.ModuleGeneralDetailsDto;
-import com.branow.memoweb.dto.module.ModuleShortDetailsRepositoryDto;
+import com.branow.memoweb.dto.module.*;
 import com.branow.memoweb.dto.score.ScoreAggregatedDto;
 import com.branow.memoweb.exception.entitynotfound.ModuleNotFoundException;
 import com.branow.memoweb.mapper.ModuleMapper;
+import com.branow.memoweb.model.Module;
 import com.branow.memoweb.repository.ModuleRepository;
 import com.branow.memoweb.service.CollectionService;
 import com.branow.memoweb.service.ModuleService;
@@ -26,7 +24,19 @@ public class ModuleServiceImpl implements ModuleService {
     private final ModuleMapper mapper;
     private final CollectionService collectionService;
     private final ScoreService scoreService;
+    private final JwtTokenService jwtTokenService;
 
+    @Override
+    public ModuleSaveDto saveByUserId(Integer userId, ModuleSaveDto dto) {
+        Module newMod = repository.save(mapper.toModule(dto, userId));
+        return mapper.toModuleSaveDto(newMod);
+    }
+
+    @Override
+    public ModuleSaveDto saveByJwtToken(String jwtToken, ModuleSaveDto dto) {
+        Integer userId = jwtTokenService.getUserId(jwtToken);
+        return saveByUserId(userId, dto);
+    }
 
     @Override
     public ModuleDetailsDto getDetailsDtoByModuleId(Integer id) {
@@ -47,13 +57,18 @@ public class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
-    public List<Integer> getIdAllByUserId(Integer userId) {
+    public List<Integer> getModuleIdAllByUserId(Integer userId) {
         return repository.findModuleIdAllByUserId(userId);
     }
 
     @Override
-    public List<Integer> getIdWithPublicAccessAllByUserId(Integer userId) {
+    public List<Integer> getModuleIdWithPublicAccessAllByUserId(Integer userId) {
         return repository.findModuleIdWithPublicAccessAllByUserId(userId);
+    }
+
+    @Override
+    public List<Module> getAllByUserId(Integer userId) {
+        return repository.findAllByUserId(userId);
     }
 
 }

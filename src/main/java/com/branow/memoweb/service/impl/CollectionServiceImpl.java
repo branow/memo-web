@@ -4,6 +4,7 @@ import com.branow.memoweb.dto.collection.CollectionGeneralDetailsDto;
 import com.branow.memoweb.dto.collection.CollectionShortDetailsDto;
 import com.branow.memoweb.dto.collection.CollectionShortDetailsRepositoryDto;
 import com.branow.memoweb.mapper.CollectionMapper;
+import com.branow.memoweb.model.Collection;
 import com.branow.memoweb.repository.CollectionRepository;
 import com.branow.memoweb.service.CollectionService;
 import com.branow.memoweb.service.ScoreService;
@@ -31,6 +32,11 @@ public class CollectionServiceImpl implements CollectionService {
         return  repository.findCollectionShortDetailsDtoAllByModuleId(moduleId).stream()
                 .map((e) -> mapper.toCollectionGeneralDetailsDto(e, scoreService.getAggregatedDtoAllByCollectionId(e.getCollectionId())))
                 .toList();
+    }
+
+    @Override
+    public List<Collection> getAllByModuleId(Integer moduleId) {
+        return repository.findAllByModuleId(moduleId);
     }
 
 }

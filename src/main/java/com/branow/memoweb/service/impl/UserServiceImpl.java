@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
     public UserPrivateGeneralDetailsDto getPrivateGeneralDetailsDtoByUserId(Integer id) {
         UserGeneralDetailsRepositoryDto details = repository.findUserGeneralDetailsByUserId(id)
                 .orElseThrow(() -> new UserNotFoundException("id", id));
-        List<Integer> moduleIds = moduleService.getIdAllByUserId(id);
+        List<Integer> moduleIds = moduleService.getModuleIdAllByUserId(id);
         return mapper.toUserPrivateGeneralDetailsDto(details, moduleIds);
     }
 
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
     public UserPublicGeneralDetailsDto getPublicGeneralDetailsDtoByUserId(Integer id) {
         UserGeneralDetailsRepositoryDto details = repository.findUserGeneralDetailsByUserId(id)
                 .orElseThrow(() -> new UserNotFoundException("id", id));
-        List<Integer> moduleIds = moduleService.getIdWithPublicAccessAllByUserId(id);
+        List<Integer> moduleIds = moduleService.getModuleIdWithPublicAccessAllByUserId(id);
         return mapper.toUserPublicGeneralDetailsDto(details, moduleIds);
     }
 

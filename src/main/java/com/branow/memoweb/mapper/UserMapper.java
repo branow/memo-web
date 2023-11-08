@@ -1,7 +1,9 @@
 package com.branow.memoweb.mapper;
 
 import com.branow.memoweb.dto.user.*;
+import com.branow.memoweb.model.Module;
 import com.branow.memoweb.model.User;
+import com.branow.memoweb.service.ModuleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,7 +15,7 @@ import java.util.List;
 public class UserMapper {
 
     private final PasswordEncoder passwordEncoder;
-
+    private final ModuleService moduleService;
 
     public UserSaveDto toUserSaveDto(User user) {
         return UserSaveDto.builder()
@@ -25,6 +27,7 @@ public class UserMapper {
     }
 
     public User toUser(UserSaveDto dto, String password, boolean enabled) {
+        List<Module> modules =  moduleService.getAllByUserId(dto.getUserId());
         return User.builder()
                 .userId(dto.getUserId())
                 .username(dto.getUsername())
@@ -32,6 +35,7 @@ public class UserMapper {
                 .description(dto.getDescription())
                 .password(password)
                 .enabled(enabled)
+                .modules(modules)
                 .build();
     }
 

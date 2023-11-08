@@ -30,4 +30,6 @@ public class Module {
     @OneToMany
     @JoinColumn(name = "module")
     private List<Collection> collections;
+
+    private Integer user;
 }
