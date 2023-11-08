@@ -19,16 +19,24 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/public/{id}")
-    public ResponseEntity<?> getPublicById(@PathVariable Integer id) {
-        return wrapGet(() -> userService.getPublicGeneralDetailsById(id));
-    }
-
     @GetMapping("/private-short-details")
     public ResponseEntity<?> getPrivateShortDetails(HttpServletRequest request) {
         return wrapGet(() -> {
             String jwt = new HttpRequestHeaders(request).getJwtToken();
             return userService.getPrivateShortDetailsByJwtToken(jwt);
+        });
+    }
+
+    @GetMapping("/public-general-details/{id}")
+    public ResponseEntity<?> getPublicGeneralDetails(@PathVariable Integer id) {
+        return wrapGet(() -> userService.getPublicGeneralDetailsById(id));
+    }
+
+    @GetMapping("/private-general-details")
+    public ResponseEntity<?> getPrivateGeneralDetails(HttpServletRequest request) {
+        return wrapGet(() -> {
+            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            return userService.getPrivateGeneralDetailsByJwtToken(jwt);
         });
     }
 

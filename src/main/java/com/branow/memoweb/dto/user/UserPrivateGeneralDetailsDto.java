@@ -5,15 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserPrivateShortDetailsDto {
+public class UserPrivateGeneralDetailsDto {
 
     private Integer userId;
     private String username;
-    private String email;
-    private Boolean enabled;
+    private String description;
+    private List<Integer> moduleIds;
 
 }

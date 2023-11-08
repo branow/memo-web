@@ -1,19 +1,46 @@
 package com.branow.memoweb.mapper;
 
-import com.branow.memoweb.dto.user.UserPrivateShortDetailsDto;
-import com.branow.memoweb.dto.user.UserRegisterDto;
-import com.branow.memoweb.dto.user.UserDto;
-import com.branow.memoweb.dto.user.UserJwtDto;
+import com.branow.memoweb.dto.user.*;
 import com.branow.memoweb.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class UserMapper {
 
     private final PasswordEncoder passwordEncoder;
+
+
+    public UserPrivateShortDetailsDto toUserPrivateShortDetailsDto(UserPrivateShortDetailsRepositoryDto dto) {
+        return UserPrivateShortDetailsDto.builder()
+                .userId(dto.getUserId())
+                .username(dto.getUsername())
+                .email(dto.getEmail())
+                .enabled(dto.getEnabled())
+                .build();
+    }
+
+    public UserPublicGeneralDetailsDto toUserPublicGeneralDetailsDto(UserGeneralDetailsRepositoryDto dto, List<Integer> moduleIds) {
+        return UserPublicGeneralDetailsDto.builder()
+                .userId(dto.getUserId())
+                .username(dto.getUsername())
+                .description(dto.getDescription())
+                .publicModuleIds(moduleIds)
+                .build();
+    }
+
+    public UserPrivateGeneralDetailsDto toUserPrivateGeneralDetailsDto(UserGeneralDetailsRepositoryDto dto, List<Integer> moduleIds) {
+        return UserPrivateGeneralDetailsDto.builder()
+                .userId(dto.getUserId())
+                .username(dto.getUsername())
+                .description(dto.getDescription())
+                .moduleIds(moduleIds)
+                .build();
+    }
 
     public UserJwtDto toUserJwtDto(User user, String jwt) {
         return UserJwtDto.builder()
@@ -28,7 +55,7 @@ public class UserMapper {
                 .userId(user.getUserId())
                 .username(user.getUsername())
                 .email(user.getEmail())
-                .enable(user.isEnabled())
+                .enabled(user.isEnabled())
                 .build();
     }
 
@@ -39,7 +66,7 @@ public class UserMapper {
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .description(user.getDescription())
-                .enable(user.isEnabled())
+                .enabled(user.isEnabled())
                 .build();
     }
 

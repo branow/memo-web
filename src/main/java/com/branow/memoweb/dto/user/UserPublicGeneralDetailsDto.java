@@ -16,6 +16,6 @@ public class UserPublicGeneralDetailsDto {
     private Integer userId;
     private String username;
     private String description;
-    private List<Integer> publicModules;
+    private List<Integer> publicModuleIds;
 
 }
