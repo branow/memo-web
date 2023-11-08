@@ -1,6 +1,7 @@
 package com.branow.memoweb.service.impl;
 
 import com.branow.memoweb.dto.user.*;
+import com.branow.memoweb.exception.JwtTokenIllegalSubjectException;
 import com.branow.memoweb.exception.entitynotfound.UserNotFoundException;
 import com.branow.memoweb.mapper.UserMapper;
 import com.branow.memoweb.model.User;
@@ -24,6 +25,10 @@ public class UserServiceImpl implements UserService {
     private final JwtTokenService jwtTokenService;
     private final ModuleService moduleService;
 
+    public User getById(Integer id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("id", id));
+    }
 
     public User getByEmail(String email) {
         return repository.findUserByEmail(email)
@@ -79,6 +84,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return getByEmail(email);
+    }
+
+    @Override
+    public UserSaveDto save(String jwt, UserSaveDto dto) {
+        if (dto == null || dto.getUserId() == null)
+            throw new IllegalStateException("User or User id is null");
+        if (!jwtTokenService.hasUserId(jwt, dto.getUserId())) {
+            throw new JwtTokenIllegalSubjectException("Jwt token has another subject");
+        }
+
+        User oldUser = getById(dto.getUserId());
+        User saved = repository.save(mapper.toUser(dto, oldUser.getPassword(), oldUser.isEnabled()));
+        return mapper.toUserSaveDto(saved);
     }
 
     @Override

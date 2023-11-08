@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import static com.branow.memoweb.controller.response.ResponseWrapper.wrapGet;
 
 public interface UserService extends UserDetailsService {
+
+    UserSaveDto save(String jwt, UserSaveDto dto);
+
     User save(User user);
 
     User getByEmail(String email);
@@ -23,7 +26,6 @@ public interface UserService extends UserDetailsService {
     UserPrivateGeneralDetailsDto getPrivateGeneralDetailsById(Integer id);
 
     UserPublicGeneralDetailsDto getPublicGeneralDetailsById(Integer id);
-
 
     UserDetailsDto getDetailsByJwtToken(String jwtToken);
 

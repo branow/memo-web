@@ -15,6 +15,26 @@ public class UserMapper {
     private final PasswordEncoder passwordEncoder;
 
 
+    public UserSaveDto toUserSaveDto(User user) {
+        return UserSaveDto.builder()
+                .userId(user.getUserId())
+                .username(user.getUsername())
+                .description(user.getDescription())
+                .email(user.getEmail())
+                .build();
+    }
+
+    public User toUser(UserSaveDto dto, String password, boolean enabled) {
+        return User.builder()
+                .userId(dto.getUserId())
+                .username(dto.getUsername())
+                .email(dto.getEmail())
+                .description(dto.getDescription())
+                .password(password)
+                .enabled(enabled)
+                .build();
+    }
+
     public UserDetailsDto toUserDetailsDto(UserDetailsRepositoryDto dto) {
         return UserDetailsDto.builder()
                 .userId(dto.getUserId())

@@ -41,10 +41,11 @@ public class WebSecurityConfig {
             //Email Controller
             auth.requestMatchers(HttpMethod.POST, "/email").permitAll();
             //User Controller
+            auth.requestMatchers(HttpMethod.GET, "/user/public-general-details/*").permitAll();
             auth.requestMatchers(HttpMethod.GET, "/user/private-short-details").authenticated();
             auth.requestMatchers(HttpMethod.GET, "/user/private-general-details").authenticated();
             auth.requestMatchers(HttpMethod.GET, "/user/details").authenticated();
-            auth.requestMatchers(HttpMethod.GET, "/user/public-general-details/*").permitAll();
+            auth.requestMatchers(HttpMethod.POST, "/user").authenticated();
             //Module Controller
             auth.requestMatchers(HttpMethod.GET, "/module/id-all-by-user-id/*").authenticated();
             auth.requestMatchers(HttpMethod.GET, "/module/id-with-public-access-all-by-user-id/*").permitAll();

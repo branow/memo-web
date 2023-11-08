@@ -24,6 +24,14 @@ public class JwtTokenService {
     private final JwtDecoder jwtDecoder;
 
 
+    public boolean hasUserId(String token, Integer userId) {
+        return hasSubject(token, userId.toString());
+    }
+
+    public boolean hasSubject(String token, String subject) {
+        return getSubject(token).equals(subject);
+    }
+
     public Integer getUserId(String token) {
         try {
             return Integer.parseInt(getSubject(token));

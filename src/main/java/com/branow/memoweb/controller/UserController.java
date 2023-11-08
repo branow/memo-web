@@ -1,5 +1,6 @@
 package com.branow.memoweb.controller;
 
+import com.branow.memoweb.dto.user.UserSaveDto;
 import com.branow.memoweb.service.UserService;
 import com.branow.memoweb.util.HttpRequestHeaders;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import static com.branow.memoweb.controller.response.ResponseWrapper.wrapGet;
+import static com.branow.memoweb.controller.response.ResponseWrapper.wrapPost;
 
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
@@ -16,6 +18,15 @@ import static com.branow.memoweb.controller.response.ResponseWrapper.wrapGet;
 public class UserController {
 
     private final UserService userService;
+
+
+    @PostMapping("")
+    public ResponseEntity<?> save(HttpServletRequest request, @RequestBody UserSaveDto dto) {
+        return wrapPost(() -> {
+            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            return userService.save(jwt, dto);
+        });
+    }
 
     @GetMapping("/details")
     public ResponseEntity<?> getDetails(HttpServletRequest request) {
