@@ -1,6 +1,6 @@
 package com.branow.memoweb.dto.collection;
 
-import com.branow.memoweb.dto.flashcard.FlashcardDto;
+import com.branow.memoweb.dto.score.ScoreAggregatedDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,10 +12,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CollectionDto {
+public class CollectionGeneralDetailsDto {
 
     private Integer collectionId;
     private String collectionName;
-    private List<FlashcardDto> flashcards;
+    private Integer size;
+    private List<ScoreAggregatedDto> scores;
 
 }

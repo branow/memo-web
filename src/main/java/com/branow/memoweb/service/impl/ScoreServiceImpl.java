@@ -16,9 +16,16 @@ public class ScoreServiceImpl implements ScoreService {
     private final ScoreRepository repository;
     private final ScoreMapper mapper;
 
+
     @Override
-    public List<ScoreAggregatedDto> getSimpleDtoAllByModuleId(Integer moduleId) {
-        return repository.findScoreAverageParamByModuleId(moduleId).stream()
+    public List<ScoreAggregatedDto> getAggregatedDtoAllByModuleId(Integer moduleId) {
+        return repository.findAverageParamsAllByModuleId(moduleId).stream()
+                .map(mapper::toScoreAggregatedDto).toList();
+    }
+
+    @Override
+    public List<ScoreAggregatedDto> getAggregatedDtoAllByCollectionId(Integer collectionId) {
+        return repository.findAverageParamsAllByCollectionId(collectionId).stream()
                 .map(mapper::toScoreAggregatedDto).toList();
     }
 

@@ -16,6 +16,11 @@ public class ModuleController {
     private final ModuleService moduleService;
 
 
+    @GetMapping("/details/{id}")
+    public ResponseEntity<?> getDetailsByModuleId(@PathVariable Integer id) {
+        return wrapGet(() -> moduleService.getDetailsDtoByModuleId(id));
+    }
+
     @GetMapping("/general-details/{id}")
     public ResponseEntity<?> getGeneralDetailsByModuleId(@PathVariable Integer id) {
         return wrapGet(() -> moduleService.getGeneralDetailsDtoByModuleId(id));

@@ -1,5 +1,6 @@
 package com.branow.memoweb.repository;
 
+import com.branow.memoweb.dto.module.ModuleDetailsRepositoryDto;
 import com.branow.memoweb.dto.module.ModuleShortDetailsRepositoryDto;
 import com.branow.memoweb.model.Module;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,6 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ModuleRepository extends JpaRepository<Module, Integer> {
+
+    @Query(value = "call get_module_details_by_module_id(?1)", nativeQuery = true)
+    Optional<ModuleDetailsRepositoryDto> findDetailsByModuleId(Integer id);
 
     @Query("select m.moduleId from User u join u.modules m where u.userId = ?1")
     List<Integer> findModuleIdAllByUserId(Integer userId);

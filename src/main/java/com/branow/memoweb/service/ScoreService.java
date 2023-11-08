@@ -8,6 +8,8 @@ import java.util.List;
 @Service
 public interface ScoreService {
 
-    List<ScoreAggregatedDto> getSimpleDtoAllByModuleId(Integer moduleId);
+    List<ScoreAggregatedDto> getAggregatedDtoAllByModuleId(Integer moduleId);
+
+    List<ScoreAggregatedDto> getAggregatedDtoAllByCollectionId(Integer collectionId);
 
 }
