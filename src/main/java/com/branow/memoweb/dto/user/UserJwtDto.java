@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserJwtDto {
 
-    private UserPrivateShortDto user;
+    private UserPrivateShortDetailsDto user;
     private String jwt;
 
 }

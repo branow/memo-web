@@ -33,15 +33,16 @@ public class WebSecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
 
         http.authorizeHttpRequests((auth) -> {
-            auth.requestMatchers(HttpMethod.GET, "/").permitAll();
+            //Authentication Controller
             auth.requestMatchers(HttpMethod.POST, "/register").permitAll();
             auth.requestMatchers(HttpMethod.POST, "/login").permitAll();
             auth.requestMatchers(HttpMethod.POST, "/enable").permitAll();
             auth.requestMatchers(HttpMethod.POST, "/regenerate-token").permitAll();
-            auth.requestMatchers(HttpMethod.GET, "/user").authenticated();
-
+            //Email Controller
             auth.requestMatchers(HttpMethod.POST, "/email").permitAll();
-
+            //User Controller
+            auth.requestMatchers(HttpMethod.GET, "/user/private-short-details").authenticated();
+            //Module Controller
             auth.requestMatchers(HttpMethod.GET, "/module/id-all-by-user-id/*").authenticated();
             auth.requestMatchers(HttpMethod.GET, "/module/id-with-public-access-all-by-user-id/*").permitAll();
             auth.requestMatchers(HttpMethod.GET, "/module/simple-by-id/*").permitAll();

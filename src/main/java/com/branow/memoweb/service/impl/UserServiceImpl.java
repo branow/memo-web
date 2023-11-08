@@ -1,8 +1,9 @@
 package com.branow.memoweb.service.impl;
 
-import com.branow.memoweb.dto.user.UserPrivateShortDto;
-import com.branow.memoweb.dto.user.UserPublicDto;
+import com.branow.memoweb.dto.user.UserPrivateShortDetailsDto;
+import com.branow.memoweb.dto.user.UserPublicGeneralDetailsDto;
 import com.branow.memoweb.exception.entitynotfound.UserNotFoundException;
+import com.branow.memoweb.mapper.UserMapper;
 import com.branow.memoweb.model.User;
 import com.branow.memoweb.repository.UserRepository;
 import com.branow.memoweb.service.UserService;
@@ -15,23 +16,31 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
+    private final UserRepository repository;
+    private final JwtTokenService jwtTokenService;
+    private final UserMapper userMapper;
 
 
     public User getByEmail(String email) {
-        return userRepository.findUserByEmail(email)
+        return repository.findUserByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("email", email));
     }
 
     @Override
-    public UserPrivateShortDto getPrivateShortByEmail(String email) {
-        return userRepository.findUserPrivateShortDtoByEmail(email)
+    public UserPrivateShortDetailsDto getPrivateShortDetailsByEmail(String email) {
+        return repository.findUserPrivateShortDtoByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("email", email));
     }
 
     @Override
-    public UserPublicDto getPublicDtoById(Integer id) {
-        return userRepository.findUserPublicDtoById(id)
+    public UserPrivateShortDetailsDto getPrivateShortDetailsByJwtToken(String jwtToken) {
+        String email = jwtTokenService.getSubject(jwtToken);
+        return getPrivateShortDetailsByEmail(email);
+    }
+
+    @Override
+    public UserPublicGeneralDetailsDto getPublicGeneralDetailsById(Integer id) {
+        return repository.findUserPublicDtoById(id)
                 .orElseThrow(() -> new UserNotFoundException("id", id));
     }
 
@@ -42,6 +51,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User user) {
-        return userRepository.save(user);
+        return repository.save(user);
     }
 }

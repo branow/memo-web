@@ -1,7 +1,7 @@
 package com.branow.memoweb.service;
 
-import com.branow.memoweb.dto.user.UserPrivateShortDto;
-import com.branow.memoweb.dto.user.UserPublicDto;
+import com.branow.memoweb.dto.user.UserPrivateShortDetailsDto;
+import com.branow.memoweb.dto.user.UserPublicGeneralDetailsDto;
 import com.branow.memoweb.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -10,7 +10,9 @@ public interface UserService extends UserDetailsService {
 
     User getByEmail(String email);
 
-    UserPrivateShortDto getPrivateShortByEmail(String email);
+    UserPrivateShortDetailsDto getPrivateShortDetailsByEmail(String email);
 
-    UserPublicDto getPublicDtoById(Integer id);
+    UserPrivateShortDetailsDto getPrivateShortDetailsByJwtToken(String jwtToken);
+
+    UserPublicGeneralDetailsDto getPublicGeneralDetailsById(Integer id);
 }

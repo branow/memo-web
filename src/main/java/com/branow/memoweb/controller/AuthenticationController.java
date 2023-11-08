@@ -39,18 +39,6 @@ public class AuthenticationController {
         return wrapPost(() -> authenticationService.regenerateToken(dto));
     }
 
-    @GetMapping("/user")
-    public ResponseEntity<?> getUser(HttpServletRequest request) {
-        return wrapGet(() -> {
-            String bearer = "bearer ";
-            String headAuth = request.getHeader("Authorization");
-            if (headAuth != null && headAuth.startsWith(bearer)) {
-                String jwt = headAuth.replaceFirst(bearer, "");
-                return authenticationService.getUser(jwt);
-            } else {
-                throw new IllegalStateException("Illegal Authorization header: " + headAuth);
-            }
-        });
-    }
+
 
 }

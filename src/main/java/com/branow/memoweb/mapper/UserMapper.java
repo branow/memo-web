@@ -1,6 +1,6 @@
 package com.branow.memoweb.mapper;
 
-import com.branow.memoweb.dto.user.UserPrivateShortDto;
+import com.branow.memoweb.dto.user.UserPrivateShortDetailsDto;
 import com.branow.memoweb.dto.user.UserRegisterDto;
 import com.branow.memoweb.dto.user.UserDto;
 import com.branow.memoweb.dto.user.UserJwtDto;
@@ -23,8 +23,8 @@ public class UserMapper {
     }
 
 
-    public UserPrivateShortDto toUserPrivateShortDto(User user) {
-        return UserPrivateShortDto.builder()
+    public UserPrivateShortDetailsDto toUserPrivateShortDto(User user) {
+        return UserPrivateShortDetailsDto.builder()
                 .userId(user.getUserId())
                 .username(user.getUsername())
                 .email(user.getEmail())

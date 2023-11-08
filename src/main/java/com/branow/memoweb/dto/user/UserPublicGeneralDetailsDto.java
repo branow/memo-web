@@ -5,17 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserPublicDto {
+public class UserPublicGeneralDetailsDto {
 
     private Integer userId;
     private String username;
     private String description;
-    private Integer daysStreak;
-    private Integer createdCards;
-    private Integer cardsStudied;
+    private List<Integer> publicModules;
 
 }

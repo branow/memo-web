@@ -62,12 +62,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public UserPrivateShortDto getUser(String jwt) {
-        String email = jwtTokenService.getSubject(jwt);
-        return userMapper.toUserPrivateShortDto(userService.getByEmail(email));
-    }
-
-    @Override
     public VerificationTokenDto regenerateToken(EmailTokenDto dto) {
         User user = userService.getByEmail(dto.getEmail());
         verificationTokenService.deleteByToken(dto.getToken());
