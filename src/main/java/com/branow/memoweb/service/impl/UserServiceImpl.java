@@ -32,34 +32,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetailsDto getDetailsByJwtToken(String jwtToken) {
-        String email = jwtTokenService.getSubject(jwtToken);
-        return getDetailsByEmail(email);
+        Integer id = jwtTokenService.getUserId(jwtToken);
+        return getDetailsById(id);
     }
 
     @Override
-    public UserDetailsDto getDetailsByEmail(String email) {
-        return mapper.toUserDetailsDto(repository.findUserDetailsByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("email", email)));
+    public UserDetailsDto getDetailsById(Integer id) {
+        return mapper.toUserDetailsDto(repository.findUserDetailsByUserId(id)
+                .orElseThrow(() -> new UserNotFoundException("id", id)));
     }
 
     @Override
-    public UserPrivateShortDetailsDto getPrivateShortDetailsByEmail(String email) {
-        return mapper.toUserPrivateShortDetailsDto(repository.findUserPrivateShortDetailsByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("email", email)));
+    public UserPrivateShortDetailsDto getPrivateShortDetailsById(Integer id) {
+        return mapper.toUserPrivateShortDetailsDto(repository.findUserPrivateShortDetailsByUserId(id)
+                .orElseThrow(() -> new UserNotFoundException("id", id)));
     }
 
     @Override
-    public UserPrivateGeneralDetailsDto getPrivateGeneralDetailsByEmail(String email) {
-        UserGeneralDetailsRepositoryDto details = repository.findUserGeneralDetailsByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("email", email));
-        List<Integer> moduleIds = moduleService.getIdAllByUserId(details.getUserId());
+    public UserPrivateGeneralDetailsDto getPrivateGeneralDetailsById(Integer id) {
+        UserGeneralDetailsRepositoryDto details = repository.findUserGeneralDetailsByUserId(id)
+                .orElseThrow(() -> new UserNotFoundException("id", id));
+        List<Integer> moduleIds = moduleService.getIdAllByUserId(id);
         return mapper.toUserPrivateGeneralDetailsDto(details, moduleIds);
-    }
-
-    @Override
-    public UserPrivateShortDetailsDto getPrivateShortDetailsByJwtToken(String jwtToken) {
-        String email = jwtTokenService.getSubject(jwtToken);
-        return getPrivateShortDetailsByEmail(email);
     }
 
     @Override
@@ -71,9 +65,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserPrivateShortDetailsDto getPrivateShortDetailsByJwtToken(String jwtToken) {
+        Integer id = jwtTokenService.getUserId(jwtToken);
+        return getPrivateShortDetailsById(id);
+    }
+
+    @Override
     public UserPrivateGeneralDetailsDto getPrivateGeneralDetailsByJwtToken(String jwtToken) {
-        String email = jwtTokenService.getSubject(jwtToken);
-        return getPrivateGeneralDetailsByEmail(email);
+        Integer id = jwtTokenService.getUserId(jwtToken);
+        return getPrivateGeneralDetailsById(id);
     }
 
     @Override

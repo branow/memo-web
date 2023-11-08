@@ -1,5 +1,6 @@
 package com.branow.memoweb.service.impl;
 
+import com.branow.memoweb.exception.JwtTokenIllegalSubjectException;
 import com.branow.memoweb.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,15 @@ public class JwtTokenService {
     private final JwtEncoder jwtEncoder;
     private final JwtDecoder jwtDecoder;
 
+
+    public Integer getUserId(String token) {
+        try {
+            return Integer.parseInt(getSubject(token));
+        } catch (NumberFormatException e) {
+            throw new JwtTokenIllegalSubjectException("Token subject is not an integer", e);
+        }
+    }
+
     public String getSubject(String token) {
         token = token.replaceFirst("bearer ", "");
         Jwt jwt = jwtDecoder.decode(token);
@@ -41,31 +51,10 @@ public class JwtTokenService {
                 .issuer("self")
                 .issuedAt(now)
                 .expiresAt(expired)
-                .subject(user.getEmail())
+                .subject(user.getUserId().toString())
                 .claim("roles", scope)
                 .build();
 
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
-
-    public String generateJwt(Authentication auth) {
-        Instant now = Instant.now();
-        Instant expired = LocalDateTime.now().plus(10, ChronoUnit.MINUTES)
-                .atZone(ZoneId.systemDefault()).toInstant();
-
-        String scope = auth.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(" "));
-
-        JwtClaimsSet claims = JwtClaimsSet.builder()
-                .issuer("self")
-                .issuedAt(now)
-                .expiresAt(expired)
-                .subject(auth.getName())
-                .claim("roles", scope)
-                .build();
-
-        return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
-    }
-
 }

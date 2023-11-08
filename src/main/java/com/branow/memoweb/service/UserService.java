@@ -1,9 +1,6 @@
 package com.branow.memoweb.service;
 
-import com.branow.memoweb.dto.user.UserDetailsDto;
-import com.branow.memoweb.dto.user.UserPrivateGeneralDetailsDto;
-import com.branow.memoweb.dto.user.UserPrivateShortDetailsDto;
-import com.branow.memoweb.dto.user.UserPublicGeneralDetailsDto;
+import com.branow.memoweb.dto.user.*;
 import com.branow.memoweb.model.User;
 import com.branow.memoweb.util.HttpRequestHeaders;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,17 +16,18 @@ public interface UserService extends UserDetailsService {
 
     User getByEmail(String email);
 
-    UserDetailsDto getDetailsByJwtToken(String jwtToken);
+    UserDetailsDto getDetailsById(Integer id);
 
-    UserDetailsDto getDetailsByEmail(String email);
+    UserPrivateShortDetailsDto getPrivateShortDetailsById(Integer id);
 
-    UserPrivateShortDetailsDto getPrivateShortDetailsByEmail(String email);
-
-    UserPrivateGeneralDetailsDto getPrivateGeneralDetailsByEmail(String email);
-
-    UserPrivateShortDetailsDto getPrivateShortDetailsByJwtToken(String jwtToken);
+    UserPrivateGeneralDetailsDto getPrivateGeneralDetailsById(Integer id);
 
     UserPublicGeneralDetailsDto getPublicGeneralDetailsById(Integer id);
+
+
+    UserDetailsDto getDetailsByJwtToken(String jwtToken);
+
+    UserPrivateShortDetailsDto getPrivateShortDetailsByJwtToken(String jwtToken);
 
     UserPrivateGeneralDetailsDto getPrivateGeneralDetailsByJwtToken(String jwtToken);
 

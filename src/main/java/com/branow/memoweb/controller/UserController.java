@@ -7,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpRequest;
-
 import static com.branow.memoweb.controller.response.ResponseWrapper.wrapGet;
 
 @RequiredArgsConstructor
@@ -18,7 +16,6 @@ import static com.branow.memoweb.controller.response.ResponseWrapper.wrapGet;
 public class UserController {
 
     private final UserService userService;
-
 
     @GetMapping("/details")
     public ResponseEntity<?> getDetails(HttpServletRequest request) {
