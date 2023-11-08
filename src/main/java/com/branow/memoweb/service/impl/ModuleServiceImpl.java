@@ -26,9 +26,9 @@ public class ModuleServiceImpl implements ModuleService {
 
 
     @Override
-    public ModuleGeneralDetailsDto getSimpleDtoById(Integer id) {
-        ModuleShortDetailsRepositoryDto dto = repository.findModuleShortDetailsDtoById(id)
-                .orElseThrow(() -> new ModuleNotFoundException("module id", id));
+    public ModuleGeneralDetailsDto getGeneralDetailsDtoByModuleId(Integer id) {
+        ModuleShortDetailsRepositoryDto dto = repository.findShortDetailsByModuleId(id)
+                .orElseThrow(() -> new ModuleNotFoundException("id", id));
         List<CollectionShortDetailsDto> collections = collectionService.getShortDetailsDtoAllByModuleId(id);
         List<ScoreAggregatedDto> scores = scoreService.getSimpleDtoAllByModuleId(id);
         return mapper.toModuleSimpleDto(dto, collections, scores);

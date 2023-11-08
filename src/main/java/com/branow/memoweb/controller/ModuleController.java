@@ -15,19 +15,10 @@ public class ModuleController {
 
     private final ModuleService moduleService;
 
-    @GetMapping("/id-all-by-user-id/{userId}")
-    public ResponseEntity<?> getIdAllByUserId(@PathVariable Integer userId) {
-        return wrapGet(() -> moduleService.getIdAllByUserId(userId));
-    }
 
-    @GetMapping("/id-with-public-access-all-by-user-id/{userId}")
-    public ResponseEntity<?> getIdWithPublicAccessAllByUserId(@PathVariable Integer userId) {
-        return wrapGet(() -> moduleService.getIdWithPublicAccessAllByUserId(userId));
-    }
-
-    @GetMapping("/simple-by-id/{id}")
-    public ResponseEntity<?> getSimpleById(@PathVariable Integer id) {
-        return wrapGet(() -> moduleService.getSimpleDtoById(id));
+    @GetMapping("/general-details/{id}")
+    public ResponseEntity<?> getGeneralDetailsByModuleId(@PathVariable Integer id) {
+        return wrapGet(() -> moduleService.getGeneralDetailsDtoByModuleId(id));
     }
 
 }

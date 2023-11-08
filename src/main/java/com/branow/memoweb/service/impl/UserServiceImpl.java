@@ -36,25 +36,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDetailsDto getDetailsByJwtToken(String jwtToken) {
+    public UserDetailsDto getDetailsDtoByJwtToken(String jwtToken) {
         Integer id = jwtTokenService.getUserId(jwtToken);
-        return getDetailsById(id);
+        return getDetailsDtoByUserId(id);
     }
 
     @Override
-    public UserDetailsDto getDetailsById(Integer id) {
+    public UserDetailsDto getDetailsDtoByUserId(Integer id) {
         return mapper.toUserDetailsDto(repository.findUserDetailsByUserId(id)
                 .orElseThrow(() -> new UserNotFoundException("id", id)));
     }
 
     @Override
-    public UserPrivateShortDetailsDto getPrivateShortDetailsById(Integer id) {
+    public UserPrivateShortDetailsDto getPrivateShortDetailsDtoByUserId(Integer id) {
         return mapper.toUserPrivateShortDetailsDto(repository.findUserPrivateShortDetailsByUserId(id)
                 .orElseThrow(() -> new UserNotFoundException("id", id)));
     }
 
     @Override
-    public UserPrivateGeneralDetailsDto getPrivateGeneralDetailsById(Integer id) {
+    public UserPrivateGeneralDetailsDto getPrivateGeneralDetailsDtoByUserId(Integer id) {
         UserGeneralDetailsRepositoryDto details = repository.findUserGeneralDetailsByUserId(id)
                 .orElseThrow(() -> new UserNotFoundException("id", id));
         List<Integer> moduleIds = moduleService.getIdAllByUserId(id);
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserPublicGeneralDetailsDto getPublicGeneralDetailsById(Integer id) {
+    public UserPublicGeneralDetailsDto getPublicGeneralDetailsDtoByUserId(Integer id) {
         UserGeneralDetailsRepositoryDto details = repository.findUserGeneralDetailsByUserId(id)
                 .orElseThrow(() -> new UserNotFoundException("id", id));
         List<Integer> moduleIds = moduleService.getIdWithPublicAccessAllByUserId(id);
@@ -70,19 +70,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserPrivateShortDetailsDto getPrivateShortDetailsByJwtToken(String jwtToken) {
+    public UserPrivateShortDetailsDto getPrivateShortDetailsDtoByJwtToken(String jwtToken) {
         Integer id = jwtTokenService.getUserId(jwtToken);
-        return getPrivateShortDetailsById(id);
+        return getPrivateShortDetailsDtoByUserId(id);
     }
 
     @Override
-    public UserPrivateGeneralDetailsDto getPrivateGeneralDetailsByJwtToken(String jwtToken) {
+    public UserPrivateGeneralDetailsDto getPrivateGeneralDetailsDtoByJwtToken(String jwtToken) {
         Integer id = jwtTokenService.getUserId(jwtToken);
-        return getPrivateGeneralDetailsById(id);
+        return getPrivateGeneralDetailsDtoByUserId(id);
     }
 
     @Override
-    public void delete(String jwt) {
+    public void deleteByJwtToken(String jwt) {
         repository.deleteById(jwtTokenService.getUserId(jwt));
     }
 

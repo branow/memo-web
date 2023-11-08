@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public interface ModuleService {
 
-    ModuleGeneralDetailsDto getSimpleDtoById(Integer id);
+    ModuleGeneralDetailsDto getGeneralDetailsDtoByModuleId(Integer id);
 
     List<Integer> getIdAllByUserId(Integer userId);
 

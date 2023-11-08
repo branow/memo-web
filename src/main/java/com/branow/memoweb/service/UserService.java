@@ -2,14 +2,7 @@ package com.branow.memoweb.service;
 
 import com.branow.memoweb.dto.user.*;
 import com.branow.memoweb.model.User;
-import com.branow.memoweb.util.HttpRequestHeaders;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import static com.branow.memoweb.controller.response.ResponseWrapper.wrapGet;
 
 public interface UserService extends UserDetailsService {
 
@@ -19,19 +12,19 @@ public interface UserService extends UserDetailsService {
 
     User getByEmail(String email);
 
-    UserDetailsDto getDetailsById(Integer id);
+    UserDetailsDto getDetailsDtoByUserId(Integer id);
 
-    UserPrivateShortDetailsDto getPrivateShortDetailsById(Integer id);
+    UserPrivateShortDetailsDto getPrivateShortDetailsDtoByUserId(Integer id);
 
-    UserPrivateGeneralDetailsDto getPrivateGeneralDetailsById(Integer id);
+    UserPrivateGeneralDetailsDto getPrivateGeneralDetailsDtoByUserId(Integer id);
 
-    UserPublicGeneralDetailsDto getPublicGeneralDetailsById(Integer id);
+    UserPublicGeneralDetailsDto getPublicGeneralDetailsDtoByUserId(Integer id);
 
-    UserDetailsDto getDetailsByJwtToken(String jwtToken);
+    UserDetailsDto getDetailsDtoByJwtToken(String jwtToken);
 
-    UserPrivateShortDetailsDto getPrivateShortDetailsByJwtToken(String jwtToken);
+    UserPrivateShortDetailsDto getPrivateShortDetailsDtoByJwtToken(String jwtToken);
 
-    UserPrivateGeneralDetailsDto getPrivateGeneralDetailsByJwtToken(String jwtToken);
+    UserPrivateGeneralDetailsDto getPrivateGeneralDetailsDtoByJwtToken(String jwtToken);
 
-    void delete(String jwt);
+    void deleteByJwtToken(String jwt);
 }

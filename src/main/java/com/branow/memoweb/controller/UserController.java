@@ -23,7 +23,7 @@ public class UserController {
     public ResponseEntity<?> delete(HttpServletRequest request) {
         return wrapPost(() -> {
             String jwt = new HttpRequestHeaders(request).getJwtToken();
-            userService.delete(jwt);
+            userService.deleteByJwtToken(jwt);
             return "User was deleted successfully";
         });
     }
@@ -40,7 +40,7 @@ public class UserController {
     public ResponseEntity<?> getDetails(HttpServletRequest request) {
         return wrapGet(() -> {
             String jwt = new HttpRequestHeaders(request).getJwtToken();
-            return userService.getDetailsByJwtToken(jwt);
+            return userService.getDetailsDtoByJwtToken(jwt);
         });
     }
 
@@ -48,20 +48,20 @@ public class UserController {
     public ResponseEntity<?> getPrivateShortDetails(HttpServletRequest request) {
         return wrapGet(() -> {
             String jwt = new HttpRequestHeaders(request).getJwtToken();
-            return userService.getPrivateShortDetailsByJwtToken(jwt);
+            return userService.getPrivateShortDetailsDtoByJwtToken(jwt);
         });
     }
 
     @GetMapping("/public-general-details/{id}")
-    public ResponseEntity<?> getPublicGeneralDetails(@PathVariable Integer id) {
-        return wrapGet(() -> userService.getPublicGeneralDetailsById(id));
+    public ResponseEntity<?> getPublicGeneralDetailsByUserId(@PathVariable Integer id) {
+        return wrapGet(() -> userService.getPublicGeneralDetailsDtoByUserId(id));
     }
 
     @GetMapping("/private-general-details")
     public ResponseEntity<?> getPrivateGeneralDetails(HttpServletRequest request) {
         return wrapGet(() -> {
             String jwt = new HttpRequestHeaders(request).getJwtToken();
-            return userService.getPrivateGeneralDetailsByJwtToken(jwt);
+            return userService.getPrivateGeneralDetailsDtoByJwtToken(jwt);
         });
     }
 

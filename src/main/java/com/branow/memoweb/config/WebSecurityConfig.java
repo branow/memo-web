@@ -48,9 +48,7 @@ public class WebSecurityConfig {
             auth.requestMatchers(HttpMethod.POST, "/user").authenticated();
             auth.requestMatchers(HttpMethod.DELETE, "/user").authenticated();
             //Module Controller
-            auth.requestMatchers(HttpMethod.GET, "/module/id-all-by-user-id/*").authenticated();
-            auth.requestMatchers(HttpMethod.GET, "/module/id-with-public-access-all-by-user-id/*").permitAll();
-            auth.requestMatchers(HttpMethod.GET, "/module/simple-by-id/*").permitAll();
+            auth.requestMatchers(HttpMethod.GET, "/module/general-details/*").permitAll();
         });
 
         http.oauth2ResourceServer((oauth) -> oauth.jwt((jwt) -> jwt.jwtAuthenticationConverter(converter)));
