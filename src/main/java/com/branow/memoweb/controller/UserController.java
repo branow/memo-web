@@ -19,6 +19,14 @@ public class UserController {
 
     private final UserService userService;
 
+    @DeleteMapping("")
+    public ResponseEntity<?> delete(HttpServletRequest request) {
+        return wrapPost(() -> {
+            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            userService.delete(jwt);
+            return "User was deleted successfully";
+        });
+    }
 
     @PostMapping("")
     public ResponseEntity<?> save(HttpServletRequest request, @RequestBody UserSaveDto dto) {

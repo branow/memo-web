@@ -82,6 +82,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void delete(String jwt) {
+        repository.deleteById(jwtTokenService.getUserId(jwt));
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return getByEmail(email);
     }

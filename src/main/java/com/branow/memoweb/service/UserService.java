@@ -33,4 +33,5 @@ public interface UserService extends UserDetailsService {
 
     UserPrivateGeneralDetailsDto getPrivateGeneralDetailsByJwtToken(String jwtToken);
 
+    void delete(String jwt);
 }
