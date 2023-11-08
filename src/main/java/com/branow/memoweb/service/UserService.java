@@ -1,5 +1,6 @@
 package com.branow.memoweb.service;
 
+import com.branow.memoweb.dto.user.UserDetailsDto;
 import com.branow.memoweb.dto.user.UserPrivateGeneralDetailsDto;
 import com.branow.memoweb.dto.user.UserPrivateShortDetailsDto;
 import com.branow.memoweb.dto.user.UserPublicGeneralDetailsDto;
@@ -17,6 +18,10 @@ public interface UserService extends UserDetailsService {
     User save(User user);
 
     User getByEmail(String email);
+
+    UserDetailsDto getDetailsByJwtToken(String jwtToken);
+
+    UserDetailsDto getDetailsByEmail(String email);
 
     UserPrivateShortDetailsDto getPrivateShortDetailsByEmail(String email);
 

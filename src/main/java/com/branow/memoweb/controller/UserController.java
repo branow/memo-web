@@ -19,6 +19,15 @@ public class UserController {
 
     private final UserService userService;
 
+
+    @GetMapping("/details")
+    public ResponseEntity<?> getDetails(HttpServletRequest request) {
+        return wrapGet(() -> {
+            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            return userService.getDetailsByJwtToken(jwt);
+        });
+    }
+
     @GetMapping("/private-short-details")
     public ResponseEntity<?> getPrivateShortDetails(HttpServletRequest request) {
         return wrapGet(() -> {

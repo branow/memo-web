@@ -15,6 +15,15 @@ public class UserMapper {
     private final PasswordEncoder passwordEncoder;
 
 
+    public UserDetailsDto toUserDetailsDto(UserDetailsRepositoryDto dto) {
+        return UserDetailsDto.builder()
+                .userId(dto.getUserId())
+                .email(dto.getEmail())
+                .username(dto.getUsername())
+                .description(dto.getDescription())
+                .build();
+    }
+
     public UserPrivateShortDetailsDto toUserPrivateShortDetailsDto(UserPrivateShortDetailsRepositoryDto dto) {
         return UserPrivateShortDetailsDto.builder()
                 .userId(dto.getUserId())

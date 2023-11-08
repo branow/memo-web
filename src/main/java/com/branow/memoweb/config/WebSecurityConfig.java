@@ -43,6 +43,7 @@ public class WebSecurityConfig {
             //User Controller
             auth.requestMatchers(HttpMethod.GET, "/user/private-short-details").authenticated();
             auth.requestMatchers(HttpMethod.GET, "/user/private-general-details").authenticated();
+            auth.requestMatchers(HttpMethod.GET, "/user/details").authenticated();
             auth.requestMatchers(HttpMethod.GET, "/user/public-general-details/*").permitAll();
             //Module Controller
             auth.requestMatchers(HttpMethod.GET, "/module/id-all-by-user-id/*").authenticated();

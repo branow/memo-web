@@ -1,9 +1,6 @@
 package com.branow.memoweb.service.impl;
 
-import com.branow.memoweb.dto.user.UserGeneralDetailsRepositoryDto;
-import com.branow.memoweb.dto.user.UserPrivateGeneralDetailsDto;
-import com.branow.memoweb.dto.user.UserPrivateShortDetailsDto;
-import com.branow.memoweb.dto.user.UserPublicGeneralDetailsDto;
+import com.branow.memoweb.dto.user.*;
 import com.branow.memoweb.exception.entitynotfound.UserNotFoundException;
 import com.branow.memoweb.mapper.UserMapper;
 import com.branow.memoweb.model.User;
@@ -34,8 +31,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDetailsDto getDetailsByJwtToken(String jwtToken) {
+        String email = jwtTokenService.getSubject(jwtToken);
+        return getDetailsByEmail(email);
+    }
+
+    @Override
+    public UserDetailsDto getDetailsByEmail(String email) {
+        return mapper.toUserDetailsDto(repository.findUserDetailsByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("email", email)));
+    }
+
+    @Override
     public UserPrivateShortDetailsDto getPrivateShortDetailsByEmail(String email) {
-        return mapper.toUserPrivateShortDetailsDto(repository.findUserPrivateShortDtoByEmail(email)
+        return mapper.toUserPrivateShortDetailsDto(repository.findUserPrivateShortDetailsByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("email", email)));
     }
 
