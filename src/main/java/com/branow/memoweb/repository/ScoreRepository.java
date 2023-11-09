@@ -16,4 +16,7 @@ public interface ScoreRepository extends JpaRepository<Score, Score.ScoreId> {
     @Query(value = "call get_score_average_params_all_by_collection_id(?1)", nativeQuery = true)
     List<ScoreParamsRepositoryDto> findAverageParamsAllByCollectionId(Integer collectionId);
 
+    @Query(value = "call get_score_params_all_by_flashcard_id(?1)", nativeQuery = true)
+    List<ScoreParamsRepositoryDto> findParamsAllByFlashcardId(Integer flashcardId);
+
 }

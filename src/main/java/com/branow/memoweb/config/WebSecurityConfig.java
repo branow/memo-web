@@ -56,6 +56,8 @@ public class WebSecurityConfig {
             auth.requestMatchers(HttpMethod.GET, "/collection/details/*").permitAll();
             auth.requestMatchers(HttpMethod.POST, "/collection/*").authenticated();
             auth.requestMatchers(HttpMethod.DELETE, "/collection/*").authenticated();
+            //Flashcard Controller
+            auth.requestMatchers(HttpMethod.GET, "/flashcard/details/*").permitAll();
         });
 
         http.oauth2ResourceServer((oauth) -> oauth.jwt((jwt) -> jwt.jwtAuthenticationConverter(converter)));

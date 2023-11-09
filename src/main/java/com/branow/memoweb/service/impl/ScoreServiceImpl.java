@@ -29,4 +29,10 @@ public class ScoreServiceImpl implements ScoreService {
                 .map(mapper::toScoreAggregatedDto).toList();
     }
 
+    @Override
+    public List<ScoreAggregatedDto> getAggregatedDtoAllByFlashcardId(Integer flashcardId) {
+        return repository.findParamsAllByFlashcardId(flashcardId).stream()
+                .map(mapper::toScoreAggregatedDto).toList();
+    }
+
 }
