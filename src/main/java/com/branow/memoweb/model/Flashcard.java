@@ -31,4 +31,6 @@ public class Flashcard {
     @JoinColumn(name = "flashcard")
     private List<Score> scores;
 
+    private Integer collection;
+
 }
