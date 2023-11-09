@@ -20,6 +20,15 @@ public class ModuleController {
     private final ModuleService moduleService;
 
 
+    @DeleteMapping("/{moduleId}")
+    public ResponseEntity<?> deleteByModuleId(HttpServletRequest request, @PathVariable Integer moduleId) {
+        return wrapPost(() -> {
+            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            moduleService.deleteByJwtTokenAndModuleId(jwt, moduleId);
+            return "Module was deleted successfully";
+        });
+    }
+
     @PostMapping("")
     public ResponseEntity<?> save(HttpServletRequest request, @RequestBody ModuleSaveDto dto) {
         return wrapPost(() -> {

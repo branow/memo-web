@@ -39,6 +39,4 @@ public class AuthenticationController {
         return wrapPost(() -> authenticationService.regenerateToken(dto));
     }
 
-
-
 }

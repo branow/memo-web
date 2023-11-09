@@ -51,6 +51,7 @@ public class WebSecurityConfig {
             auth.requestMatchers(HttpMethod.GET, "/module/general-details/*").permitAll();
             auth.requestMatchers(HttpMethod.GET, "/module/details/*").permitAll();
             auth.requestMatchers(HttpMethod.POST, "/module").authenticated();
+            auth.requestMatchers(HttpMethod.DELETE, "/module/*").authenticated();
         });
 
         http.oauth2ResourceServer((oauth) -> oauth.jwt((jwt) -> jwt.jwtAuthenticationConverter(converter)));

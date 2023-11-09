@@ -25,4 +25,5 @@ public interface ModuleService {
 
     List<Module> getAllByUserId(Integer userId);
 
+    void deleteByJwtTokenAndModuleId(String jwt, Integer moduleId);
 }

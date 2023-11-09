@@ -25,4 +25,7 @@ public interface ModuleRepository extends JpaRepository<Module, Integer> {
 
     @Query("select m from Module m where m.user = ?1")
     List<Module> findAllByUserId(Integer userId);
+
+    @Query("select m.user from Module m where m.moduleId = ?1")
+    Optional<Integer> findUserByModuleId(Integer moduleId);
 }

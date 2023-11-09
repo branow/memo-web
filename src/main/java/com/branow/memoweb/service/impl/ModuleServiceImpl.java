@@ -14,6 +14,7 @@ import com.branow.memoweb.service.ScoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -69,6 +70,17 @@ public class ModuleServiceImpl implements ModuleService {
     @Override
     public List<Module> getAllByUserId(Integer userId) {
         return repository.findAllByUserId(userId);
+    }
+
+    @Override
+    public void deleteByJwtTokenAndModuleId(String jwtToken, Integer moduleId) {
+        Integer userId = jwtTokenService.getUserId(jwtToken);
+        Integer ownerId = repository.findUserByModuleId(moduleId)
+                .orElseThrow(() -> new ModuleNotFoundException("id", moduleId));
+        if (!userId.equals(ownerId)) {
+            throw new IllegalStateException("Jwt Token belongs to another User than Module");
+        }
+        repository.deleteById(moduleId);
     }
 
 }
