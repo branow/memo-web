@@ -69,7 +69,7 @@ public class ModuleServiceImpl implements ModuleService {
 
     @Override
     public List<Module> getAllByUserId(Integer userId) {
-        return repository.findAllByUserId(userId);
+        return repository.findAllByUser(userId);
     }
 
     @Override

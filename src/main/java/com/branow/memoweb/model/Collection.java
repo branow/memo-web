@@ -25,4 +25,6 @@ public class Collection {
     @JoinColumn(name = "collection")
     private List<Flashcard> flashCards;
 
+    private Integer module;
+
 }

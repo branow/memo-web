@@ -1,17 +1,12 @@
 package com.branow.memoweb.service.impl;
 
-import com.branow.memoweb.dto.collection.CollectionDetailsDto;
-import com.branow.memoweb.dto.collection.CollectionGeneralDetailsDto;
-import com.branow.memoweb.dto.collection.CollectionShortDetailsDto;
-import com.branow.memoweb.dto.collection.CollectionShortDetailsRepositoryDto;
+import com.branow.memoweb.dto.collection.*;
 import com.branow.memoweb.dto.score.ScoreAggregatedDto;
 import com.branow.memoweb.exception.entitynotfound.CollectionNotFoundException;
 import com.branow.memoweb.mapper.CollectionMapper;
 import com.branow.memoweb.model.Collection;
 import com.branow.memoweb.repository.CollectionRepository;
-import com.branow.memoweb.service.CollectionService;
-import com.branow.memoweb.service.FlashcardService;
-import com.branow.memoweb.service.ScoreService;
+import com.branow.memoweb.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +20,7 @@ public class CollectionServiceImpl implements CollectionService {
     private final CollectionMapper mapper;
     private final ScoreService scoreService;
     private final FlashcardService flashcardService;
+    private final JwtBelongingChecker jwtBelongingChecker;
 
     @Override
     public List<CollectionShortDetailsDto> getShortDetailsDtoAllByModuleId(Integer moduleId) {
@@ -41,7 +37,7 @@ public class CollectionServiceImpl implements CollectionService {
 
     @Override
     public List<Collection> getAllByModuleId(Integer moduleId) {
-        return repository.findAllByModuleId(moduleId);
+        return repository.findAllByModule(moduleId);
     }
 
     @Override
@@ -51,6 +47,12 @@ public class CollectionServiceImpl implements CollectionService {
         List<ScoreAggregatedDto> scores = scoreService.getAggregatedDtoAllByCollectionId(collectionId);
         List<Integer> flashcardIds = flashcardService.getFlashcardIdAllByCollectionId(collectionId);
         return mapper.toCollectionDetailsDto(dto, scores, flashcardIds);
+    }
+
+    @Override
+    public CollectionSaveDto saveByModuleIdWithJwtCheck(String jwt, Integer moduleId, CollectionSaveDto dto) {
+        jwtBelongingChecker.moduleBelongToOrThrow(jwt, moduleId);
+        return mapper.toCollectionSaveDto(repository.save(mapper.toCollection(dto, moduleId)));
     }
 
 }

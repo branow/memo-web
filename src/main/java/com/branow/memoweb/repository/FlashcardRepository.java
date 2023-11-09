@@ -11,4 +11,6 @@ public interface FlashcardRepository extends JpaRepository<Flashcard, Integer> {
     @Query("select f.flashcardId from Flashcard f where f.collection = ?1")
     List<Integer> findFlashcardIdAllByCollectionId(Integer collectionId);
 
+    List<Flashcard> findAllByCollection(Integer collectionId);
+
 }

@@ -1,5 +1,6 @@
 package com.branow.memoweb.service.impl;
 
+import com.branow.memoweb.model.Flashcard;
 import com.branow.memoweb.repository.FlashcardRepository;
 import com.branow.memoweb.service.FlashcardService;
 import lombok.RequiredArgsConstructor;
@@ -16,5 +17,10 @@ public class FlashcardServiceImpl implements FlashcardService {
     @Override
     public List<Integer> getFlashcardIdAllByCollectionId(Integer collectionId) {
         return repository.findFlashcardIdAllByCollectionId(collectionId);
+    }
+
+    @Override
+    public List<Flashcard> getAllByCollectionId(Integer collectionId) {
+        return repository.findAllByCollection(collectionId);
     }
 }

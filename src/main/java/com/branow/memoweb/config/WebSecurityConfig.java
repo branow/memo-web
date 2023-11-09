@@ -54,6 +54,7 @@ public class WebSecurityConfig {
             auth.requestMatchers(HttpMethod.DELETE, "/module/*").authenticated();
             //Collection Controller
             auth.requestMatchers(HttpMethod.GET, "/collection/details/*").permitAll();
+            auth.requestMatchers(HttpMethod.POST, "/collection/*").authenticated();
         });
 
         http.oauth2ResourceServer((oauth) -> oauth.jwt((jwt) -> jwt.jwtAuthenticationConverter(converter)));

@@ -23,8 +23,7 @@ public interface ModuleRepository extends JpaRepository<Module, Integer> {
     @Query(value = "call get_module_short_details_by_module_id(?1)", nativeQuery = true)
     Optional<ModuleShortDetailsRepositoryDto> findShortDetailsByModuleId(Integer id);
 
-    @Query("select m from Module m where m.user = ?1")
-    List<Module> findAllByUserId(Integer userId);
+    List<Module> findAllByUser(Integer userId);
 
     @Query("select m.user from Module m where m.moduleId = ?1")
     Optional<Integer> findUserByModuleId(Integer moduleId);
