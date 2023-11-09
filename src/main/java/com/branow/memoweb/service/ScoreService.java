@@ -9,6 +9,8 @@ import java.util.List;
 @Service
 public interface ScoreService {
 
+    List<Score> getAllByFlashcardId(Integer flashcardId);
+
     List<ScoreAggregatedDto> getAggregatedDtoAllByModuleId(Integer moduleId);
 
     List<ScoreAggregatedDto> getAggregatedDtoAllByCollectionId(Integer collectionId);

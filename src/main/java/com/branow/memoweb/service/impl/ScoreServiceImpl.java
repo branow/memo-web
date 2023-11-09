@@ -2,6 +2,7 @@ package com.branow.memoweb.service.impl;
 
 import com.branow.memoweb.dto.score.ScoreAggregatedDto;
 import com.branow.memoweb.mapper.ScoreMapper;
+import com.branow.memoweb.model.Score;
 import com.branow.memoweb.repository.ScoreRepository;
 import com.branow.memoweb.service.ScoreService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,11 @@ public class ScoreServiceImpl implements ScoreService {
     private final ScoreRepository repository;
     private final ScoreMapper mapper;
 
+
+    @Override
+    public List<Score> getAllByFlashcardId(Integer flashcardId) {
+        return repository.findAllByFlashcard(flashcardId);
+    }
 
     @Override
     public List<ScoreAggregatedDto> getAggregatedDtoAllByModuleId(Integer moduleId) {

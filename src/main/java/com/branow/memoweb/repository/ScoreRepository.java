@@ -10,6 +10,9 @@ import java.util.List;
 
 public interface ScoreRepository extends JpaRepository<Score, Score.ScoreId> {
 
+    @Query("select s from Score s where s.scoreId.flashcard = ?1")
+    List<Score> findAllByFlashcard(Integer flashcardId);
+
     @Query(value = "call get_score_average_params_all_by_module_id(?1)", nativeQuery = true)
     List<ScoreParamsRepositoryDto> findAverageParamsAllByModuleId(Integer moduleId);
 
