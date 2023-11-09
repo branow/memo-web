@@ -20,4 +20,6 @@ public interface CollectionService {
     CollectionDetailsDto getDetailsDtoByCollectionId(Integer collectionId);
 
     CollectionSaveDto saveByModuleIdWithJwtCheck(String jwt, Integer moduleId, CollectionSaveDto dto);
+
+    void deleteByCollectionIdWithJwtCheck(String jwt, Integer collectionId);
 }

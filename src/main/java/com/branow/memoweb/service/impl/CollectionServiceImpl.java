@@ -55,4 +55,10 @@ public class CollectionServiceImpl implements CollectionService {
         return mapper.toCollectionSaveDto(repository.save(mapper.toCollection(dto, moduleId)));
     }
 
+    @Override
+    public void deleteByCollectionIdWithJwtCheck(String jwt, Integer collectionId) {
+        jwtBelongingChecker.collectionBelongToOrThrow(jwt, collectionId);
+        repository.deleteById(collectionId);
+    }
+
 }

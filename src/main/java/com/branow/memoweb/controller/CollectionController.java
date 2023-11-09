@@ -19,6 +19,15 @@ public class CollectionController {
     private final CollectionService collectionService;
 
 
+    @DeleteMapping("/{collectionId}")
+    public ResponseEntity<?> delete(HttpServletRequest request, @PathVariable Integer collectionId) {
+        return wrapGet(() -> {
+            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            collectionService.deleteByCollectionIdWithJwtCheck(jwt, collectionId);
+            return "Collection was deleted successfully";
+        });
+    }
+
     @PostMapping("/{moduleId}")
     public ResponseEntity<?> save(HttpServletRequest request, @PathVariable Integer moduleId, @RequestBody CollectionSaveDto dto) {
         return wrapGet(() -> {

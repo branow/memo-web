@@ -1,7 +1,9 @@
 package com.branow.memoweb.service.impl;
 
 import com.branow.memoweb.exception.JwtIllegalSubjectException;
+import com.branow.memoweb.exception.entitynotfound.CollectionNotFoundException;
 import com.branow.memoweb.exception.entitynotfound.ModuleNotFoundException;
+import com.branow.memoweb.repository.CollectionRepository;
 import com.branow.memoweb.repository.ModuleRepository;
 import com.branow.memoweb.service.JwtBelongingChecker;
 import com.branow.memoweb.service.JwtService;
@@ -14,6 +16,7 @@ public class JwtBelongingCheckerImpl implements JwtBelongingChecker {
 
     private final JwtService jwtService;
     private final ModuleRepository moduleRepository;
+    private final CollectionRepository collectionRepository;
 
 
     @Override
@@ -31,6 +34,13 @@ public class JwtBelongingCheckerImpl implements JwtBelongingChecker {
     }
 
     @Override
+    public void collectionBelongToOrThrow(String jwt, Integer collectionId) {
+        if (!collectionBelongTo(jwt, collectionId)) {
+            throw new JwtIllegalSubjectException("Jwt subject is not matching the given collection id");
+        }
+    }
+
+    @Override
     public boolean belongTo(String jwt, Integer userId) {
         return jwtService.hasSubject(jwt, userId.toString());
     }
@@ -39,6 +49,12 @@ public class JwtBelongingCheckerImpl implements JwtBelongingChecker {
     public boolean moduleBelongTo(String jwt, Integer moduleId) {
         return belongTo(jwt, moduleRepository.findUserByModuleId(moduleId)
                 .orElseThrow(() -> new ModuleNotFoundException("id", moduleId)));
+    }
+
+    @Override
+    public boolean collectionBelongTo(String jwt, Integer collectionId) {
+        return moduleBelongTo(jwt, collectionRepository.findModuleByCollectionId(collectionId)
+                .orElseThrow(() -> new CollectionNotFoundException("id", collectionId)));
     }
 
     @Override
