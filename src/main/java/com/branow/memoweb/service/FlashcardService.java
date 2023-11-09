@@ -14,4 +14,6 @@ public interface FlashcardService {
     FlashcardDetailsDto getDetailsDtoByFlashcardId(Integer flashcardId);
 
     FlashcardSaveDto saveByCollectionIdWithJwtCheck(String jwt, Integer collectionId, FlashcardSaveDto dto);
+
+    void deleteByFlashcardIdWithJwtCheck(String jwt, Integer flashcardId);
 }

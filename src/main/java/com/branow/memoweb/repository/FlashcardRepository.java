@@ -10,6 +10,9 @@ import java.util.Optional;
 
 public interface FlashcardRepository extends JpaRepository<Flashcard, Integer> {
 
+    @Query("select f.collection from Flashcard f where f.flashcardId = ?1")
+    Optional<Integer> findCollectionByFlashcardId(Integer flashcardId);
+
     @Query("select f.flashcardId from Flashcard f where f.collection = ?1")
     List<Integer> findFlashcardIdAllByCollectionId(Integer collectionId);
 

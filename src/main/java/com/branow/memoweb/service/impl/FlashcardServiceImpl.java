@@ -28,6 +28,7 @@ public class FlashcardServiceImpl implements FlashcardService {
     private final FormattedTextService formattedTextService;
     private final JwtBelongingChecker jwtBelongingChecker;
 
+
     @Override
     public List<Integer> getFlashcardIdAllByCollectionId(Integer collectionId) {
         return repository.findFlashcardIdAllByCollectionId(collectionId);
@@ -58,5 +59,11 @@ public class FlashcardServiceImpl implements FlashcardService {
             dto.setFrontSide(formattedTextService.createEmpty().getTextId());
         }
         return mapper.toFlashcardSaveDto(repository.save(mapper.toFlashcard(dto, collectionId)));
+    }
+
+    @Override
+    public void deleteByFlashcardIdWithJwtCheck(String jwt, Integer flashcardId) {
+        jwtBelongingChecker.flashcardBelongToOrThrow(jwt, flashcardId);
+        repository.deleteById(flashcardId);
     }
 }

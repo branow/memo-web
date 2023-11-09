@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.service.annotation.DeleteExchange;
 
 import static com.branow.memoweb.controller.response.ResponseWrapper.wrapGet;
 
@@ -19,6 +20,16 @@ public class FlashcardController {
 
     private final FlashcardService flashcardService;
 
+
+    @DeleteMapping("/{flashcardId}")
+    public ResponseEntity<?> save(HttpServletRequest request, @PathVariable Integer flashcardId) {
+        return wrapGet(() -> {
+            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            flashcardService.deleteByFlashcardIdWithJwtCheck(jwt, flashcardId);
+            return "Flashcard was deleted successfully";
+        });
+    }
+
     @PostMapping("/{collectionId}")
     public ResponseEntity<?> save(HttpServletRequest request, @PathVariable Integer collectionId, @RequestBody FlashcardSaveDto dto) {
         return wrapGet(() -> {
@@ -26,7 +37,6 @@ public class FlashcardController {
             return flashcardService.saveByCollectionIdWithJwtCheck(jwt, collectionId, dto);
         });
     }
-
 
     @GetMapping("details/{flashcardId}")
     public ResponseEntity<?> getDetailsByFlashcardId(@PathVariable Integer flashcardId) {
