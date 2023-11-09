@@ -13,7 +13,7 @@ public interface ModuleService {
 
     ModuleSaveDto saveByUserId(Integer userId, ModuleSaveDto dto);
 
-    ModuleSaveDto saveByJwtToken(String jwtToken, ModuleSaveDto dto);
+    ModuleSaveDto saveToJwtUser(String jwtToken, ModuleSaveDto dto);
 
     ModuleDetailsDto getDetailsDtoByModuleId(Integer id);
 
@@ -25,5 +25,5 @@ public interface ModuleService {
 
     List<Module> getAllByUserId(Integer userId);
 
-    void deleteByJwtTokenAndModuleId(String jwt, Integer moduleId);
+    void deleteByModuleIdWithJwtCheck(String jwt, Integer moduleId);
 }

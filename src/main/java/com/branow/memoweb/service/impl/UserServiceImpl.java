@@ -1,11 +1,13 @@
 package com.branow.memoweb.service.impl;
 
 import com.branow.memoweb.dto.user.*;
-import com.branow.memoweb.exception.JwtTokenIllegalSubjectException;
+import com.branow.memoweb.exception.JwtIllegalSubjectException;
 import com.branow.memoweb.exception.entitynotfound.UserNotFoundException;
 import com.branow.memoweb.mapper.UserMapper;
 import com.branow.memoweb.model.User;
 import com.branow.memoweb.repository.UserRepository;
+import com.branow.memoweb.service.JwtBelongingChecker;
+import com.branow.memoweb.service.JwtService;
 import com.branow.memoweb.service.ModuleService;
 import com.branow.memoweb.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +24,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository repository;
     private final UserMapper mapper;
 
-    private final JwtTokenService jwtTokenService;
+    private final JwtBelongingChecker jwtBelongingChecker;
     private final ModuleService moduleService;
 
     public User getById(Integer id) {
@@ -37,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetailsDto getDetailsDtoByJwtToken(String jwtToken) {
-        Integer id = jwtTokenService.getUserId(jwtToken);
+        Integer id = jwtBelongingChecker.getUserId(jwtToken);
         return getDetailsDtoByUserId(id);
     }
 
@@ -71,19 +73,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserPrivateShortDetailsDto getPrivateShortDetailsDtoByJwtToken(String jwtToken) {
-        Integer id = jwtTokenService.getUserId(jwtToken);
+        Integer id = jwtBelongingChecker.getUserId(jwtToken);
         return getPrivateShortDetailsDtoByUserId(id);
     }
 
     @Override
     public UserPrivateGeneralDetailsDto getPrivateGeneralDetailsDtoByJwtToken(String jwtToken) {
-        Integer id = jwtTokenService.getUserId(jwtToken);
+        Integer id = jwtBelongingChecker.getUserId(jwtToken);
         return getPrivateGeneralDetailsDtoByUserId(id);
     }
 
     @Override
     public void deleteByJwtToken(String jwt) {
-        repository.deleteById(jwtTokenService.getUserId(jwt));
+        repository.deleteById(jwtBelongingChecker.getUserId(jwt));
     }
 
     @Override
@@ -95,10 +97,7 @@ public class UserServiceImpl implements UserService {
     public UserSaveDto save(String jwt, UserSaveDto dto) {
         if (dto == null || dto.getUserId() == null)
             throw new IllegalStateException("User or User id is null");
-        if (!jwtTokenService.hasUserId(jwt, dto.getUserId())) {
-            throw new JwtTokenIllegalSubjectException("Jwt token has another subject");
-        }
-
+        jwtBelongingChecker.belongToOrThrow(jwt, dto.getUserId());
         User oldUser = getById(dto.getUserId());
         User saved = repository.save(mapper.toUser(dto, oldUser.getPassword(), oldUser.isEnabled()));
         return mapper.toUserSaveDto(saved);

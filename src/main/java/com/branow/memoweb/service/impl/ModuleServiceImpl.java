@@ -9,12 +9,12 @@ import com.branow.memoweb.mapper.ModuleMapper;
 import com.branow.memoweb.model.Module;
 import com.branow.memoweb.repository.ModuleRepository;
 import com.branow.memoweb.service.CollectionService;
+import com.branow.memoweb.service.JwtBelongingChecker;
 import com.branow.memoweb.service.ModuleService;
 import com.branow.memoweb.service.ScoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -25,7 +25,7 @@ public class ModuleServiceImpl implements ModuleService {
     private final ModuleMapper mapper;
     private final CollectionService collectionService;
     private final ScoreService scoreService;
-    private final JwtTokenService jwtTokenService;
+    private final JwtBelongingChecker jwtBelongingChecker;
 
     @Override
     public ModuleSaveDto saveByUserId(Integer userId, ModuleSaveDto dto) {
@@ -34,8 +34,8 @@ public class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
-    public ModuleSaveDto saveByJwtToken(String jwtToken, ModuleSaveDto dto) {
-        Integer userId = jwtTokenService.getUserId(jwtToken);
+    public ModuleSaveDto saveToJwtUser(String jwt, ModuleSaveDto dto) {
+        Integer userId = jwtBelongingChecker.getUserId(jwt);
         return saveByUserId(userId, dto);
     }
 
@@ -73,13 +73,8 @@ public class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
-    public void deleteByJwtTokenAndModuleId(String jwtToken, Integer moduleId) {
-        Integer userId = jwtTokenService.getUserId(jwtToken);
-        Integer ownerId = repository.findUserByModuleId(moduleId)
-                .orElseThrow(() -> new ModuleNotFoundException("id", moduleId));
-        if (!userId.equals(ownerId)) {
-            throw new IllegalStateException("Jwt Token belongs to another User than Module");
-        }
+    public void deleteByModuleIdWithJwtCheck(String jwt, Integer moduleId) {
+        jwtBelongingChecker.moduleBelongToOrThrow(jwt, moduleId);
         repository.deleteById(moduleId);
     }
 

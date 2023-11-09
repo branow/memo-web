@@ -24,7 +24,7 @@ public class ModuleController {
     public ResponseEntity<?> deleteByModuleId(HttpServletRequest request, @PathVariable Integer moduleId) {
         return wrapPost(() -> {
             String jwt = new HttpRequestHeaders(request).getJwtToken();
-            moduleService.deleteByJwtTokenAndModuleId(jwt, moduleId);
+            moduleService.deleteByModuleIdWithJwtCheck(jwt, moduleId);
             return "Module was deleted successfully";
         });
     }
@@ -33,7 +33,7 @@ public class ModuleController {
     public ResponseEntity<?> save(HttpServletRequest request, @RequestBody ModuleSaveDto dto) {
         return wrapPost(() -> {
             String jwt = new HttpRequestHeaders(request).getJwtToken();
-            return moduleService.saveByJwtToken(jwt, dto);
+            return moduleService.saveToJwtUser(jwt, dto);
         });
     }
 

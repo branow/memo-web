@@ -1,10 +1,8 @@
 package com.branow.memoweb.service.impl;
 
-import com.branow.memoweb.exception.JwtTokenIllegalSubjectException;
 import com.branow.memoweb.model.User;
+import com.branow.memoweb.service.JwtService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Service;
@@ -12,32 +10,19 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class JwtTokenService {
+public class JwtServiceImpl implements JwtService {
 
     private final JwtEncoder jwtEncoder;
     private final JwtDecoder jwtDecoder;
 
 
-    public boolean hasUserId(String token, Integer userId) {
-        return hasSubject(token, userId.toString());
-    }
-
     public boolean hasSubject(String token, String subject) {
         return getSubject(token).equals(subject);
-    }
-
-    public Integer getUserId(String token) {
-        try {
-            return Integer.parseInt(getSubject(token));
-        } catch (NumberFormatException e) {
-            throw new JwtTokenIllegalSubjectException("Token subject is not an integer", e);
-        }
     }
 
     public String getSubject(String token) {
