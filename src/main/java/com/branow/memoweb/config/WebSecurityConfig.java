@@ -60,8 +60,11 @@ public class WebSecurityConfig {
             auth.requestMatchers(HttpMethod.GET, "/flashcard/details/*").permitAll();
             auth.requestMatchers(HttpMethod.POST, "/flashcard/*").authenticated();
             auth.requestMatchers(HttpMethod.DELETE, "/flashcard/*").authenticated();
-            //FormattedText Controller
+            //FormattedTextController
             auth.requestMatchers(HttpMethod.POST, "/formatted-text").authenticated();
+            //MediaController
+            auth.requestMatchers(HttpMethod.GET, "/media/image/*").permitAll();
+            auth.requestMatchers(HttpMethod.GET, "/media/audio/*").permitAll();
         });
 
         http.oauth2ResourceServer((oauth) -> oauth.jwt((jwt) -> jwt.jwtAuthenticationConverter(converter)));

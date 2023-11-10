@@ -13,7 +13,6 @@ public class MediaServiceImpl implements MediaService {
 
     private final MediaRepository repository;
 
-
     @Override
     public Media getByMediaId(Integer mediaId) {
         return repository.findById(mediaId)
