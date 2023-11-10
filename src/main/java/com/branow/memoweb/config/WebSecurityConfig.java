@@ -33,33 +33,35 @@ public class WebSecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
 
         http.authorizeHttpRequests((auth) -> {
-            //Authentication Controller
+            //AuthenticationController
             auth.requestMatchers(HttpMethod.POST, "/register").permitAll();
             auth.requestMatchers(HttpMethod.POST, "/login").permitAll();
             auth.requestMatchers(HttpMethod.POST, "/enable").permitAll();
             auth.requestMatchers(HttpMethod.POST, "/regenerate-token").permitAll();
-            //Email Controller
+            //EmailController
             auth.requestMatchers(HttpMethod.POST, "/email").permitAll();
-            //User Controller
+            //UserController
             auth.requestMatchers(HttpMethod.GET, "/user/public-general-details/*").permitAll();
             auth.requestMatchers(HttpMethod.GET, "/user/private-short-details").authenticated();
             auth.requestMatchers(HttpMethod.GET, "/user/private-general-details").authenticated();
             auth.requestMatchers(HttpMethod.GET, "/user/details").authenticated();
             auth.requestMatchers(HttpMethod.POST, "/user").authenticated();
             auth.requestMatchers(HttpMethod.DELETE, "/user").authenticated();
-            //Module Controller
+            //ModuleController
             auth.requestMatchers(HttpMethod.GET, "/module/general-details/*").permitAll();
             auth.requestMatchers(HttpMethod.GET, "/module/details/*").permitAll();
             auth.requestMatchers(HttpMethod.POST, "/module").authenticated();
             auth.requestMatchers(HttpMethod.DELETE, "/module/*").authenticated();
-            //Collection Controller
+            //CollectionController
             auth.requestMatchers(HttpMethod.GET, "/collection/details/*").permitAll();
             auth.requestMatchers(HttpMethod.POST, "/collection/*").authenticated();
             auth.requestMatchers(HttpMethod.DELETE, "/collection/*").authenticated();
-            //Flashcard Controller
+            //FlashcardController
             auth.requestMatchers(HttpMethod.GET, "/flashcard/details/*").permitAll();
             auth.requestMatchers(HttpMethod.POST, "/flashcard/*").authenticated();
             auth.requestMatchers(HttpMethod.DELETE, "/flashcard/*").authenticated();
+            //FormattedText Controller
+            auth.requestMatchers(HttpMethod.POST, "/formatted-text").authenticated();
         });
 
         http.oauth2ResourceServer((oauth) -> oauth.jwt((jwt) -> jwt.jwtAuthenticationConverter(converter)));

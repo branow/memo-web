@@ -4,9 +4,11 @@ import com.branow.memoweb.exception.EntityNotFoundException;
 import com.branow.memoweb.exception.JwtIllegalSubjectException;
 import com.branow.memoweb.model.Collection;
 import com.branow.memoweb.model.Flashcard;
+import com.branow.memoweb.model.FormattedText;
 import com.branow.memoweb.model.Module;
 import com.branow.memoweb.repository.CollectionRepository;
 import com.branow.memoweb.repository.FlashcardRepository;
+import com.branow.memoweb.repository.FormattedTextRepository;
 import com.branow.memoweb.repository.ModuleRepository;
 import com.branow.memoweb.service.JwtBelongingChecker;
 import com.branow.memoweb.service.JwtService;
@@ -21,6 +23,7 @@ public class JwtBelongingCheckerImpl implements JwtBelongingChecker {
     private final ModuleRepository moduleRepository;
     private final CollectionRepository collectionRepository;
     private final FlashcardRepository flashcardRepository;
+    private final FormattedTextRepository formattedTextRepository;
 
     @Override
     public void belongToOrThrow(String jwt, Integer userId) {
@@ -51,6 +54,13 @@ public class JwtBelongingCheckerImpl implements JwtBelongingChecker {
     }
 
     @Override
+    public void formattedTextBelongToOrThrow(String jwt, Integer textId) {
+        if (!formattedTextBelongTo(jwt, textId)) {
+            throw new JwtIllegalSubjectException("Jwt subject is not matching the given text id");
+        }
+    }
+
+    @Override
     public boolean belongTo(String jwt, Integer userId) {
         return jwtService.hasSubject(jwt, userId.toString());
     }
@@ -71,6 +81,12 @@ public class JwtBelongingCheckerImpl implements JwtBelongingChecker {
     public boolean flashcardBelongTo(String jwt, Integer flashcardId) {
         return collectionBelongTo(jwt, flashcardRepository.findCollectionByFlashcardId(flashcardId)
                 .orElseThrow(() -> new EntityNotFoundException(Flashcard.class, "id", flashcardId)));
+    }
+
+    @Override
+    public boolean formattedTextBelongTo(String jwt, Integer textId) {
+        return flashcardBelongTo(jwt, formattedTextRepository.findFlashcardByTextId(textId)
+                .orElseThrow(() -> new EntityNotFoundException(FormattedText.class, "id", textId)));
     }
 
     @Override

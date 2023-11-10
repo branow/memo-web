@@ -10,6 +10,8 @@ public interface JwtBelongingChecker {
 
     void flashcardBelongToOrThrow(String jwt, Integer flashcardId);
 
+    void formattedTextBelongToOrThrow(String jwt, Integer textId);
+
     boolean belongTo(String jwt, Integer userId);
 
     boolean moduleBelongTo(String jwt, Integer moduleId);
@@ -17,6 +19,8 @@ public interface JwtBelongingChecker {
     boolean collectionBelongTo(String jwt, Integer collectionId);
 
     boolean flashcardBelongTo(String jwt, Integer flashcardId);
+
+    boolean formattedTextBelongTo(String jwt, Integer textId);
 
     Integer getUserId(String jwt);
 
