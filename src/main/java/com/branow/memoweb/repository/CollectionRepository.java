@@ -18,7 +18,4 @@ public interface CollectionRepository extends JpaRepository<Collection, Integer>
 
     List<Collection> findAllByModule(Integer moduleId);
 
-    @Query("select c.module from Collection c where c.collectionId = ?1")
-    Optional<Integer> findModuleByCollectionId(Integer collectionId);
-
 }

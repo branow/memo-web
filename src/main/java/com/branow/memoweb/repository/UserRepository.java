@@ -20,4 +20,16 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(value = "call get_user_general_details_by_user_id(?1)", nativeQuery = true)
     Optional<UserGeneralDetailsRepositoryDto> findUserGeneralDetailsByUserId(Integer userId);
 
+    @Query(value = "call get_user_id_by_module_id(?1)", nativeQuery = true)
+    Optional<Integer> findUserIdByModuleId(Integer moduleId);
+
+    @Query(value = "call get_user_id_by_collection_id(?1)", nativeQuery = true)
+    Optional<Integer> findUserIdByCollectionId(Integer collectionId);
+
+    @Query(value = "call get_user_id_by_flashcard_id(?1)", nativeQuery = true)
+    Optional<Integer> findUserIdByFlashcardId(Integer flashcardId);
+
+    @Query(value = "call get_user_id_by_text_id(?1)", nativeQuery = true)
+    Optional<Integer> findUserIdByTextId(Integer textId);
+
 }

@@ -12,7 +12,4 @@ public interface FormattedTextRepository extends JpaRepository<FormattedText, In
     @Query(value = "call get_formatted_text_general_details_by_text_id(?1)", nativeQuery = true)
     Optional<FormattedTextGeneralDetailsRepositoryDto> findGeneralDetailsByTextId(Integer textId);
 
-    @Query("select fc.flashcardId from Flashcard fc where fc.backSide.textId = ?1 or fc.frontSide.textId = ?1")
-    Optional<Integer> findFlashcardByTextId(Integer textId);
-
 }
