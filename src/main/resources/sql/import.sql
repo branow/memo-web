@@ -47,12 +47,12 @@ load data local infile 'src/main/resources/sql/data/collection.csv'
 
 
 insert into media (media_id, media, format)
-    values (1, load_file('D:/project/java/memo-web/src/main/resources/sql/data/media/1.jpg'), 'jpg'),
-           (2, load_file('D:/project/java/memo-web/src/main/resources/sql/data/media/2.jpg'), 'jpg'),
-           (3, load_file('D:/project/java/memo-web/src/main/resources/sql/data/media/3.jpg'), 'jpg'),
-           (4, load_file('D:/project/java/memo-web/src/main/resources/sql/data/media/4.jpg'), 'jpg'),
-           (5, load_file('D:/project/java/memo-web/src/main/resources/sql/data/media/5.mp3'), 'mp3'),
-           (6, load_file('D:/project/java/memo-web/src/main/resources/sql/data/media/6.mp3'), 'mp3');
+    values (1, load_file('D:/project/java/memo-web/src/main/resources/sql/data/media/1.jpg'), 'JPG'),
+           (2, load_file('D:/project/java/memo-web/src/main/resources/sql/data/media/2.jpg'), 'JPG'),
+           (3, load_file('D:/project/java/memo-web/src/main/resources/sql/data/media/3.jpg'), 'JPG'),
+           (4, load_file('D:/project/java/memo-web/src/main/resources/sql/data/media/4.jpg'), 'JPG'),
+           (5, load_file('D:/project/java/memo-web/src/main/resources/sql/data/media/5.mp3'), 'MP3'),
+           (6, load_file('D:/project/java/memo-web/src/main/resources/sql/data/media/6.mp3'), 'MP3');
 
 
 load data local infile 'src/main/resources/sql/data/formatted_text.csv'

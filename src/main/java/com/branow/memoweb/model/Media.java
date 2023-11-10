@@ -1,5 +1,6 @@
 package com.branow.memoweb.model;
 
+import com.branow.memoweb.model.auxilary.FileType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,5 +19,7 @@ public class Media {
     private Integer mediaId;
     private byte[] media;
     private String hash;
+    @Enumerated(EnumType.STRING)
+    private FileType.Format format;
 
 }
