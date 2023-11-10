@@ -1,6 +1,6 @@
 package com.branow.memoweb.service.impl;
 
-import com.branow.memoweb.exception.entitynotfound.VerificationTokenNotFoundException;
+import com.branow.memoweb.exception.EntityNotFoundException;
 import com.branow.memoweb.model.User;
 import com.branow.memoweb.model.VerificationToken;
 import com.branow.memoweb.repository.VerificationTokenRepository;
@@ -29,7 +29,7 @@ public class VerificationTokenServiceImpl implements VerificationTokenService {
     @Override
     public VerificationToken getByToken(String token) {
         return repository.findVerificationTokenByToken(token)
-                .orElseThrow(() -> new VerificationTokenNotFoundException("token", token));
+                .orElseThrow(() -> new EntityNotFoundException(VerificationToken.class, "token", token));
     }
 
     @Override

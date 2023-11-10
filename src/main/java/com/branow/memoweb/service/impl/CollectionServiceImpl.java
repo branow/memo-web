@@ -2,11 +2,14 @@ package com.branow.memoweb.service.impl;
 
 import com.branow.memoweb.dto.collection.*;
 import com.branow.memoweb.dto.score.ScoreAggregatedDto;
-import com.branow.memoweb.exception.entitynotfound.CollectionNotFoundException;
+import com.branow.memoweb.exception.EntityNotFoundException;
 import com.branow.memoweb.mapper.CollectionMapper;
 import com.branow.memoweb.model.Collection;
 import com.branow.memoweb.repository.CollectionRepository;
-import com.branow.memoweb.service.*;
+import com.branow.memoweb.service.CollectionService;
+import com.branow.memoweb.service.FlashcardService;
+import com.branow.memoweb.service.JwtBelongingChecker;
+import com.branow.memoweb.service.ScoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +46,7 @@ public class CollectionServiceImpl implements CollectionService {
     @Override
     public CollectionDetailsDto getDetailsDtoByCollectionId(Integer collectionId) {
         CollectionShortDetailsRepositoryDto dto = repository.findCollectionShortDetailsDtoByCollectionId(collectionId)
-                .orElseThrow(() -> new CollectionNotFoundException("id", collectionId));
+                .orElseThrow(() -> new EntityNotFoundException(Collection.class, "id", collectionId));
         List<ScoreAggregatedDto> scores = scoreService.getAggregatedDtoAllByCollectionId(collectionId);
         List<Integer> flashcardIds = flashcardService.getFlashcardIdAllByCollectionId(collectionId);
         return mapper.toCollectionDetailsDto(dto, scores, flashcardIds);

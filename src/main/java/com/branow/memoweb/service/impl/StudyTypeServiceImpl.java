@@ -1,8 +1,9 @@
 package com.branow.memoweb.service.impl;
 
 import com.branow.memoweb.dto.studytype.StudyTypeDto;
-import com.branow.memoweb.exception.entitynotfound.StudyTypeNotFoundException;
+import com.branow.memoweb.exception.EntityNotFoundException;
 import com.branow.memoweb.mapper.StudyTypeMapper;
+import com.branow.memoweb.model.StudyType;
 import com.branow.memoweb.model.auxilary.StudyTypeName;
 import com.branow.memoweb.repository.StudyTypeRepository;
 import com.branow.memoweb.service.StudyTypeService;
@@ -19,7 +20,7 @@ public class StudyTypeServiceImpl implements StudyTypeService {
     @Override
     public StudyTypeDto getByStudyName(String studyName) {
         return mapper.toStudyTypeDto(repository.findByStudyName(StudyTypeName.valueOf(studyName))
-                .orElseThrow(() -> new StudyTypeNotFoundException("study type name", studyName)));
+                .orElseThrow(() -> new EntityNotFoundException(StudyType.class, "study type name", studyName)));
     }
 
 }

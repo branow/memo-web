@@ -1,7 +1,7 @@
 package com.branow.memoweb.service.impl;
 
 import com.branow.memoweb.dto.formattedtext.FormattedTextGeneralDetailsDto;
-import com.branow.memoweb.exception.entitynotfound.FormattedTextNotFoundException;
+import com.branow.memoweb.exception.EntityNotFoundException;
 import com.branow.memoweb.mapper.FormattedTextMapper;
 import com.branow.memoweb.model.FormattedText;
 import com.branow.memoweb.repository.FormattedTextRepository;
@@ -20,13 +20,13 @@ public class FormattedTextServiceImpl implements FormattedTextService {
     @Override
     public FormattedText getByTextId(Integer textId) {
         return repository.findById(textId)
-                .orElseThrow(() -> new FormattedTextNotFoundException("id", textId));
+                .orElseThrow(() -> new EntityNotFoundException(FormattedText.class, "id", textId));
     }
 
     @Override
     public FormattedTextGeneralDetailsDto getGeneralDetailsDtoByTextId(Integer textId) {
         return mapper.toFormattedTextGeneralDetailsDto(repository.findGeneralDetailsByTextId(textId)
-                .orElseThrow(() -> new FormattedTextNotFoundException("id", textId)));
+                .orElseThrow(() -> new EntityNotFoundException(FormattedText.class, "id", textId)));
     }
 
     @Override

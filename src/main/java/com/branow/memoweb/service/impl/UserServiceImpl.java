@@ -1,13 +1,11 @@
 package com.branow.memoweb.service.impl;
 
 import com.branow.memoweb.dto.user.*;
-import com.branow.memoweb.exception.JwtIllegalSubjectException;
-import com.branow.memoweb.exception.entitynotfound.UserNotFoundException;
+import com.branow.memoweb.exception.EntityNotFoundException;
 import com.branow.memoweb.mapper.UserMapper;
 import com.branow.memoweb.model.User;
 import com.branow.memoweb.repository.UserRepository;
 import com.branow.memoweb.service.JwtBelongingChecker;
-import com.branow.memoweb.service.JwtService;
 import com.branow.memoweb.service.ModuleService;
 import com.branow.memoweb.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -29,12 +27,12 @@ public class UserServiceImpl implements UserService {
 
     public User getById(Integer id) {
         return repository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("id", id));
+                .orElseThrow(() -> new EntityNotFoundException(User.class, "id", id));
     }
 
     public User getByEmail(String email) {
         return repository.findUserByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("email", email));
+                .orElseThrow(() -> new EntityNotFoundException(User.class, "email", email));
     }
 
     @Override
@@ -46,19 +44,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetailsDto getDetailsDtoByUserId(Integer id) {
         return mapper.toUserDetailsDto(repository.findUserDetailsByUserId(id)
-                .orElseThrow(() -> new UserNotFoundException("id", id)));
+                .orElseThrow(() -> new EntityNotFoundException(User.class, "id", id)));
     }
 
     @Override
     public UserPrivateShortDetailsDto getPrivateShortDetailsDtoByUserId(Integer id) {
         return mapper.toUserPrivateShortDetailsDto(repository.findUserPrivateShortDetailsByUserId(id)
-                .orElseThrow(() -> new UserNotFoundException("id", id)));
+                .orElseThrow(() -> new EntityNotFoundException(User.class, "id", id)));
     }
 
     @Override
     public UserPrivateGeneralDetailsDto getPrivateGeneralDetailsDtoByUserId(Integer id) {
         UserGeneralDetailsRepositoryDto details = repository.findUserGeneralDetailsByUserId(id)
-                .orElseThrow(() -> new UserNotFoundException("id", id));
+                .orElseThrow(() -> new EntityNotFoundException(User.class, "id", id));
         List<Integer> moduleIds = moduleService.getModuleIdAllByUserId(id);
         return mapper.toUserPrivateGeneralDetailsDto(details, moduleIds);
     }
@@ -66,7 +64,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserPublicGeneralDetailsDto getPublicGeneralDetailsDtoByUserId(Integer id) {
         UserGeneralDetailsRepositoryDto details = repository.findUserGeneralDetailsByUserId(id)
-                .orElseThrow(() -> new UserNotFoundException("id", id));
+                .orElseThrow(() -> new EntityNotFoundException(User.class, "id", id));
         List<Integer> moduleIds = moduleService.getModuleIdWithPublicAccessAllByUserId(id);
         return mapper.toUserPublicGeneralDetailsDto(details, moduleIds);
     }

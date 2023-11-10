@@ -5,7 +5,7 @@ import com.branow.memoweb.dto.flashcard.FlashcardSaveDto;
 import com.branow.memoweb.dto.flashcard.FlashcardShortDetailsRepositoryDto;
 import com.branow.memoweb.dto.formattedtext.FormattedTextGeneralDetailsDto;
 import com.branow.memoweb.dto.score.ScoreAggregatedDto;
-import com.branow.memoweb.exception.entitynotfound.FlashcardNotFoundException;
+import com.branow.memoweb.exception.EntityNotFoundException;
 import com.branow.memoweb.mapper.FlashcardMapper;
 import com.branow.memoweb.model.Flashcard;
 import com.branow.memoweb.repository.FlashcardRepository;
@@ -42,7 +42,7 @@ public class FlashcardServiceImpl implements FlashcardService {
     @Override
     public FlashcardDetailsDto getDetailsDtoByFlashcardId(Integer flashcardId) {
         FlashcardShortDetailsRepositoryDto dto = repository.findShortDetailsByFlashcardId(flashcardId)
-                .orElseThrow(() -> new FlashcardNotFoundException("id", flashcardId));
+                .orElseThrow(() -> new EntityNotFoundException(Flashcard.class, "id", flashcardId));
         FormattedTextGeneralDetailsDto front = formattedTextService.getGeneralDetailsDtoByTextId(dto.getFrontSide());
         FormattedTextGeneralDetailsDto back = formattedTextService.getGeneralDetailsDtoByTextId(dto.getBackSide());
         List<ScoreAggregatedDto> scores = scoreService.getAggregatedDtoAllByFlashcardId(flashcardId);

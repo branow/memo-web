@@ -4,7 +4,7 @@ import com.branow.memoweb.dto.collection.CollectionGeneralDetailsDto;
 import com.branow.memoweb.dto.collection.CollectionShortDetailsDto;
 import com.branow.memoweb.dto.module.*;
 import com.branow.memoweb.dto.score.ScoreAggregatedDto;
-import com.branow.memoweb.exception.entitynotfound.ModuleNotFoundException;
+import com.branow.memoweb.exception.EntityNotFoundException;
 import com.branow.memoweb.mapper.ModuleMapper;
 import com.branow.memoweb.model.Module;
 import com.branow.memoweb.repository.ModuleRepository;
@@ -42,7 +42,7 @@ public class ModuleServiceImpl implements ModuleService {
     @Override
     public ModuleDetailsDto getDetailsDtoByModuleId(Integer id) {
         ModuleDetailsRepositoryDto dto = repository.findDetailsByModuleId(id)
-                .orElseThrow(() -> new ModuleNotFoundException("id", id));
+                .orElseThrow(() -> new EntityNotFoundException(Module.class, "id", id));
         List<CollectionGeneralDetailsDto> collections = collectionService.getGeneralDetailsDtoAllByModuleId(id);
         List<ScoreAggregatedDto> scores = scoreService.getAggregatedDtoAllByModuleId(id);
         return mapper.toModuleDetailsDto(dto, collections, scores);
@@ -51,7 +51,7 @@ public class ModuleServiceImpl implements ModuleService {
     @Override
     public ModuleGeneralDetailsDto getGeneralDetailsDtoByModuleId(Integer id) {
         ModuleShortDetailsRepositoryDto dto = repository.findShortDetailsByModuleId(id)
-                .orElseThrow(() -> new ModuleNotFoundException("id", id));
+                .orElseThrow(() -> new EntityNotFoundException(Module.class, "id", id));
         List<CollectionShortDetailsDto> collections = collectionService.getShortDetailsDtoAllByModuleId(id);
         List<ScoreAggregatedDto> scores = scoreService.getAggregatedDtoAllByModuleId(id);
         return mapper.toModuleGeneralDetailsDto(dto, collections, scores);

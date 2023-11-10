@@ -1,12 +1,12 @@
-package com.branow.memoweb.exception.entitynotfound;
+package com.branow.memoweb.exception;
 
 import static com.brano.print.ShortPrint.form;
 
 public class EntityNotFoundException extends RuntimeException {
 
-    public EntityNotFoundException(String entityName, String searchField, Object fieldValue) {
+    public EntityNotFoundException(Class<?> entityClass, String searchField, Object fieldValue) {
         super(form()
-                .and(entityName).sp()
+                .and(entityClass.getSimpleName()).sp()
                 .and("with such").sp()
                 .and(searchField).sp()
                 .and("not found:").sp()

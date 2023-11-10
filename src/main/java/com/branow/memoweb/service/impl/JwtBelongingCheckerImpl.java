@@ -1,9 +1,10 @@
 package com.branow.memoweb.service.impl;
 
+import com.branow.memoweb.exception.EntityNotFoundException;
 import com.branow.memoweb.exception.JwtIllegalSubjectException;
-import com.branow.memoweb.exception.entitynotfound.CollectionNotFoundException;
-import com.branow.memoweb.exception.entitynotfound.FlashcardNotFoundException;
-import com.branow.memoweb.exception.entitynotfound.ModuleNotFoundException;
+import com.branow.memoweb.model.Collection;
+import com.branow.memoweb.model.Flashcard;
+import com.branow.memoweb.model.Module;
 import com.branow.memoweb.repository.CollectionRepository;
 import com.branow.memoweb.repository.FlashcardRepository;
 import com.branow.memoweb.repository.ModuleRepository;
@@ -57,19 +58,19 @@ public class JwtBelongingCheckerImpl implements JwtBelongingChecker {
     @Override
     public boolean moduleBelongTo(String jwt, Integer moduleId) {
         return belongTo(jwt, moduleRepository.findUserByModuleId(moduleId)
-                .orElseThrow(() -> new ModuleNotFoundException("id", moduleId)));
+                .orElseThrow(() -> new EntityNotFoundException(Module.class, "id", moduleId)));
     }
 
     @Override
     public boolean collectionBelongTo(String jwt, Integer collectionId) {
         return moduleBelongTo(jwt, collectionRepository.findModuleByCollectionId(collectionId)
-                .orElseThrow(() -> new CollectionNotFoundException("id", collectionId)));
+                .orElseThrow(() -> new EntityNotFoundException(Collection.class, "id", collectionId)));
     }
 
     @Override
     public boolean flashcardBelongTo(String jwt, Integer flashcardId) {
         return collectionBelongTo(jwt, flashcardRepository.findCollectionByFlashcardId(flashcardId)
-                .orElseThrow(() -> new FlashcardNotFoundException("id", flashcardId)));
+                .orElseThrow(() -> new EntityNotFoundException(Flashcard.class, "id", flashcardId)));
     }
 
     @Override
