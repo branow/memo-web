@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MediaDto {
+public class MediaSaveDto {
 
     private Integer mediaId;
-    private byte[] media;
+    private String mediaUrl;
     private String format;
 
 }

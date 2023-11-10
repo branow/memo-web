@@ -65,6 +65,7 @@ public class WebSecurityConfig {
             //MediaController
             auth.requestMatchers(HttpMethod.GET, "/media/image/*").permitAll();
             auth.requestMatchers(HttpMethod.GET, "/media/audio/*").permitAll();
+            auth.requestMatchers(HttpMethod.POST, "/media").authenticated();
         });
 
         http.oauth2ResourceServer((oauth) -> oauth.jwt((jwt) -> jwt.jwtAuthenticationConverter(converter)));

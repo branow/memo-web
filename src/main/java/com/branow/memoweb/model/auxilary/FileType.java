@@ -2,10 +2,10 @@ package com.branow.memoweb.model.auxilary;
 
 public enum FileType {
 
-    AUDIO(Format.MP3), IMAGE(Format.JPEG, Format.JPG, Format.PNG);
+    AUDIO(Format.MP3), IMAGE(Format.JPEG, Format.JPG, Format.PNG, Format.WEBP);
 
     public enum Format {
-        JPEG, JPG, PNG, MP3;
+        JPEG, JPG, PNG, MP3, WEBP;
     }
 
 

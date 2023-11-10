@@ -18,7 +18,6 @@ public class Media {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer mediaId;
     private byte[] media;
-    private String hash;
     @Enumerated(EnumType.STRING)
     private FileType.Format format;
 
