@@ -1,5 +1,6 @@
 package com.branow.memoweb.service.impl;
 
+import com.branow.memoweb.dto.email.EmailDto;
 import com.branow.memoweb.dto.user.*;
 import com.branow.memoweb.dto.verificationtoken.EmailTokenDto;
 import com.branow.memoweb.dto.verificationtoken.VerificationTokenDto;
@@ -8,12 +9,16 @@ import com.branow.memoweb.mapper.UserMapper;
 import com.branow.memoweb.model.User;
 import com.branow.memoweb.model.VerificationToken;
 import com.branow.memoweb.service.AuthenticationService;
+import com.branow.memoweb.service.EmailSenderService;
 import com.branow.memoweb.service.UserService;
 import com.branow.memoweb.service.VerificationTokenService;
+import com.branow.memoweb.util.RandomPasswordGenerator;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -25,6 +30,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserService userService;
     private final VerificationTokenService verificationTokenService;
     private final JwtServiceImpl jwtTokenService;
+    private final EmailSenderService emailSenderService;
+    private final RandomPasswordGenerator randomPasswordGenerator;
+    private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
     private final AuthenticationManager authenticationManager;
 
@@ -69,5 +77,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return VerificationTokenDto.builder()
                 .token(token.getToken())
                 .build();
+    }
+
+    @Override
+    public void resetPassword(EmailDto dto) throws MessagingException {
+        User user = userService.getByEmail(dto.getReceiver());
+        String password = randomPasswordGenerator.generate();
+        System.out.println("New Password: " + password);
+        user.setPassword(passwordEncoder.encode(password));
+        userService.save(user);
+        dto.setBody(dto.getBody().replace("{PASSWORD}", password));
+        emailSenderService.send(dto);
     }
 }

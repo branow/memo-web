@@ -1,16 +1,19 @@
 package com.branow.memoweb.controller;
 
+import com.branow.memoweb.dto.email.EmailDto;
 import com.branow.memoweb.dto.user.UserLoginDto;
 import com.branow.memoweb.dto.user.UserRegisterDto;
 import com.branow.memoweb.dto.verificationtoken.EmailTokenDto;
 import com.branow.memoweb.dto.verificationtoken.VerificationTokenDto;
 import com.branow.memoweb.service.AuthenticationService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import static com.branow.memoweb.controller.response.ResponseWrapper.*;
+import static com.branow.memoweb.controller.response.ResponseWrapper.wrapPost;
 
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
@@ -38,5 +41,14 @@ public class AuthenticationController {
     public ResponseEntity<?> regenerateToken(@RequestBody EmailTokenDto dto) {
         return wrapPost(() -> authenticationService.regenerateToken(dto));
     }
+
+    @PostMapping("/reset")
+    public ResponseEntity<?> resetPassword(@RequestBody EmailDto dto) {
+        return wrapPost(() -> {
+            authenticationService.resetPassword(dto);
+            return "Success";
+        });
+    }
+
 
 }
