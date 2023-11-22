@@ -1,5 +1,6 @@
 package com.branow.memoweb.controller;
 
+import com.branow.memoweb.dto.user.ChangePasswordDto;
 import com.branow.memoweb.dto.user.UserSaveDto;
 import com.branow.memoweb.service.UserService;
 import com.branow.memoweb.util.HttpRequestHeaders;
@@ -33,6 +34,15 @@ public class UserController {
         return wrapPost(() -> {
             String jwt = new HttpRequestHeaders(request).getJwtToken();
             return userService.save(jwt, dto);
+        });
+    }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(HttpServletRequest request, @RequestBody ChangePasswordDto dto) {
+        return wrapPost(() -> {
+            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            userService.changePassword(jwt, dto);
+            return "Success";
         });
     }
 

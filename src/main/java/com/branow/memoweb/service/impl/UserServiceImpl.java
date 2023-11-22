@@ -11,6 +11,7 @@ import com.branow.memoweb.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper mapper;
 
     private final JwtBelongingChecker jwtBelongingChecker;
+    private final PasswordEncoder passwordEncoder;
     private final ModuleService moduleService;
 
     public User getById(Integer id) {
@@ -76,14 +78,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserPrivateGeneralDetailsDto getPrivateGeneralDetailsDtoByJwtToken(String jwtToken) {
-        Integer id = jwtBelongingChecker.getUserId(jwtToken);
+    public UserPrivateGeneralDetailsDto getPrivateGeneralDetailsDtoByJwtToken(String jwt) {
+        Integer id = jwtBelongingChecker.getUserId(jwt);
         return getPrivateGeneralDetailsDtoByUserId(id);
     }
 
     @Override
     public void deleteByJwtToken(String jwt) {
         repository.deleteById(jwtBelongingChecker.getUserId(jwt));
+    }
+
+    @Override
+    public void changePassword(String jwt, ChangePasswordDto dto) {
+        Integer id = jwtBelongingChecker.getUserId(jwt);
+        User user = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(User.class, "id", id));
+        if (passwordEncoder.matches(dto.getCurrentPassword(), user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(dto.getNewPassword()));
+            repository.save(user);
+        } else {
+            throw new IllegalStateException("Invalid current password");
+        }
     }
 
     @Override

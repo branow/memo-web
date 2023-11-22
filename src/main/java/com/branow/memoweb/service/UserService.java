@@ -27,4 +27,6 @@ public interface UserService extends UserDetailsService {
     UserPrivateGeneralDetailsDto getPrivateGeneralDetailsDtoByJwtToken(String jwtToken);
 
     void deleteByJwtToken(String jwt);
+
+    void changePassword(String jwt, ChangePasswordDto dto);
 }
