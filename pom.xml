@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.branow</groupId>
     <artifactId>memo-web</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2</version>
     <name>memo-web</name>
     <description>memo-web</description>
     <properties>
@@ -21,6 +21,11 @@
             <groupId>com.brano</groupId>
             <artifactId>formatted-print</artifactId>
             <version>1.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.branow</groupId>
+            <artifactId>memo-web-search</artifactId>
+            <version>0.1</version>
         </dependency>
         <dependency>
             <groupId>com.branow</groupId>
