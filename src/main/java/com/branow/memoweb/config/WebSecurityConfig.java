@@ -71,6 +71,8 @@ public class WebSecurityConfig {
             //SearchController
             auth.requestMatchers(HttpMethod.GET, "/search/images/*").authenticated();
             auth.requestMatchers(HttpMethod.GET, "/search/audios/*").authenticated();
+            auth.requestMatchers(HttpMethod.GET, "/search/english-word-senses/*").authenticated();
+            auth.requestMatchers(HttpMethod.GET, "/search/english-word/*").authenticated();
         });
 
         http.oauth2ResourceServer((oauth) -> oauth.jwt((jwt) -> jwt.jwtAuthenticationConverter(converter)));

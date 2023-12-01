@@ -26,4 +26,14 @@ public class SearchController {
         return wrapGet(() -> searcher.searchAudios(phrase));
     }
 
+    @GetMapping("/english-word-senses/{phrase}")
+    public ResponseEntity<?> englishWordSenses(@PathVariable String phrase) {
+        return wrapGet(() -> searcher.searchEnglishWordSenses(phrase));
+    }
+
+    @GetMapping("/english-word/{phrase}")
+    public ResponseEntity<?> englishWords(@PathVariable String phrase) {
+        return wrapGet(() -> searcher.searchEnglishWord(phrase));
+    }
+
 }
