@@ -75,7 +75,7 @@ public class ModuleServiceImpl implements ModuleService {
     @Override
     public void deleteByModuleIdWithJwtCheck(String jwt, Integer moduleId) {
         jwtBelongingChecker.moduleBelongToOrThrow(jwt, moduleId);
-        repository.deleteById(moduleId);
+        repository.deleteByModuleId(moduleId);
     }
 
 }

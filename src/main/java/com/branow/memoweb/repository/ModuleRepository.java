@@ -4,7 +4,9 @@ import com.branow.memoweb.dto.module.ModuleDetailsRepositoryDto;
 import com.branow.memoweb.dto.module.ModuleShortDetailsRepositoryDto;
 import com.branow.memoweb.model.Module;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,5 +26,10 @@ public interface ModuleRepository extends JpaRepository<Module, Integer> {
     Optional<ModuleShortDetailsRepositoryDto> findShortDetailsByModuleId(Integer id);
 
     List<Module> findAllByUser(Integer userId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from module m where m.module_id = ?1", nativeQuery = true)
+    void deleteByModuleId(Integer moduleId);
 
 }
