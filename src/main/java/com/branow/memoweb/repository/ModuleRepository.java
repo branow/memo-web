@@ -25,6 +25,9 @@ public interface ModuleRepository extends JpaRepository<Module, Integer> {
     @Query(value = "call get_module_short_details_by_module_id(?1)", nativeQuery = true)
     Optional<ModuleShortDetailsRepositoryDto> findShortDetailsByModuleId(Integer id);
 
+    @Query(value = "call get_module_short_details_by_collection_id(?1)", nativeQuery = true)
+    Optional<ModuleShortDetailsRepositoryDto> findShortDetailsByCollectionId(Integer collectionId);
+
     List<Module> findAllByUser(Integer userId);
 
     @Transactional

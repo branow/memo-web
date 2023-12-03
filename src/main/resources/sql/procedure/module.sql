@@ -24,6 +24,7 @@ begin
     where m.module_id = p_module_id;
 end &&
 
+
 delimiter &&
 create procedure get_module_details_by_module_id(in p_module_id int)
 begin
@@ -34,4 +35,13 @@ begin
     from module m
              join access_type a on a.access_id = m.access
     where m.module_id = p_module_id;
+end &&
+
+
+delimiter &&
+create procedure get_module_short_details_by_collection_id(in p_collection_id int)
+begin
+    declare v_module_id int;
+    select c.module into v_module_id from collection c where c.collection_id = p_collection_id;
+    call get_module_short_details_by_module_id(v_module_id);
 end &&
