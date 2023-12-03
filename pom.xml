@@ -25,7 +25,7 @@
         <dependency>
             <groupId>com.branow</groupId>
             <artifactId>memo-web-search</artifactId>
-            <version>0.5.1</version>
+            <version>0.5.2</version>
         </dependency>
         <dependency>
             <groupId>com.branow</groupId>

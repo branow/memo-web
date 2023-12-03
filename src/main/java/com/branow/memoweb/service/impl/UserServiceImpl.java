@@ -56,31 +56,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserPrivateGeneralDetailsDto getPrivateGeneralDetailsDtoByUserId(Integer id) {
-        UserGeneralDetailsRepositoryDto details = repository.findUserGeneralDetailsByUserId(id)
-                .orElseThrow(() -> new EntityNotFoundException(User.class, "id", id));
-        List<Integer> moduleIds = moduleService.getModuleIdAllByUserId(id);
-        return mapper.toUserPrivateGeneralDetailsDto(details, moduleIds);
-    }
-
-    @Override
-    public UserPublicGeneralDetailsDto getPublicGeneralDetailsDtoByUserId(Integer id) {
-        UserGeneralDetailsRepositoryDto details = repository.findUserGeneralDetailsByUserId(id)
-                .orElseThrow(() -> new EntityNotFoundException(User.class, "id", id));
-        List<Integer> moduleIds = moduleService.getModuleIdWithPublicAccessAllByUserId(id);
-        return mapper.toUserPublicGeneralDetailsDto(details, moduleIds);
+    public UserGeneralDetailsDto getGeneralDetailsDtoByJwtTokenAndUserId(String jwt, Integer userId) {
+        Integer jwtId = jwt != null ? jwtBelongingChecker.getUserId(jwt) : -1;
+        UserGeneralDetailsRepositoryDto details = repository.findUserGeneralDetailsByUserId(userId)
+                .orElseThrow(() -> new EntityNotFoundException(User.class, "id", userId));
+        List<Integer> moduleIds = jwtId.equals(userId) ? moduleService.getModuleIdAllByUserId(userId) :
+                moduleService.getModuleIdWithPublicAccessAllByUserId(userId);
+        return mapper.toUserGeneralDetailsDto(details, moduleIds);
     }
 
     @Override
     public UserPrivateShortDetailsDto getPrivateShortDetailsDtoByJwtToken(String jwtToken) {
         Integer id = jwtBelongingChecker.getUserId(jwtToken);
         return getPrivateShortDetailsDtoByUserId(id);
-    }
-
-    @Override
-    public UserPrivateGeneralDetailsDto getPrivateGeneralDetailsDtoByJwtToken(String jwt) {
-        Integer id = jwtBelongingChecker.getUserId(jwt);
-        return getPrivateGeneralDetailsDtoByUserId(id);
     }
 
     @Override

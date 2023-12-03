@@ -42,9 +42,8 @@ public class WebSecurityConfig {
             //EmailController
             auth.requestMatchers(HttpMethod.POST, "/email").permitAll();
             //UserController
-            auth.requestMatchers(HttpMethod.GET, "/user/public-general-details/*").permitAll();
+            auth.requestMatchers(HttpMethod.GET, "/user/general-details/*").permitAll();
             auth.requestMatchers(HttpMethod.GET, "/user/private-short-details").authenticated();
-            auth.requestMatchers(HttpMethod.GET, "/user/private-general-details").authenticated();
             auth.requestMatchers(HttpMethod.GET, "/user/details").authenticated();
             auth.requestMatchers(HttpMethod.POST, "/user").authenticated();
             auth.requestMatchers(HttpMethod.POST, "/user/change-password").authenticated();

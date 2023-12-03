@@ -57,17 +57,8 @@ public class UserMapper {
                 .build();
     }
 
-    public UserPublicGeneralDetailsDto toUserPublicGeneralDetailsDto(UserGeneralDetailsRepositoryDto dto, List<Integer> moduleIds) {
-        return UserPublicGeneralDetailsDto.builder()
-                .userId(dto.getUserId())
-                .username(dto.getUsername())
-                .description(dto.getDescription())
-                .publicModuleIds(moduleIds)
-                .build();
-    }
-
-    public UserPrivateGeneralDetailsDto toUserPrivateGeneralDetailsDto(UserGeneralDetailsRepositoryDto dto, List<Integer> moduleIds) {
-        return UserPrivateGeneralDetailsDto.builder()
+    public UserGeneralDetailsDto toUserGeneralDetailsDto(UserGeneralDetailsRepositoryDto dto, List<Integer> moduleIds) {
+        return UserGeneralDetailsDto.builder()
                 .userId(dto.getUserId())
                 .username(dto.getUsername())
                 .description(dto.getDescription())

@@ -2,6 +2,7 @@ package com.branow.memoweb.controller;
 
 import com.branow.memoweb.dto.user.ChangePasswordDto;
 import com.branow.memoweb.dto.user.UserSaveDto;
+import com.branow.memoweb.exception.AuthorizationHeaderParsingException;
 import com.branow.memoweb.service.UserService;
 import com.branow.memoweb.util.HttpRequestHeaders;
 import jakarta.servlet.http.HttpServletRequest;
@@ -62,16 +63,15 @@ public class UserController {
         });
     }
 
-    @GetMapping("/public-general-details/{id}")
-    public ResponseEntity<?> getPublicGeneralDetailsByUserId(@PathVariable Integer id) {
-        return wrapGet(() -> userService.getPublicGeneralDetailsDtoByUserId(id));
-    }
-
-    @GetMapping("/private-general-details")
-    public ResponseEntity<?> getPrivateGeneralDetails(HttpServletRequest request) {
+    @GetMapping("/general-details/{userId}")
+    public ResponseEntity<?> getGeneralDetails(@PathVariable Integer userId, HttpServletRequest request) {
         return wrapGet(() -> {
-            String jwt = new HttpRequestHeaders(request).getJwtToken();
-            return userService.getPrivateGeneralDetailsDtoByJwtToken(jwt);
+            String jwt = null;
+            try {
+                jwt = new HttpRequestHeaders(request).getJwtToken();
+            } catch (AuthorizationHeaderParsingException e) {
+            }
+            return userService.getGeneralDetailsDtoByJwtTokenAndUserId(jwt, userId);
         });
     }
 

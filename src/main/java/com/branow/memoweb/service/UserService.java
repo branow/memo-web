@@ -16,17 +16,14 @@ public interface UserService extends UserDetailsService {
 
     UserPrivateShortDetailsDto getPrivateShortDetailsDtoByUserId(Integer id);
 
-    UserPrivateGeneralDetailsDto getPrivateGeneralDetailsDtoByUserId(Integer id);
-
-    UserPublicGeneralDetailsDto getPublicGeneralDetailsDtoByUserId(Integer id);
-
     UserDetailsDto getDetailsDtoByJwtToken(String jwtToken);
 
     UserPrivateShortDetailsDto getPrivateShortDetailsDtoByJwtToken(String jwtToken);
 
-    UserPrivateGeneralDetailsDto getPrivateGeneralDetailsDtoByJwtToken(String jwtToken);
+    UserGeneralDetailsDto getGeneralDetailsDtoByJwtTokenAndUserId(String jwt, Integer userId);
 
     void deleteByJwtToken(String jwt);
 
     void changePassword(String jwt, ChangePasswordDto dto);
+
 }

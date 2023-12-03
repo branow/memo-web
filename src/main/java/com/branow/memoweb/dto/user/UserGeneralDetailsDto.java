@@ -11,11 +11,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserPublicGeneralDetailsDto {
+public class UserGeneralDetailsDto {
 
     private Integer userId;
     private String username;
     private String description;
-    private List<Integer> publicModuleIds;
+    private List<Integer> moduleIds;
 
 }
+
