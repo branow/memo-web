@@ -13,7 +13,7 @@ public class ModuleShortDetailsDto {
 
     private Integer moduleId;
     private String moduleName;
-    private String description;
+    private String shortDescription;
     private String access;
 
 }

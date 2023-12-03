@@ -1,7 +1,11 @@
 package com.branow.memoweb.mapper;
 
 import com.branow.memoweb.dto.collection.*;
+import com.branow.memoweb.dto.module.ModuleShortDetailsDto;
+import com.branow.memoweb.dto.module.ModuleShortDetailsRepositoryDto;
 import com.branow.memoweb.dto.score.ScoreAggregatedDto;
+import com.branow.memoweb.dto.user.UserPublicShortDetailsDto;
+import com.branow.memoweb.dto.user.UserPublicShortDetailsRepositoryDto;
 import com.branow.memoweb.model.Collection;
 import com.branow.memoweb.model.Flashcard;
 import com.branow.memoweb.repository.CollectionRepository;
@@ -37,13 +41,28 @@ public class CollectionMapper {
 
     public CollectionDetailsDto toCollectionDetailsDto(CollectionShortDetailsRepositoryDto dto,
                                                        List<ScoreAggregatedDto> scores,
-                                                       List<Integer> flashcardIds) {
+                                                       List<Integer> flashcardIds,
+                                                       ModuleShortDetailsRepositoryDto moduleDto,
+                                                       UserPublicShortDetailsRepositoryDto ownerDto) {
+        ModuleShortDetailsDto module = ModuleShortDetailsDto.builder()
+                .moduleId(moduleDto.getModuleId())
+                .moduleName(moduleDto.getModuleName())
+                .access(moduleDto.getAccess())
+                .shortDescription(moduleDto.getShortDescription())
+                .build();
+        UserPublicShortDetailsDto owner = UserPublicShortDetailsDto.builder()
+                .userId(ownerDto.getUserId())
+                .shortDescription(ownerDto.getShortDescription())
+                .username(ownerDto.getUsername())
+                .build();
         return CollectionDetailsDto.builder()
                 .collectionId(dto.getCollectionId())
                 .collectionName(dto.getCollectionName())
                 .size(dto.getSize())
                 .flashcardIds(flashcardIds)
                 .scores(scores)
+                .owner(owner)
+                .module(module)
                 .build();
     }
 

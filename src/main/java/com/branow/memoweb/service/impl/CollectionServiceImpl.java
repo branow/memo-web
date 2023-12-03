@@ -1,11 +1,17 @@
 package com.branow.memoweb.service.impl;
 
 import com.branow.memoweb.dto.collection.*;
+import com.branow.memoweb.dto.module.ModuleShortDetailsRepositoryDto;
 import com.branow.memoweb.dto.score.ScoreAggregatedDto;
+import com.branow.memoweb.dto.user.UserPublicShortDetailsDto;
+import com.branow.memoweb.dto.user.UserPublicShortDetailsRepositoryDto;
 import com.branow.memoweb.exception.EntityNotFoundException;
 import com.branow.memoweb.mapper.CollectionMapper;
 import com.branow.memoweb.model.Collection;
+import com.branow.memoweb.model.User;
 import com.branow.memoweb.repository.CollectionRepository;
+import com.branow.memoweb.repository.ModuleRepository;
+import com.branow.memoweb.repository.UserRepository;
 import com.branow.memoweb.service.CollectionService;
 import com.branow.memoweb.service.FlashcardService;
 import com.branow.memoweb.service.JwtBelongingChecker;
@@ -24,6 +30,8 @@ public class CollectionServiceImpl implements CollectionService {
     private final ScoreService scoreService;
     private final FlashcardService flashcardService;
     private final JwtBelongingChecker jwtBelongingChecker;
+    private final UserRepository userRepository;
+    private final ModuleRepository moduleRepository;
 
     @Override
     public List<CollectionShortDetailsDto> getShortDetailsDtoAllByModuleId(Integer moduleId) {
@@ -49,7 +57,11 @@ public class CollectionServiceImpl implements CollectionService {
                 .orElseThrow(() -> new EntityNotFoundException(Collection.class, "id", collectionId));
         List<ScoreAggregatedDto> scores = scoreService.getAggregatedDtoAllByCollectionId(collectionId);
         List<Integer> flashcardIds = flashcardService.getFlashcardIdAllByCollectionId(collectionId);
-        return mapper.toCollectionDetailsDto(dto, scores, flashcardIds);
+        UserPublicShortDetailsRepositoryDto owner = userRepository.findUserPublicShortDetailsByCollectionId(collectionId)
+                .orElseThrow(() -> new EntityNotFoundException(User.class, "collectionId", collectionId));
+        ModuleShortDetailsRepositoryDto module = moduleRepository.findShortDetailsByCollectionId(collectionId)
+                .orElseThrow(() -> new EntityNotFoundException(Module.class, "collectionId", collectionId));
+        return mapper.toCollectionDetailsDto(dto, scores, flashcardIds, module, owner);
     }
 
     @Override
