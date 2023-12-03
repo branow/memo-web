@@ -32,4 +32,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(value = "call get_user_id_by_text_id(?1)", nativeQuery = true)
     Optional<Integer> findUserIdByTextId(Integer textId);
 
+    @Query(value = "call get_user_public_short_details_by_collection_id(?1)", nativeQuery = true)
+    Optional<UserPublicShortDetailsRepositoryDto> findUserPublicShortDetailsByCollectionId(Integer collectionId);
+
 }
