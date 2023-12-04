@@ -1,6 +1,5 @@
 package com.branow.memoweb.controller;
 
-import com.branow.memoweb.dto.media.MediaSaveDto;
 import com.branow.memoweb.service.MediaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +24,6 @@ public class MediaController {
     @GetMapping(value = "/audio/{mediaId}", produces = "audio/mpeg")
     public ResponseEntity<?> getAudioByMediaId(@PathVariable Integer mediaId) {
         return wrapGet(() -> mediaService.getByMediaId(mediaId).getMedia());
-    }
-
-    @PostMapping("")
-    public ResponseEntity<?> save(@RequestBody MediaSaveDto dto) {
-        return wrapGet(() -> mediaService.save(dto));
     }
 
 }

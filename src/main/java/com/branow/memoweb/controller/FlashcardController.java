@@ -36,7 +36,7 @@ public class FlashcardController {
         });
     }
 
-    @GetMapping("details/{flashcardId}")
+    @GetMapping("/details/{flashcardId}")
     public ResponseEntity<?> getDetailsByFlashcardId(@PathVariable Integer flashcardId) {
         return wrapGet(() -> flashcardService.getDetailsDtoByFlashcardId(flashcardId));
     }

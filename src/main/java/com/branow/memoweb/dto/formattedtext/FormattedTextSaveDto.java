@@ -1,6 +1,6 @@
 package com.branow.memoweb.dto.formattedtext;
 
-import com.branow.memoweb.model.auxilary.TextFormat;
+import com.branow.memoweb.dto.media.MediaSaveDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,8 +14,8 @@ public class FormattedTextSaveDto {
 
     private Integer textId;
     private String text;
-    private TextFormat format;
-    private Integer imageId;
-    private Integer audioId;
+    private String format;
+    private MediaSaveDto image;
+    private MediaSaveDto audio;
 
 }

@@ -61,12 +61,9 @@ public class WebSecurityConfig {
             auth.requestMatchers(HttpMethod.GET, "/flashcard/details/*").permitAll();
             auth.requestMatchers(HttpMethod.POST, "/flashcard/*").authenticated();
             auth.requestMatchers(HttpMethod.DELETE, "/flashcard/*").authenticated();
-            //FormattedTextController
-            auth.requestMatchers(HttpMethod.POST, "/formatted-text").authenticated();
             //MediaController
             auth.requestMatchers(HttpMethod.GET, "/media/image/*").permitAll();
             auth.requestMatchers(HttpMethod.GET, "/media/audio/*").permitAll();
-            auth.requestMatchers(HttpMethod.POST, "/media").authenticated();
             //SearchController
             auth.requestMatchers(HttpMethod.GET, "/search/images/*").authenticated();
             auth.requestMatchers(HttpMethod.GET, "/search/audios/*").authenticated();
