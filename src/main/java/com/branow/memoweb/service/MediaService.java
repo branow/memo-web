@@ -10,6 +10,6 @@ public interface MediaService {
 
     MediaDetailsDto getDetailsDtoByMediaId(Integer mediaId);
 
-    MediaDetailsDto save(MediaSaveDto dto);
+    Media save(MediaSaveDto dto);
 
 }

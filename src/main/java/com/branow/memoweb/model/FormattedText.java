@@ -1,9 +1,6 @@
 package com.branow.memoweb.model;
 
 
-import com.branow.memoweb.model.auxilary.TextFormat;
-import com.branow.memoweb.service.TextFormatConverter;
-import com.branow.memoweb.service.impl.TextFormatConverterImpl;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,8 +20,8 @@ public class FormattedText {
 
     private String text;
 
-    @Convert(converter = TextFormatConverterImpl.class)
-    private TextFormat format;
+
+    private String format;
 
     @ManyToOne
     @JoinColumn(name = "image")

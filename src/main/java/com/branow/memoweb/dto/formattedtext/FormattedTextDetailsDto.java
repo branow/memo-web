@@ -1,7 +1,6 @@
 package com.branow.memoweb.dto.formattedtext;
 
 import com.branow.memoweb.dto.media.MediaDetailsDto;
-import com.branow.memoweb.model.auxilary.TextFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,11 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FormattedTextGeneralDetailsDto {
+public class FormattedTextDetailsDto {
 
     private Integer textId;
     private String text;
-    private TextFormat format;
+    private String format;
     private MediaDetailsDto image;
     private MediaDetailsDto audio;
 

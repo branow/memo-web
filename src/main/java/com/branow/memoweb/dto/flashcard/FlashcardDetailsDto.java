@@ -1,6 +1,6 @@
 package com.branow.memoweb.dto.flashcard;
 
-import com.branow.memoweb.dto.formattedtext.FormattedTextGeneralDetailsDto;
+import com.branow.memoweb.dto.formattedtext.FormattedTextDetailsDto;
 import com.branow.memoweb.dto.score.ScoreAggregatedDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,8 +16,8 @@ import java.util.List;
 public class FlashcardDetailsDto {
 
     private Integer flashcardId;
-    private FormattedTextGeneralDetailsDto frontSide;
-    private FormattedTextGeneralDetailsDto backSide;
+    private FormattedTextDetailsDto frontSide;
+    private FormattedTextDetailsDto backSide;
     private List<ScoreAggregatedDto> scores;
 
 }

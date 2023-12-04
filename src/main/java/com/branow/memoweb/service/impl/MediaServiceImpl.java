@@ -2,6 +2,7 @@ package com.branow.memoweb.service.impl;
 
 import com.branow.memoweb.dto.media.MediaDetailsDto;
 import com.branow.memoweb.dto.media.MediaSaveDto;
+import com.branow.memoweb.dto.media.MediaShortDetailsRepositoryDto;
 import com.branow.memoweb.exception.EntityNotFoundException;
 import com.branow.memoweb.mapper.MediaMapper;
 import com.branow.memoweb.model.Media;
@@ -36,7 +37,7 @@ public class MediaServiceImpl implements MediaService {
     }
 
     @Override
-    public MediaDetailsDto save(MediaSaveDto dto) {
+    public Media save(MediaSaveDto dto) {
         try {
             URL url = new URL(dto.getMediaUrl());
             URLConnection conn = url.openConnection();
@@ -48,7 +49,8 @@ public class MediaServiceImpl implements MediaService {
             IOUtils.copy(conn.getInputStream(), baos);
 
             byte[] media = baos.toByteArray();
-            return mapper.toMediaDetailsDto(repository.loadMediaIfNotExist(media, dto.getFormat()));
+            MediaShortDetailsRepositoryDto repositoryDto = repository.loadMediaIfNotExist(media, dto.getFormat());
+            return getByMediaId(repositoryDto.getMediaId());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

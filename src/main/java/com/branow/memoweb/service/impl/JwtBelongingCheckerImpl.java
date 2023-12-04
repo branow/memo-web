@@ -66,19 +66,19 @@ public class JwtBelongingCheckerImpl implements JwtBelongingChecker {
 
     @Override
     public boolean collectionBelongTo(String jwt, Integer collectionId) {
-        return moduleBelongTo(jwt, userRepository.findUserIdByCollectionId(collectionId)
+        return belongTo(jwt, userRepository.findUserIdByCollectionId(collectionId)
                 .orElseThrow(() -> new EntityNotFoundException(Collection.class, "id", collectionId)));
     }
 
     @Override
     public boolean flashcardBelongTo(String jwt, Integer flashcardId) {
-        return collectionBelongTo(jwt, userRepository.findUserIdByFlashcardId(flashcardId)
+        return belongTo(jwt, userRepository.findUserIdByFlashcardId(flashcardId)
                 .orElseThrow(() -> new EntityNotFoundException(Flashcard.class, "id", flashcardId)));
     }
 
     @Override
     public boolean formattedTextBelongTo(String jwt, Integer textId) {
-        return flashcardBelongTo(jwt, userRepository.findUserIdByTextId(textId)
+        return belongTo(jwt, userRepository.findUserIdByTextId(textId)
                 .orElseThrow(() -> new EntityNotFoundException(FormattedText.class, "id", textId)));
     }
 

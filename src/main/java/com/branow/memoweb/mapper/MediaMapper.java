@@ -25,6 +25,13 @@ public class MediaMapper {
     private String serverAddress;
 
 
+    public MediaDetailsDto toMediaDetailsDto(Media entity) {
+        return MediaDetailsDto.builder()
+                .mediaId(entity.getMediaId())
+                .mediaUrl(toMediaUrl(entity.getMediaId(), entity.getFormat()))
+                .build();
+    }
+
     public MediaDetailsDto toMediaDetailsDto(MediaShortDetailsRepositoryDto dto) {
         return MediaDetailsDto.builder()
                 .mediaId(dto.getMediaId())
