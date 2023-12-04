@@ -16,7 +16,9 @@ import com.branow.memoweb.service.FormattedTextService;
 import com.branow.memoweb.service.JwtBelongingChecker;
 import com.branow.memoweb.service.ScoreService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -54,6 +56,14 @@ public class FlashcardServiceImpl implements FlashcardService {
     @Override
     public FlashcardDetailsDto saveByCollectionIdWithJwtCheck(String jwt, Integer collectionId, FlashcardSaveDto dto) {
         jwtBelongingChecker.collectionBelongToOrThrow(jwt, collectionId);
+        if (dto.getFlashcardId() == null) {
+            Flashcard entity = Flashcard.builder()
+                    .collection(collectionId)
+                    .frontSide(FormattedText.builder().text("").build())
+                    .backSide(FormattedText.builder().text("").build())
+                    .build();
+            return mapper.toFlashcardDetailsDto(repository.save(entity), List.of());
+        }
         FormattedText front = formattedTextService.save(dto.getFrontSide());
         FormattedText back = formattedTextService.save(dto.getBackSide());
         List<Score> scores = scoreService.getAllByFlashcardId(dto.getFlashcardId());
@@ -65,6 +75,6 @@ public class FlashcardServiceImpl implements FlashcardService {
     @Override
     public void deleteByFlashcardIdWithJwtCheck(String jwt, Integer flashcardId) {
         jwtBelongingChecker.flashcardBelongToOrThrow(jwt, flashcardId);
-        repository.deleteById(flashcardId);
+        repository.deleteByFlashcardId(flashcardId);
     }
 }

@@ -19,11 +19,11 @@ public class Flashcard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer flashcardId;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "front_side")
     private FormattedText frontSide;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "back_side")
     private FormattedText backSide;
 
