@@ -2,6 +2,7 @@ package com.branow.memoweb.dto.module;
 
 import com.branow.memoweb.dto.collection.CollectionGeneralDetailsDto;
 import com.branow.memoweb.dto.score.ScoreAggregatedDto;
+import com.branow.memoweb.dto.user.UserPublicShortDetailsDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,5 +22,6 @@ public class ModuleDetailsDto {
     private String access;
     private List<CollectionGeneralDetailsDto> collections;
     private List<ScoreAggregatedDto> scores;
+    private UserPublicShortDetailsDto owner;
 
 }

@@ -1,6 +1,11 @@
 package com.branow.memoweb.controller;
 
+import com.branow.memoweb.dto.module.ModuleDetailsDto;
+import com.branow.memoweb.dto.module.ModuleGeneralDetailsDto;
 import com.branow.memoweb.dto.module.ModuleSaveDto;
+import com.branow.memoweb.model.AccessType;
+import com.branow.memoweb.model.auxilary.Access;
+import com.branow.memoweb.service.JwtBelongingChecker;
 import com.branow.memoweb.service.ModuleService;
 import com.branow.memoweb.util.HttpRequestHeaders;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +23,7 @@ import static com.branow.memoweb.controller.response.ResponseWrapper.wrapPost;
 public class ModuleController {
 
     private final ModuleService moduleService;
+    private final JwtBelongingChecker checker;
 
 
     @DeleteMapping("/{moduleId}")
@@ -37,9 +43,21 @@ public class ModuleController {
         });
     }
 
-    @GetMapping("/details/{id}")
-    public ResponseEntity<?> getDetailsByModuleId(@PathVariable Integer id) {
-        return wrapGet(() -> moduleService.getDetailsDtoByModuleId(id));
+    @GetMapping("/details/{moduleId}")
+    public ResponseEntity<?> getDetailsByModuleId(HttpServletRequest request, @PathVariable Integer moduleId) {
+        return wrapGet(() -> {
+            ModuleDetailsDto module = moduleService.getDetailsDtoByModuleId(moduleId);
+            if (module.getAccess().equalsIgnoreCase(Access.PRIVATE.toString())) {
+                String jwt = new HttpRequestHeaders(request).getJwtToken();
+                if (checker.belongTo(jwt, module.getOwner().getUserId())) {
+                    return module;
+                } else {
+                    throw new IllegalStateException("Your cannot see this module");
+                }
+            } else {
+                return module;
+            }
+        });
     }
 
     @GetMapping("/general-details/{id}")

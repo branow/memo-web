@@ -4,6 +4,8 @@ import com.branow.memoweb.dto.collection.CollectionGeneralDetailsDto;
 import com.branow.memoweb.dto.collection.CollectionShortDetailsDto;
 import com.branow.memoweb.dto.module.*;
 import com.branow.memoweb.dto.score.ScoreAggregatedDto;
+import com.branow.memoweb.dto.user.UserPublicShortDetailsDto;
+import com.branow.memoweb.dto.user.UserPublicShortDetailsRepositoryDto;
 import com.branow.memoweb.model.AccessType;
 import com.branow.memoweb.model.Collection;
 import com.branow.memoweb.model.Module;
@@ -45,7 +47,12 @@ public class ModuleMapper {
     }
 
     public ModuleDetailsDto toModuleDetailsDto(ModuleDetailsRepositoryDto module, List<CollectionGeneralDetailsDto> collections,
-                                               List<ScoreAggregatedDto> scores) {
+                                               List<ScoreAggregatedDto> scores, UserPublicShortDetailsRepositoryDto ownerDto) {
+        UserPublicShortDetailsDto owner = UserPublicShortDetailsDto.builder()
+                .username(ownerDto.getUsername())
+                .shortDescription(ownerDto.getShortDescription())
+                .userId(ownerDto.getUserId())
+                .build();
         return ModuleDetailsDto.builder()
                 .moduleId(module.getModuleId())
                 .moduleName(module.getModuleName())
@@ -53,6 +60,7 @@ public class ModuleMapper {
                 .access(module.getAccess())
                 .collections(collections)
                 .scores(scores)
+                .owner(owner)
                 .build();
     }
 

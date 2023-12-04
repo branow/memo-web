@@ -4,10 +4,13 @@ import com.branow.memoweb.dto.collection.CollectionGeneralDetailsDto;
 import com.branow.memoweb.dto.collection.CollectionShortDetailsDto;
 import com.branow.memoweb.dto.module.*;
 import com.branow.memoweb.dto.score.ScoreAggregatedDto;
+import com.branow.memoweb.dto.user.UserPublicShortDetailsRepositoryDto;
 import com.branow.memoweb.exception.EntityNotFoundException;
 import com.branow.memoweb.mapper.ModuleMapper;
 import com.branow.memoweb.model.Module;
+import com.branow.memoweb.model.User;
 import com.branow.memoweb.repository.ModuleRepository;
+import com.branow.memoweb.repository.UserRepository;
 import com.branow.memoweb.service.CollectionService;
 import com.branow.memoweb.service.JwtBelongingChecker;
 import com.branow.memoweb.service.ModuleService;
@@ -26,6 +29,7 @@ public class ModuleServiceImpl implements ModuleService {
     private final CollectionService collectionService;
     private final ScoreService scoreService;
     private final JwtBelongingChecker jwtBelongingChecker;
+    private final UserRepository userRepository;
 
     @Override
     public ModuleSaveDto saveByUserId(Integer userId, ModuleSaveDto dto) {
@@ -40,12 +44,14 @@ public class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
-    public ModuleDetailsDto getDetailsDtoByModuleId(Integer id) {
-        ModuleDetailsRepositoryDto dto = repository.findDetailsByModuleId(id)
-                .orElseThrow(() -> new EntityNotFoundException(Module.class, "id", id));
-        List<CollectionGeneralDetailsDto> collections = collectionService.getGeneralDetailsDtoAllByModuleId(id);
-        List<ScoreAggregatedDto> scores = scoreService.getAggregatedDtoAllByModuleId(id);
-        return mapper.toModuleDetailsDto(dto, collections, scores);
+    public ModuleDetailsDto getDetailsDtoByModuleId(Integer moduleId) {
+        ModuleDetailsRepositoryDto dto = repository.findDetailsByModuleId(moduleId)
+                .orElseThrow(() -> new EntityNotFoundException(Module.class, "id", moduleId));
+        UserPublicShortDetailsRepositoryDto owner = userRepository.findUserPublicShortDetailsByModuleId(moduleId)
+                .orElseThrow(() -> new EntityNotFoundException(User.class, "moduleId", moduleId));
+        List<CollectionGeneralDetailsDto> collections = collectionService.getGeneralDetailsDtoAllByModuleId(moduleId);
+        List<ScoreAggregatedDto> scores = scoreService.getAggregatedDtoAllByModuleId(moduleId);
+        return mapper.toModuleDetailsDto(dto, collections, scores, owner);
     }
 
     @Override
