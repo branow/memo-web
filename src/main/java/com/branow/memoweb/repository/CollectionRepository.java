@@ -11,10 +11,13 @@ import java.util.Optional;
 public interface CollectionRepository extends JpaRepository<Collection, Integer> {
 
     @Query(value = "call get_collection_short_details_all_by_module_id(?1)", nativeQuery = true)
-    List<CollectionShortDetailsRepositoryDto> findCollectionShortDetailsDtoAllByModuleId(Integer moduleId);
+    List<CollectionShortDetailsRepositoryDto> findShortDetailsAllByModuleId(Integer moduleId);
 
     @Query(value = "call get_collection_short_details_by_collection_id(?1)", nativeQuery = true)
-    Optional<CollectionShortDetailsRepositoryDto> findCollectionShortDetailsDtoByCollectionId(Integer collectionId);
+    Optional<CollectionShortDetailsRepositoryDto> findShortDetailsByCollectionId(Integer collectionId);
+
+    @Query(value = "call get_collection_short_details_by_flashcard_id(?1)", nativeQuery = true)
+    Optional<CollectionShortDetailsRepositoryDto> findShortDetailsByFlashcardId(Integer flashcardId);
 
     List<Collection> findAllByModule(Integer moduleId);
 

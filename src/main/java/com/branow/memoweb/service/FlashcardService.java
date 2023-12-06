@@ -1,12 +1,16 @@
 package com.branow.memoweb.service;
 
 import com.branow.memoweb.dto.flashcard.FlashcardDetailsDto;
+import com.branow.memoweb.dto.flashcard.FlashcardLearnContextDto;
 import com.branow.memoweb.dto.flashcard.FlashcardSaveDto;
 import com.branow.memoweb.model.Flashcard;
 
 import java.util.List;
 
 public interface FlashcardService {
+
+    FlashcardLearnContextDto getLearnContextDtoByFlashcardIdAndStudyTypeId(Integer flashcardId, Integer studyTypeId);
+
     List<Integer> getFlashcardIdAllByCollectionId(Integer collectionId);
 
     List<Flashcard> getAllByCollectionId(Integer collectionId);

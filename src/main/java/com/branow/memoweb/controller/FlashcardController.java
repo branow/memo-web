@@ -2,6 +2,7 @@ package com.branow.memoweb.controller;
 
 import com.branow.memoweb.dto.flashcard.FlashcardSaveDto;
 import com.branow.memoweb.service.FlashcardService;
+import com.branow.memoweb.service.JwtBelongingChecker;
 import com.branow.memoweb.util.HttpRequestHeaders;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ import static com.branow.memoweb.controller.response.ResponseWrapper.wrapGet;
 public class FlashcardController {
 
     private final FlashcardService flashcardService;
-
+    private final JwtBelongingChecker belongingChecker;
 
     @DeleteMapping("/{flashcardId}")
     public ResponseEntity<?> delete(HttpServletRequest request, @PathVariable Integer flashcardId) {
@@ -39,6 +40,18 @@ public class FlashcardController {
     @GetMapping("/details/{flashcardId}")
     public ResponseEntity<?> getDetailsByFlashcardId(@PathVariable Integer flashcardId) {
         return wrapGet(() -> flashcardService.getDetailsDtoByFlashcardId(flashcardId));
+    }
+
+    @GetMapping("/learn-context/{flashcardId}/{studyTypeId}")
+    public ResponseEntity<?> getLearnContextByFlashcardIdAndStudyTypeId(
+                                                    HttpServletRequest request,
+                                                    @PathVariable("flashcardId") Integer flashcardId,
+                                                    @PathVariable("studyTypeId") Integer studyTypeId) {
+        return wrapGet(() -> {
+            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            belongingChecker.flashcardBelongToOrThrow(jwt, flashcardId);
+            return flashcardService.getLearnContextDtoByFlashcardIdAndStudyTypeId(flashcardId, studyTypeId);
+        });
     }
 
 }

@@ -1,7 +1,11 @@
 package com.branow.memoweb.mapper;
 
+import com.branow.memoweb.dto.collection.CollectionShortDetailsDto;
+import com.branow.memoweb.dto.collection.CollectionShortDetailsRepositoryDto;
 import com.branow.memoweb.dto.flashcard.*;
 import com.branow.memoweb.dto.formattedtext.FormattedTextDetailsDto;
+import com.branow.memoweb.dto.module.ModuleShortDetailsDto;
+import com.branow.memoweb.dto.module.ModuleShortDetailsRepositoryDto;
 import com.branow.memoweb.dto.score.ScoreAggregatedDto;
 import com.branow.memoweb.model.Flashcard;
 import com.branow.memoweb.model.FormattedText;
@@ -19,6 +23,34 @@ public class FlashcardMapper {
     private final FormattedTextMapper formattedTextMapper;
     private final ScoreMapper scoreMapper;
     private final ScoreCalculatorService scoreCalculatorService;
+
+
+    public FlashcardLearnContextDto toFlashcardLearnContextDto(FlashcardShortDetailsRepositoryDto dto,
+                                                               FormattedTextDetailsDto front,
+                                                               FormattedTextDetailsDto back,
+                                                               ScoreAggregatedDto score,
+                                                               CollectionShortDetailsRepositoryDto collectionDto,
+                                                               ModuleShortDetailsRepositoryDto moduleDto) {
+        ModuleShortDetailsDto module = ModuleShortDetailsDto.builder()
+                .moduleId(moduleDto.getModuleId())
+                .moduleName(moduleDto.getModuleName())
+                .access(moduleDto.getAccess())
+                .shortDescription(moduleDto.getShortDescription())
+                .build();
+        CollectionShortDetailsDto collection = CollectionShortDetailsDto.builder()
+                .collectionId(collectionDto.getCollectionId())
+                .collectionName(collectionDto.getCollectionName())
+                .size(collectionDto.getSize())
+                .build();
+        return FlashcardLearnContextDto.builder()
+                .flashcardId(dto.getFlashcardId())
+                .score(score)
+                .backSide(back)
+                .frontSide(front)
+                .collection(collection)
+                .module(module)
+                .build();
+    }
 
     public FlashcardAggregatedScoreDto toFlashcardAggregatedScoreDto(FlashcardScoreParamsRepositoryDto dto) {
         int score = dto.getScore() != null ? scoreCalculatorService.aggregateScore(scoreMapper.toScoreParamsDto(dto)) : 0;

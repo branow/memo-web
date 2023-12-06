@@ -1,24 +1,29 @@
 package com.branow.memoweb.service.impl;
 
+import com.branow.memoweb.dto.collection.CollectionShortDetailsRepositoryDto;
 import com.branow.memoweb.dto.flashcard.FlashcardDetailsDto;
+import com.branow.memoweb.dto.flashcard.FlashcardLearnContextDto;
 import com.branow.memoweb.dto.flashcard.FlashcardSaveDto;
 import com.branow.memoweb.dto.flashcard.FlashcardShortDetailsRepositoryDto;
 import com.branow.memoweb.dto.formattedtext.FormattedTextDetailsDto;
+import com.branow.memoweb.dto.module.ModuleShortDetailsRepositoryDto;
 import com.branow.memoweb.dto.score.ScoreAggregatedDto;
 import com.branow.memoweb.exception.EntityNotFoundException;
 import com.branow.memoweb.mapper.FlashcardMapper;
+import com.branow.memoweb.model.Collection;
 import com.branow.memoweb.model.Flashcard;
 import com.branow.memoweb.model.FormattedText;
+import com.branow.memoweb.model.Module;
 import com.branow.memoweb.model.Score;
+import com.branow.memoweb.repository.CollectionRepository;
 import com.branow.memoweb.repository.FlashcardRepository;
+import com.branow.memoweb.repository.ModuleRepository;
 import com.branow.memoweb.service.FlashcardService;
 import com.branow.memoweb.service.FormattedTextService;
 import com.branow.memoweb.service.JwtBelongingChecker;
 import com.branow.memoweb.service.ScoreService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,6 +36,8 @@ public class FlashcardServiceImpl implements FlashcardService {
     private final ScoreService scoreService;
     private final FormattedTextService formattedTextService;
     private final JwtBelongingChecker jwtBelongingChecker;
+    private final CollectionRepository collectionRepository;
+    private final ModuleRepository moduleRepository;
 
 
     @Override
@@ -51,6 +58,22 @@ public class FlashcardServiceImpl implements FlashcardService {
         FormattedTextDetailsDto back = formattedTextService.getDetailsDtoByTextId(dto.getBackSide());
         List<ScoreAggregatedDto> scores = scoreService.getAggregatedDtoAllByFlashcardId(flashcardId);
         return mapper.toFlashcardDetailsDto(dto, front, back, scores);
+    }
+
+    @Override
+    public FlashcardLearnContextDto getLearnContextDtoByFlashcardIdAndStudyTypeId(Integer flashcardId, Integer studyTypeId) {
+        FlashcardShortDetailsRepositoryDto dto = repository.findShortDetailsByFlashcardId(flashcardId)
+                .orElseThrow(() -> new EntityNotFoundException(Flashcard.class, "id", flashcardId));
+        FormattedTextDetailsDto front = formattedTextService.getDetailsDtoByTextId(dto.getFrontSide());
+        FormattedTextDetailsDto back = formattedTextService.getDetailsDtoByTextId(dto.getBackSide());
+        ScoreAggregatedDto score = scoreService.getAggregatedDtoByFlashcardIdAndStudyTypeId(flashcardId, studyTypeId);
+        CollectionShortDetailsRepositoryDto collection = collectionRepository
+                .findShortDetailsByFlashcardId(flashcardId)
+                .orElseThrow(() -> new EntityNotFoundException(Collection.class, "flashcard id", flashcardId));
+        ModuleShortDetailsRepositoryDto module = moduleRepository
+                .findShortDetailsByFlashcardId(flashcardId)
+                .orElseThrow(() -> new EntityNotFoundException(Module.class, "flashcard id", flashcardId));
+        return mapper.toFlashcardLearnContextDto(dto, front, back, score, collection, module);
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.branow.memoweb.service.impl;
 import com.branow.memoweb.dto.collection.*;
 import com.branow.memoweb.dto.module.ModuleShortDetailsRepositoryDto;
 import com.branow.memoweb.dto.score.ScoreAggregatedDto;
-import com.branow.memoweb.dto.user.UserPublicShortDetailsDto;
 import com.branow.memoweb.dto.user.UserPublicShortDetailsRepositoryDto;
 import com.branow.memoweb.exception.EntityNotFoundException;
 import com.branow.memoweb.mapper.CollectionMapper;
@@ -35,13 +34,13 @@ public class CollectionServiceImpl implements CollectionService {
 
     @Override
     public List<CollectionShortDetailsDto> getShortDetailsDtoAllByModuleId(Integer moduleId) {
-        return repository.findCollectionShortDetailsDtoAllByModuleId(moduleId).stream()
+        return repository.findShortDetailsAllByModuleId(moduleId).stream()
                 .map(mapper::toCollectionShortDetailsDto).toList();
     }
 
     @Override
     public List<CollectionGeneralDetailsDto> getGeneralDetailsDtoAllByModuleId(Integer moduleId) {
-        return  repository.findCollectionShortDetailsDtoAllByModuleId(moduleId).stream()
+        return  repository.findShortDetailsAllByModuleId(moduleId).stream()
                 .map((e) -> mapper.toCollectionGeneralDetailsDto(e, scoreService.getAggregatedDtoAllByCollectionId(e.getCollectionId())))
                 .toList();
     }
@@ -53,7 +52,7 @@ public class CollectionServiceImpl implements CollectionService {
 
     @Override
     public CollectionDetailsDto getDetailsDtoByCollectionId(Integer collectionId) {
-        CollectionShortDetailsRepositoryDto dto = repository.findCollectionShortDetailsDtoByCollectionId(collectionId)
+        CollectionShortDetailsRepositoryDto dto = repository.findShortDetailsByCollectionId(collectionId)
                 .orElseThrow(() -> new EntityNotFoundException(Collection.class, "id", collectionId));
         List<ScoreAggregatedDto> scores = scoreService.getAggregatedDtoAllByCollectionId(collectionId);
         List<Integer> flashcardIds = flashcardService.getFlashcardIdAllByCollectionId(collectionId);

@@ -19,6 +19,8 @@ public interface ScoreService {
 
     List<ScoreAggregatedDto> getAggregatedDtoAllByFlashcardId(Integer flashcardId);
 
+    ScoreAggregatedDto getAggregatedDtoByFlashcardIdAndStudyTypeId(Integer flashcardId, Integer studyTypeId);
+
     ScoreAggregatedDto setScore(Integer flashcardId, Integer studyTypeId, Integer score);
 
 }
