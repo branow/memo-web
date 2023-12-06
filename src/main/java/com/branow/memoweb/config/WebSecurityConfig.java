@@ -71,6 +71,7 @@ public class WebSecurityConfig {
             auth.requestMatchers(HttpMethod.GET, "/search/english-word/*").authenticated();
             //LearningController
             auth.requestMatchers(HttpMethod.GET, "/learn/*").authenticated();
+            auth.requestMatchers(HttpMethod.POST, "/learn/*/*/*").authenticated();
         });
 
         http.oauth2ResourceServer((oauth) -> oauth.jwt((jwt) -> jwt.jwtAuthenticationConverter(converter)));

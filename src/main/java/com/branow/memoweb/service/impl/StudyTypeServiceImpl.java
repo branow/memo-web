@@ -18,7 +18,13 @@ public class StudyTypeServiceImpl implements StudyTypeService {
     private final StudyTypeMapper mapper;
 
     @Override
-    public StudyTypeDto getByStudyName(String studyName) {
+    public StudyType getByStudyId(Integer studyId) {
+        return repository.findById(studyId)
+                .orElseThrow(() -> new EntityNotFoundException(StudyType.class, "id", studyId));
+    }
+
+    @Override
+    public StudyTypeDto getDtoByStudyName(String studyName) {
         return mapper.toStudyTypeDto(repository.findByStudyName(StudyTypeName.valueOf(studyName))
                 .orElseThrow(() -> new EntityNotFoundException(StudyType.class, "study type name", studyName)));
     }

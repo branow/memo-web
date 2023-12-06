@@ -2,12 +2,12 @@ package com.branow.memoweb.service.impl;
 
 import com.branow.memoweb.dto.flashcard.FlashcardAggregatedScoreDto;
 import com.branow.memoweb.dto.flashcard.FlashcardScoreParamsRepositoryDto;
+import com.branow.memoweb.dto.score.ScoreAggregatedDto;
 import com.branow.memoweb.mapper.FlashcardMapper;
-import com.branow.memoweb.mapper.ScoreMapper;
 import com.branow.memoweb.repository.FlashcardRepository;
 import com.branow.memoweb.service.JwtBelongingChecker;
 import com.branow.memoweb.service.LearningService;
-import com.branow.memoweb.service.ScoreCalculatorService;
+import com.branow.memoweb.service.ScoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +23,7 @@ public class LearningServiceImpl implements LearningService {
     private final JwtBelongingChecker jwtBelongingChecker;
     private final FlashcardRepository flashcardRepository;
     private final FlashcardMapper flashcardMapper;
+    private final ScoreService scoreService;
 
     @Override
     public List<Integer> getFlashcardIdsToLearnWithJwtCheck(String jwt, Integer studyType, List<Integer> collections,
@@ -36,6 +37,12 @@ public class LearningServiceImpl implements LearningService {
             agr = agr.sorted(Comparator.comparing(FlashcardAggregatedScoreDto::getScore));
         }
         return agr.map(FlashcardAggregatedScoreDto::getFlashcardId).toList();
+    }
+
+    @Override
+    public ScoreAggregatedDto setScoreToFlashcardWithJwtCheck(String jwt, Integer flashcardId, Integer studyTypeId, Integer score) {
+        jwtBelongingChecker.flashcardBelongToOrThrow(jwt, flashcardId);
+        return scoreService.setScore(flashcardId, studyTypeId, score);
     }
 
     private List<FlashcardScoreParamsRepositoryDto> getFlashcardScoreAllByCollectionIdAndStudyTypeIdWithJwtCheck(
@@ -68,14 +75,6 @@ public class LearningServiceImpl implements LearningService {
 
         public boolean inScope(int value) {
             return value >= min && value <= max;
-        }
-
-        public int getMin() {
-            return min;
-        }
-
-        public int getMax() {
-            return max;
         }
     }
 

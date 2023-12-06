@@ -37,4 +37,15 @@ public class LearningController {
         });
     }
 
+    @PostMapping("/{flashcardId}/{studyTypeId}/{score}")
+    public ResponseEntity<?> setScoreToFlashcard(HttpServletRequest request,
+                                                 @PathVariable("flashcardId") Integer flashcardId,
+                                                 @PathVariable("studyTypeId") Integer studyTypeId,
+                                                 @PathVariable("score") Integer score) {
+        return wrapGet(() -> {
+            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            return service.setScoreToFlashcardWithJwtCheck(jwt, flashcardId, studyTypeId, score);
+        });
+    }
+
 }
