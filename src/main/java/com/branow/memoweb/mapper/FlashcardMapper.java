@@ -1,13 +1,12 @@
 package com.branow.memoweb.mapper;
 
-import com.branow.memoweb.dto.flashcard.FlashcardDetailsDto;
-import com.branow.memoweb.dto.flashcard.FlashcardSaveDto;
-import com.branow.memoweb.dto.flashcard.FlashcardShortDetailsRepositoryDto;
+import com.branow.memoweb.dto.flashcard.*;
 import com.branow.memoweb.dto.formattedtext.FormattedTextDetailsDto;
 import com.branow.memoweb.dto.score.ScoreAggregatedDto;
 import com.branow.memoweb.model.Flashcard;
 import com.branow.memoweb.model.FormattedText;
 import com.branow.memoweb.model.Score;
+import com.branow.memoweb.service.ScoreCalculatorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +17,16 @@ import java.util.List;
 public class FlashcardMapper {
 
     private final FormattedTextMapper formattedTextMapper;
+    private final ScoreMapper scoreMapper;
+    private final ScoreCalculatorService scoreCalculatorService;
 
+    public FlashcardAggregatedScoreDto toFlashcardAggregatedScoreDto(FlashcardScoreParamsRepositoryDto dto) {
+        int score = dto.getScore() != null ? scoreCalculatorService.aggregateScore(scoreMapper.toScoreParamsDto(dto)) : 0;
+        return FlashcardAggregatedScoreDto.builder()
+                .flashcardId(dto.getFlashcardId())
+                .score(score)
+                .build();
+    }
 
     public Flashcard toFlashcard(FlashcardSaveDto dto, FormattedText front, FormattedText back,
                                  List<Score> scores, Integer collectionId) {

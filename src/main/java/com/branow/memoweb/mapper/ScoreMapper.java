@@ -1,5 +1,6 @@
 package com.branow.memoweb.mapper;
 
+import com.branow.memoweb.dto.flashcard.FlashcardScoreParamsRepositoryDto;
 import com.branow.memoweb.dto.score.ScoreAggregatedDto;
 import com.branow.memoweb.dto.score.ScoreParamsRepositoryDto;
 import com.branow.memoweb.dto.score.ScoreParamsDto;
@@ -27,6 +28,12 @@ public class ScoreMapper {
                 .build();
     }
 
+    public ScoreParamsDto toScoreParamsDto(FlashcardScoreParamsRepositoryDto dto) {
+        return ScoreParamsDto.builder()
+                .resetTime(dto.getResetTime())
+                .lastScore(toScoreSingleDto(dto))
+                .build();
+    }
 
     public ScoreParamsDto toScoreParamsDto(ScoreParamsRepositoryDto baseDto) {
         return ScoreParamsDto.builder()
@@ -39,6 +46,13 @@ public class ScoreMapper {
         return ScoreSingleDto.builder()
                 .score(baseDto.getScore())
                 .time(baseDto.getStudyTime())
+                .build();
+    }
+
+    public ScoreSingleDto toScoreSingleDto(FlashcardScoreParamsRepositoryDto dto) {
+        return ScoreSingleDto.builder()
+                .score(dto.getScore())
+                .time(dto.getStudyTime())
                 .build();
     }
 
