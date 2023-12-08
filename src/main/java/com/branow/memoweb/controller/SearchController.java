@@ -1,0 +1,27 @@
+package com.branow.memoweb.controller;
+
+import com.branow.memoweb.service.SearchService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import static com.branow.memoweb.controller.response.ResponseWrapper.wrapGet;
+
+@RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/search")
+@RestController
+public class SearchController {
+
+    private final SearchService service;
+
+    @GetMapping("/user/{query}/{page-number}")
+    public ResponseEntity<?> searchUserAllByQuery(@PathVariable("query") String query,
+                                                  @PathVariable("page-number") Integer pageNumber) {
+        return wrapGet(() -> {
+            String preparedQuery = query.replaceAll("-", " ");
+            return service.searchUserAllByQuery(preparedQuery, pageNumber);
+        });
+    }
+
+}
