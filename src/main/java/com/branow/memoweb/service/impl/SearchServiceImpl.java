@@ -1,5 +1,6 @@
 package com.branow.memoweb.service.impl;
 
+import com.branow.memoweb.dto.search.ModuleSearchingDto;
 import com.branow.memoweb.dto.search.UserSearchingDto;
 import com.branow.memoweb.mapper.SearchMapper;
 import com.branow.memoweb.repository.SearchRepository;
@@ -23,5 +24,14 @@ public class SearchServiceImpl implements SearchService {
         return repository.searchUserAllByQuery(query, pageNumber, PAGE_SIZE)
                 .map(mapper::toUserSearchingDto);
     }
+
+    @Override
+    public Page<ModuleSearchingDto> searchModuleAllByQuery(String query, Integer pageNumber) {
+        if (query.isEmpty() || query.isBlank())
+            throw new IllegalArgumentException("Query must not be empty or black");
+        return repository.searchModuleAllByQuery(query, pageNumber, PAGE_SIZE)
+                .map(mapper::toModuleSearchingDto);
+    }
+
 
 }

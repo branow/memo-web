@@ -24,4 +24,13 @@ public class SearchController {
         });
     }
 
+    @GetMapping("/module/{query}/{page-number}")
+    public ResponseEntity<?> searchModuleAllByQuery(@PathVariable("query") String query,
+                                                  @PathVariable("page-number") Integer pageNumber) {
+        return wrapGet(() -> {
+            String preparedQuery = query.replaceAll("-", " ");
+            return service.searchModuleAllByQuery(preparedQuery, pageNumber);
+        });
+    }
+
 }

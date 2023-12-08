@@ -75,6 +75,7 @@ public class WebSecurityConfig {
             auth.requestMatchers(HttpMethod.POST, "/learn/*/*/*").authenticated();
             //SearchController
             auth.requestMatchers(HttpMethod.GET, "/search/user/*/*").permitAll();
+            auth.requestMatchers(HttpMethod.GET, "/search/module/*/*").permitAll();
         });
 
         http.oauth2ResourceServer((oauth) -> oauth.jwt((jwt) -> jwt.jwtAuthenticationConverter(converter)));
