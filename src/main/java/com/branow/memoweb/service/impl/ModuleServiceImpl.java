@@ -7,6 +7,8 @@ import com.branow.memoweb.dto.score.ScoreAggregatedDto;
 import com.branow.memoweb.dto.user.UserPublicShortDetailsRepositoryDto;
 import com.branow.memoweb.exception.EntityNotFoundException;
 import com.branow.memoweb.mapper.ModuleMapper;
+import com.branow.memoweb.model.Collection;
+import com.branow.memoweb.model.Flashcard;
 import com.branow.memoweb.model.Module;
 import com.branow.memoweb.model.User;
 import com.branow.memoweb.repository.ModuleRepository;
@@ -30,6 +32,27 @@ public class ModuleServiceImpl implements ModuleService {
     private final ScoreService scoreService;
     private final JwtBelongingChecker jwtBelongingChecker;
     private final UserRepository userRepository;
+
+    @Override
+    public Module getByModuleId(Integer moduleId) {
+        return repository.findById(moduleId)
+                .orElseThrow(() -> new EntityNotFoundException(Module.class, "id", moduleId));
+    }
+
+    @Override
+    public Module save(Module module) {
+        List<Collection> collections = module.getCollections();
+        module.setCollections(List.of());
+        repository.save(module);
+        if (collections != null) {
+            for (Collection collection: collections) {
+                collection.setModule(module.getModuleId());
+                collectionService.save(collection);
+            }
+        }
+        module.setCollections(collections);
+        return module;
+    }
 
     @Override
     public ModuleSaveDto saveByUserId(Integer userId, ModuleSaveDto dto) {

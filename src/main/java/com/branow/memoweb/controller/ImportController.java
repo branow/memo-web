@@ -2,6 +2,7 @@ package com.branow.memoweb.controller;
 
 import com.branow.memoweb.service.ImportService;
 import com.branow.memoweb.service.JwtBelongingChecker;
+import com.branow.memoweb.service.JwtService;
 import com.branow.memoweb.util.HttpRequestHeaders;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,20 @@ public class ImportController {
     private final JwtBelongingChecker belongingChecker;
 
 
+    @PostMapping("/module/{module-id}")
+    public ResponseEntity<?> importCollection(HttpServletRequest request,
+                                              @PathVariable("module-id") Integer moduleId) {
+        return wrapPost(() -> {
+            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            Integer targetUserId = belongingChecker.getUserId(jwt);
+            if (belongingChecker.moduleBelongTo(jwt, moduleId)) {
+                throw new IllegalStateException("User cannot import own module: " + moduleId);
+            }
+            service.importModule(moduleId, targetUserId);
+            return "Module was imported successfully";
+        });
+    }
+
     @PostMapping("/collection/{collection-id}/{target-module-id}")
     public ResponseEntity<?> importCollection(HttpServletRequest request,
                                              @PathVariable("collection-id") Integer collectionId,
@@ -27,7 +42,7 @@ public class ImportController {
         return wrapPost(() -> {
             String jwt = new HttpRequestHeaders(request).getJwtToken();
             belongingChecker.moduleBelongToOrThrow(jwt, targetModuleId);
-            if (belongingChecker.flashcardBelongTo(jwt, collectionId)) {
+            if (belongingChecker.collectionBelongTo(jwt, collectionId)) {
                 throw new IllegalStateException("User cannot import own collection: " + collectionId);
             }
             service.importCollection(collectionId, targetModuleId);

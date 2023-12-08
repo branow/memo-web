@@ -6,4 +6,6 @@ public interface ImportService {
 
     void importCollection(Integer collectionId, Integer targetModuleId);
 
+    void importModule(Integer moduleId, Integer targetUserId);
+
 }

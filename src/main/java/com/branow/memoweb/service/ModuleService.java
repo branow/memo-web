@@ -11,6 +11,10 @@ import java.util.List;
 @Service
 public interface ModuleService {
 
+    Module getByModuleId(Integer moduleId);
+
+    Module save(Module module);
+
     ModuleSaveDto saveByUserId(Integer userId, ModuleSaveDto dto);
 
     ModuleSaveDto saveToJwtUser(String jwtToken, ModuleSaveDto dto);
