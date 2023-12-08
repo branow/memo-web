@@ -76,6 +76,9 @@ public class WebSecurityConfig {
             //SearchController
             auth.requestMatchers(HttpMethod.GET, "/search/user/*/*").permitAll();
             auth.requestMatchers(HttpMethod.GET, "/search/module/*/*").permitAll();
+            //ImportController
+            auth.requestMatchers(HttpMethod.POST, "/import/flashcard/*/*").authenticated();
+
         });
 
         http.oauth2ResourceServer((oauth) -> oauth.jwt((jwt) -> jwt.jwtAuthenticationConverter(converter)));

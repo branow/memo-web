@@ -61,6 +61,17 @@ public class FlashcardServiceImpl implements FlashcardService {
     }
 
     @Override
+    public Flashcard getByFlashcardId(Integer flashcardId) {
+        return repository.findById(flashcardId)
+                .orElseThrow(() -> new EntityNotFoundException(Flashcard.class, "id", flashcardId));
+    }
+
+    @Override
+    public Flashcard save(Flashcard flashcard) {
+        return repository.save(flashcard);
+    }
+
+    @Override
     public FlashcardLearnContextDto getLearnContextDtoByFlashcardIdAndStudyTypeId(Integer flashcardId, Integer studyTypeId) {
         FlashcardShortDetailsRepositoryDto dto = repository.findShortDetailsByFlashcardId(flashcardId)
                 .orElseThrow(() -> new EntityNotFoundException(Flashcard.class, "id", flashcardId));

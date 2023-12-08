@@ -9,6 +9,10 @@ import java.util.List;
 
 public interface FlashcardService {
 
+    Flashcard getByFlashcardId(Integer flashcardId);
+
+    Flashcard save(Flashcard flashcard);
+
     FlashcardLearnContextDto getLearnContextDtoByFlashcardIdAndStudyTypeId(Integer flashcardId, Integer studyTypeId);
 
     List<Integer> getFlashcardIdAllByCollectionId(Integer collectionId);
