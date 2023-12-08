@@ -1,6 +1,6 @@
 package com.branow.memoweb.service;
 
-import com.branow.memoweb.dto.search.EnglishBuiltWord;
+import com.branow.memoweb.dto.websearch.EnglishBuiltWord;
 import com.branow.memowebsearch.WebContainer;
 import com.branow.memowebsearch.search.items.EnglishWordSenseUnit;
 

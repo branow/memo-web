@@ -1,4 +1,4 @@
-package com.branow.memoweb.dto.search;
+package com.branow.memoweb.dto.websearch;
 
 import com.branow.memowebsearch.search.items.EnglishPartWord;
 import lombok.AllArgsConstructor;

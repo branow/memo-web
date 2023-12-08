@@ -9,9 +9,9 @@ import static com.branow.memoweb.controller.response.ResponseWrapper.wrapGet;
 
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/search")
+@RequestMapping("/web-search")
 @RestController
-public class SearchController {
+public class WebSearchController {
 
     private final WebSearcher searcher;
 

@@ -65,14 +65,16 @@ public class WebSecurityConfig {
             //MediaController
             auth.requestMatchers(HttpMethod.GET, "/media/image/*").permitAll();
             auth.requestMatchers(HttpMethod.GET, "/media/audio/*").permitAll();
-            //SearchController
-            auth.requestMatchers(HttpMethod.GET, "/search/images/*").authenticated();
-            auth.requestMatchers(HttpMethod.GET, "/search/audios/*").authenticated();
-            auth.requestMatchers(HttpMethod.GET, "/search/english-word-senses/*").authenticated();
-            auth.requestMatchers(HttpMethod.GET, "/search/english-word/*").authenticated();
+            //WebSearchController
+            auth.requestMatchers(HttpMethod.GET, "/web-search/images/*").authenticated();
+            auth.requestMatchers(HttpMethod.GET, "/web-search/audios/*").authenticated();
+            auth.requestMatchers(HttpMethod.GET, "/web-search/english-word-senses/*").authenticated();
+            auth.requestMatchers(HttpMethod.GET, "/web-search/english-word/*").authenticated();
             //LearningController
             auth.requestMatchers(HttpMethod.GET, "/learn/*").authenticated();
             auth.requestMatchers(HttpMethod.POST, "/learn/*/*/*").authenticated();
+            //SearchController
+            auth.requestMatchers(HttpMethod.GET, "/search/user/*/*").permitAll();
         });
 
         http.oauth2ResourceServer((oauth) -> oauth.jwt((jwt) -> jwt.jwtAuthenticationConverter(converter)));

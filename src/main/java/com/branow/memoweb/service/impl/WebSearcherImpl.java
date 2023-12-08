@@ -1,7 +1,7 @@
 package com.branow.memoweb.service.impl;
 
-import com.branow.memoweb.dto.search.EnglishBuiltWord;
-import com.branow.memoweb.mapper.SearchMapper;
+import com.branow.memoweb.dto.websearch.EnglishBuiltWord;
+import com.branow.memoweb.mapper.WebSearchMapper;
 import com.branow.memoweb.service.WebSearcher;
 import com.branow.memowebsearch.WebContainer;
 import com.branow.memowebsearch.search.OxfordLearnersDictionariesSearcher;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WebSearcherImpl implements WebSearcher {
 
-    private final SearchMapper mapper;
+    private final WebSearchMapper mapper;
 
     @Override
     public List<WebContainer<String>> searchImages(String phrase) {
