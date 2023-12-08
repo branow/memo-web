@@ -7,6 +7,7 @@ import com.branow.memoweb.dto.user.UserPublicShortDetailsRepositoryDto;
 import com.branow.memoweb.exception.EntityNotFoundException;
 import com.branow.memoweb.mapper.CollectionMapper;
 import com.branow.memoweb.model.Collection;
+import com.branow.memoweb.model.Flashcard;
 import com.branow.memoweb.model.User;
 import com.branow.memoweb.repository.CollectionRepository;
 import com.branow.memoweb.repository.ModuleRepository;
@@ -31,6 +32,27 @@ public class CollectionServiceImpl implements CollectionService {
     private final JwtBelongingChecker jwtBelongingChecker;
     private final UserRepository userRepository;
     private final ModuleRepository moduleRepository;
+
+    @Override
+    public Collection getByCollectionId(Integer collectionId) {
+        return repository.findById(collectionId)
+                .orElseThrow(() -> new EntityNotFoundException(Collection.class, "id", collectionId));
+    }
+
+    @Override
+    public Collection save(Collection collection) {
+        List<Flashcard> flashcards = collection.getFlashcards();
+        collection.setFlashcards(List.of());
+        repository.save(collection);
+        if (flashcards != null) {
+            for (Flashcard flashcard: flashcards) {
+                flashcard.setCollection(collection.getCollectionId());
+                flashcardService.save(flashcard);
+            }
+        }
+        collection.setFlashcards(flashcards);
+        return collection;
+    }
 
     @Override
     public List<CollectionShortDetailsDto> getShortDetailsDtoAllByModuleId(Integer moduleId) {

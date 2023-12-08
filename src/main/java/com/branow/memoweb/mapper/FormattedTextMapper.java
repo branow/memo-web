@@ -29,6 +29,7 @@ public class FormattedTextMapper {
     }
 
     public FormattedText toFormattedText(FormattedTextSaveDto dto, Media audio, Media image) {
+
         return FormattedText.builder()
                 .textId(dto.getTextId())
                 .text(dto.getText())

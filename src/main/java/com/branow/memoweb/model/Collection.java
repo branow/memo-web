@@ -21,10 +21,10 @@ public class Collection {
 
     private String collectionName;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "collection")
-    private List<Flashcard> flashCards;
+    private List<Flashcard> flashcards;
 
-    private Integer module;
+    private Integer module;/***/
 
 }

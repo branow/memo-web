@@ -11,6 +11,11 @@ import java.util.List;
 
 @Service
 public interface CollectionService {
+
+    Collection getByCollectionId(Integer collectionId);
+
+    Collection save(Collection collection);
+
     List<CollectionShortDetailsDto> getShortDetailsDtoAllByModuleId(Integer moduleId);
 
     List<CollectionGeneralDetailsDto> getGeneralDetailsDtoAllByModuleId(Integer moduleId);
@@ -22,4 +27,5 @@ public interface CollectionService {
     CollectionSaveDto saveByModuleIdWithJwtCheck(String jwt, Integer moduleId, CollectionSaveDto dto);
 
     void deleteByCollectionIdWithJwtCheck(String jwt, Integer collectionId);
+
 }

@@ -34,7 +34,7 @@ public class CollectionMapper {
         return Collection.builder()
                 .collectionId(dto.getCollectionId())
                 .collectionName(dto.getCollectionName())
-                .flashCards(flashcards)
+                .flashcards(flashcards)
                 .module(moduleId)
                 .build();
     }

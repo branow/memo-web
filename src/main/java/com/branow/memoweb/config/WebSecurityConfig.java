@@ -78,6 +78,7 @@ public class WebSecurityConfig {
             auth.requestMatchers(HttpMethod.GET, "/search/module/*/*").permitAll();
             //ImportController
             auth.requestMatchers(HttpMethod.POST, "/import/flashcard/*/*").authenticated();
+            auth.requestMatchers(HttpMethod.POST, "/import/collection/*/*").authenticated();
 
         });
 

@@ -20,6 +20,21 @@ public class ImportController {
     private final JwtBelongingChecker belongingChecker;
 
 
+    @PostMapping("/collection/{collection-id}/{target-module-id}")
+    public ResponseEntity<?> importCollection(HttpServletRequest request,
+                                             @PathVariable("collection-id") Integer collectionId,
+                                             @PathVariable("target-module-id") Integer targetModuleId) {
+        return wrapPost(() -> {
+            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            belongingChecker.moduleBelongToOrThrow(jwt, targetModuleId);
+            if (belongingChecker.flashcardBelongTo(jwt, collectionId)) {
+                throw new IllegalStateException("User cannot import own collection: " + collectionId);
+            }
+            service.importCollection(collectionId, targetModuleId);
+            return "Collection was imported successfully";
+        });
+    }
+
     @PostMapping("/flashcard/{flashcard-id}/{target-collection-id}")
     public ResponseEntity<?> importFlashcard(HttpServletRequest request,
                                              @PathVariable("flashcard-id") Integer flashcardId,
@@ -31,7 +46,7 @@ public class ImportController {
                 throw new IllegalStateException("User cannot import own flashcard: " + flashcardId);
             }
             service.importFlashcard(flashcardId, collectionId);
-            return "Import was done successfully";
+            return "Flashcard was imported successfully";
         });
     }
 
