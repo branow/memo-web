@@ -22,7 +22,18 @@ public class ModuleMapper {
 
     private final CollectionService collectionService;
     private final AccessTypeService accessTypeService;
+    private final CollectionMapper collectionMapper;
 
+
+    public ModuleCollectionDto toModuleCollectionDto(Module module) {
+        List<CollectionShortDetailsDto> collections = module.getCollections().stream()
+                .map(collectionMapper::toCollectionShortDetailsDto).toList();
+        return ModuleCollectionDto.builder()
+                .moduleId(module.getModuleId())
+                .moduleName(module.getModuleName())
+                .collections(collections)
+                .build();
+    }
 
     public ModuleSaveDto toModuleSaveDto(Module module) {
         return ModuleSaveDto.builder()

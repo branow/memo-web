@@ -2,7 +2,6 @@ package com.branow.memoweb.controller;
 
 import com.branow.memoweb.service.ImportService;
 import com.branow.memoweb.service.JwtBelongingChecker;
-import com.branow.memoweb.service.JwtService;
 import com.branow.memoweb.util.HttpRequestHeaders;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,7 @@ public class ImportController {
     public ResponseEntity<?> importCollection(HttpServletRequest request,
                                               @PathVariable("module-id") Integer moduleId) {
         return wrapPost(() -> {
-            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            String jwt = new HttpRequestHeaders(request).getJwt();
             Integer targetUserId = belongingChecker.getUserId(jwt);
             if (belongingChecker.moduleBelongTo(jwt, moduleId)) {
                 throw new IllegalStateException("User cannot import own module: " + moduleId);
@@ -40,7 +39,7 @@ public class ImportController {
                                              @PathVariable("collection-id") Integer collectionId,
                                              @PathVariable("target-module-id") Integer targetModuleId) {
         return wrapPost(() -> {
-            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            String jwt = new HttpRequestHeaders(request).getJwt();
             belongingChecker.moduleBelongToOrThrow(jwt, targetModuleId);
             if (belongingChecker.collectionBelongTo(jwt, collectionId)) {
                 throw new IllegalStateException("User cannot import own collection: " + collectionId);
@@ -55,7 +54,7 @@ public class ImportController {
                                              @PathVariable("flashcard-id") Integer flashcardId,
                                              @PathVariable("target-collection-id") Integer collectionId) {
         return wrapPost(() -> {
-            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            String jwt = new HttpRequestHeaders(request).getJwt();
             belongingChecker.collectionBelongToOrThrow(jwt, collectionId);
             if (belongingChecker.flashcardBelongTo(jwt, flashcardId)) {
                 throw new IllegalStateException("User cannot import own flashcard: " + flashcardId);

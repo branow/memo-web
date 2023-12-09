@@ -22,7 +22,7 @@ public class CollectionController {
     @DeleteMapping("/{collectionId}")
     public ResponseEntity<?> delete(HttpServletRequest request, @PathVariable Integer collectionId) {
         return wrapGet(() -> {
-            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            String jwt = new HttpRequestHeaders(request).getJwt();
             collectionService.deleteByCollectionIdWithJwtCheck(jwt, collectionId);
             return "Collection was deleted successfully";
         });
@@ -31,7 +31,7 @@ public class CollectionController {
     @PostMapping("/{moduleId}")
     public ResponseEntity<?> save(HttpServletRequest request, @PathVariable Integer moduleId, @RequestBody CollectionSaveDto dto) {
         return wrapGet(() -> {
-            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            String jwt = new HttpRequestHeaders(request).getJwt();
             return collectionService.saveByModuleIdWithJwtCheck(jwt, moduleId, dto);
         });
     }

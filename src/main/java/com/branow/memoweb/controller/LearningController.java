@@ -27,7 +27,7 @@ public class LearningController {
                                                     @RequestParam("sort") String sort,
                                                     @RequestParam("levels") String levels) {
         return wrapGet(() -> {
-            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            String jwt = new HttpRequestHeaders(request).getJwt();
             List<Integer> collectionsList = Arrays.stream(collections.split(","))
                     .map(Integer::parseInt).toList();
             boolean sortBool = Boolean.parseBoolean(sort);
@@ -43,7 +43,7 @@ public class LearningController {
                                                  @PathVariable("studyTypeId") Integer studyTypeId,
                                                  @PathVariable("score") Integer score) {
         return wrapGet(() -> {
-            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            String jwt = new HttpRequestHeaders(request).getJwt();
             return service.setScoreToFlashcardWithJwtCheck(jwt, flashcardId, studyTypeId, score);
         });
     }

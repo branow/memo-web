@@ -22,6 +22,14 @@ public class CollectionMapper {
     private final FlashcardService flashcardService;
 
 
+    public CollectionShortDetailsDto toCollectionShortDetailsDto(Collection collection) {
+        return CollectionShortDetailsDto.builder()
+                .size(collection.getFlashcards().size())
+                .collectionName(collection.getCollectionName())
+                .collectionId(collection.getCollectionId())
+                .build();
+    }
+
     public CollectionSaveDto toCollectionSaveDto(Collection collection) {
         return CollectionSaveDto.builder()
                 .collectionId(collection.getCollectionId())

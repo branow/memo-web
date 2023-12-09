@@ -23,7 +23,7 @@ public class FlashcardController {
     @DeleteMapping("/{flashcardId}")
     public ResponseEntity<?> delete(HttpServletRequest request, @PathVariable Integer flashcardId) {
         return wrapGet(() -> {
-            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            String jwt = new HttpRequestHeaders(request).getJwt();
             flashcardService.deleteByFlashcardIdWithJwtCheck(jwt, flashcardId);
             return "Flashcard was deleted successfully";
         });
@@ -32,7 +32,7 @@ public class FlashcardController {
     @PostMapping("/{collectionId}")
     public ResponseEntity<?> save(HttpServletRequest request, @PathVariable Integer collectionId, @RequestBody FlashcardSaveDto dto) {
         return wrapGet(() -> {
-            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            String jwt = new HttpRequestHeaders(request).getJwt();
             return flashcardService.saveByCollectionIdWithJwtCheck(jwt, collectionId, dto);
         });
     }
@@ -48,7 +48,7 @@ public class FlashcardController {
                                                     @PathVariable("flashcardId") Integer flashcardId,
                                                     @PathVariable("studyTypeId") Integer studyTypeId) {
         return wrapGet(() -> {
-            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            String jwt = new HttpRequestHeaders(request).getJwt();
             belongingChecker.flashcardBelongToOrThrow(jwt, flashcardId);
             return flashcardService.getLearnContextDtoByFlashcardIdAndStudyTypeId(flashcardId, studyTypeId);
         });

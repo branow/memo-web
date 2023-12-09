@@ -24,7 +24,7 @@ public class UserController {
     @DeleteMapping("")
     public ResponseEntity<?> delete(HttpServletRequest request) {
         return wrapPost(() -> {
-            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            String jwt = new HttpRequestHeaders(request).getJwt();
             userService.deleteByJwtToken(jwt);
             return "User was deleted successfully";
         });
@@ -33,7 +33,7 @@ public class UserController {
     @PostMapping("")
     public ResponseEntity<?> save(HttpServletRequest request, @RequestBody UserSaveDto dto) {
         return wrapPost(() -> {
-            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            String jwt = new HttpRequestHeaders(request).getJwt();
             return userService.save(jwt, dto);
         });
     }
@@ -41,7 +41,7 @@ public class UserController {
     @PostMapping("/change-password")
     public ResponseEntity<?> changePassword(HttpServletRequest request, @RequestBody ChangePasswordDto dto) {
         return wrapPost(() -> {
-            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            String jwt = new HttpRequestHeaders(request).getJwt();
             userService.changePassword(jwt, dto);
             return "Success";
         });
@@ -50,7 +50,7 @@ public class UserController {
     @GetMapping("/details")
     public ResponseEntity<?> getDetails(HttpServletRequest request) {
         return wrapGet(() -> {
-            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            String jwt = new HttpRequestHeaders(request).getJwt();
             return userService.getDetailsDtoByJwtToken(jwt);
         });
     }
@@ -58,7 +58,7 @@ public class UserController {
     @GetMapping("/private-short-details")
     public ResponseEntity<?> getPrivateShortDetails(HttpServletRequest request) {
         return wrapGet(() -> {
-            String jwt = new HttpRequestHeaders(request).getJwtToken();
+            String jwt = new HttpRequestHeaders(request).getJwt();
             return userService.getPrivateShortDetailsDtoByJwtToken(jwt);
         });
     }
@@ -68,7 +68,7 @@ public class UserController {
         return wrapGet(() -> {
             String jwt = null;
             try {
-                jwt = new HttpRequestHeaders(request).getJwtToken();
+                jwt = new HttpRequestHeaders(request).getJwt();
             } catch (AuthorizationHeaderParsingException e) {
             }
             return userService.getGeneralDetailsDtoByJwtTokenAndUserId(jwt, userId);

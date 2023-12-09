@@ -15,7 +15,7 @@ public class HttpRequestHeaders {
         this.request = request;
     }
 
-    public String getJwtToken() {
+    public String getJwt() {
         String bearer = "bearer ";
         String headAuth = getAuthorizationHeader();
 

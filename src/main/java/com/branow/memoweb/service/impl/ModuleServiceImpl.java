@@ -34,6 +34,12 @@ public class ModuleServiceImpl implements ModuleService {
     private final UserRepository userRepository;
 
     @Override
+    public List<ModuleCollectionDto> getCollectionDtoAllByUserId(Integer userId) {
+        return repository.findAllByUserId(userId).stream()
+                .map(mapper::toModuleCollectionDto).toList();
+    }
+
+    @Override
     public Module getByModuleId(Integer moduleId) {
         return repository.findById(moduleId)
                 .orElseThrow(() -> new EntityNotFoundException(Module.class, "id", moduleId));

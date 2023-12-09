@@ -13,6 +13,9 @@ import java.util.Optional;
 
 public interface ModuleRepository extends JpaRepository<Module, Integer> {
 
+    @Query("select m from User u join u.modules m where u.userId = ?1")
+    List<Module> findAllByUserId(Integer id);
+
     @Query(value = "call get_module_details_by_module_id(?1)", nativeQuery = true)
     Optional<ModuleDetailsRepositoryDto> findDetailsByModuleId(Integer id);
 

@@ -1,9 +1,7 @@
 package com.branow.memoweb.controller;
 
 import com.branow.memoweb.dto.module.ModuleDetailsDto;
-import com.branow.memoweb.dto.module.ModuleGeneralDetailsDto;
 import com.branow.memoweb.dto.module.ModuleSaveDto;
-import com.branow.memoweb.model.AccessType;
 import com.branow.memoweb.model.auxilary.Access;
 import com.branow.memoweb.service.JwtBelongingChecker;
 import com.branow.memoweb.service.ModuleService;
@@ -22,15 +20,15 @@ import static com.branow.memoweb.controller.response.ResponseWrapper.wrapPost;
 @RestController
 public class ModuleController {
 
-    private final ModuleService moduleService;
+    private final ModuleService service;
     private final JwtBelongingChecker checker;
 
 
     @DeleteMapping("/{moduleId}")
     public ResponseEntity<?> deleteByModuleId(HttpServletRequest request, @PathVariable Integer moduleId) {
         return wrapPost(() -> {
-            String jwt = new HttpRequestHeaders(request).getJwtToken();
-            moduleService.deleteByModuleIdWithJwtCheck(jwt, moduleId);
+            String jwt = new HttpRequestHeaders(request).getJwt();
+            service.deleteByModuleIdWithJwtCheck(jwt, moduleId);
             return "Module was deleted successfully";
         });
     }
@@ -38,17 +36,17 @@ public class ModuleController {
     @PostMapping("")
     public ResponseEntity<?> save(HttpServletRequest request, @RequestBody ModuleSaveDto dto) {
         return wrapPost(() -> {
-            String jwt = new HttpRequestHeaders(request).getJwtToken();
-            return moduleService.saveToJwtUser(jwt, dto);
+            String jwt = new HttpRequestHeaders(request).getJwt();
+            return service.saveToJwtUser(jwt, dto);
         });
     }
 
     @GetMapping("/details/{moduleId}")
     public ResponseEntity<?> getDetailsByModuleId(HttpServletRequest request, @PathVariable Integer moduleId) {
         return wrapGet(() -> {
-            ModuleDetailsDto module = moduleService.getDetailsDtoByModuleId(moduleId);
+            ModuleDetailsDto module = service.getDetailsDtoByModuleId(moduleId);
             if (module.getAccess().equalsIgnoreCase(Access.PRIVATE.toString())) {
-                String jwt = new HttpRequestHeaders(request).getJwtToken();
+                String jwt = new HttpRequestHeaders(request).getJwt();
                 if (checker.belongTo(jwt, module.getOwner().getUserId())) {
                     return module;
                 } else {
@@ -62,7 +60,16 @@ public class ModuleController {
 
     @GetMapping("/general-details/{id}")
     public ResponseEntity<?> getGeneralDetailsByModuleId(@PathVariable Integer id) {
-        return wrapGet(() -> moduleService.getGeneralDetailsDtoByModuleId(id));
+        return wrapGet(() -> service.getGeneralDetailsDtoByModuleId(id));
+    }
+
+    @GetMapping("/collection")
+    public ResponseEntity<?> getCollectionAll(HttpServletRequest request) {
+        return wrapGet(() -> {
+            String jwt = new HttpRequestHeaders(request).getJwt();
+            Integer userId = checker.getUserId(jwt);
+            return service.getCollectionDtoAllByUserId(userId);
+        });
     }
 
 }
