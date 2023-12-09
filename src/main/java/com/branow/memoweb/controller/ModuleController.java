@@ -72,4 +72,13 @@ public class ModuleController {
         });
     }
 
+    @GetMapping("/short-details")
+    public ResponseEntity<?> getShortDetailsAll(HttpServletRequest request) {
+        return wrapGet(() -> {
+            String jwt = new HttpRequestHeaders(request).getJwt();
+            Integer userId = checker.getUserId(jwt);
+            return service.getShortDetailsDtoAllByUserId(userId);
+        });
+    }
+
 }

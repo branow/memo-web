@@ -52,6 +52,7 @@ public class WebSecurityConfig {
             auth.requestMatchers(HttpMethod.GET, "/module/general-details/*").permitAll();
             auth.requestMatchers(HttpMethod.GET, "/module/details/*").permitAll();
             auth.requestMatchers(HttpMethod.GET, "/module/collection").authenticated();
+            auth.requestMatchers(HttpMethod.GET, "/module/short-details").authenticated();
             auth.requestMatchers(HttpMethod.POST, "/module").authenticated();
             auth.requestMatchers(HttpMethod.DELETE, "/module/*").authenticated();
             //CollectionController

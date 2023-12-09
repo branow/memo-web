@@ -33,6 +33,14 @@ public class ModuleServiceImpl implements ModuleService {
     private final JwtBelongingChecker jwtBelongingChecker;
     private final UserRepository userRepository;
 
+
+    @Override
+    public List<ModuleShortDetailsDto> getShortDetailsDtoAllByUserId(Integer userId) {
+        return repository.findAllByUserId(userId).stream()
+                .map(mapper::toModuleShortDetailsDto).toList();
+    }
+
+
     @Override
     public List<ModuleCollectionDto> getCollectionDtoAllByUserId(Integer userId) {
         return repository.findAllByUserId(userId).stream()

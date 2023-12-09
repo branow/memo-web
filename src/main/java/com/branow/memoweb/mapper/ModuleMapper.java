@@ -25,6 +25,17 @@ public class ModuleMapper {
     private final CollectionMapper collectionMapper;
 
 
+    public ModuleShortDetailsDto toModuleShortDetailsDto(Module module) {
+        String shortDescription = module.getDescription() != null ?
+                module.getDescription().substring(0, Math.min(module.getDescription().length(), 100)) : null;
+        return ModuleShortDetailsDto.builder()
+                .moduleId(module.getModuleId())
+                .moduleName(module.getModuleName())
+                .shortDescription(shortDescription)
+                .access(module.getAccessType().getAccess().toString())
+                .build();
+    }
+
     public ModuleCollectionDto toModuleCollectionDto(Module module) {
         List<CollectionShortDetailsDto> collections = module.getCollections().stream()
                 .map(collectionMapper::toCollectionShortDetailsDto).toList();
