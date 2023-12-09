@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SearchServiceImpl implements SearchService {
 
-    private final static int PAGE_SIZE = 30;
+    private final static int PAGE_SIZE = 20;
     private final SearchRepository repository;
     private final SearchMapper mapper;
 
