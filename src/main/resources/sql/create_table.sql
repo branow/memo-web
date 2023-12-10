@@ -50,7 +50,7 @@ create table if not exists media (
 
 create table if not exists formatted_text(
     text_id int primary key auto_increment,
-    text varchar(2000) not null,
+    text varchar(1000) not null,
     format varchar(2000),
     audio int,
     image int,
