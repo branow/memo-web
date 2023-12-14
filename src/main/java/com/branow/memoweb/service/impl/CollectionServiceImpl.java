@@ -94,7 +94,7 @@ public class CollectionServiceImpl implements CollectionService {
     @Override
     public void deleteByCollectionIdWithJwtCheck(String jwt, Integer collectionId) {
         jwtBelongingChecker.collectionBelongToOrThrow(jwt, collectionId);
-        repository.deleteById(collectionId);
+        repository.deleteByCollectionId(collectionId);
     }
 
 }
