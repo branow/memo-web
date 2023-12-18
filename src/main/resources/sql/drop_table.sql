@@ -12,7 +12,6 @@ drop table if exists media;
 drop table if exists collection;
 drop table if exists module;
 drop table if exists access_type;
-drop table if exists verification_token;
 drop table if exists user;
 
 
