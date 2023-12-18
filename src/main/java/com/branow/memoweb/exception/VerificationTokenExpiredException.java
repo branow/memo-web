@@ -1,11 +1,11 @@
 package com.branow.memoweb.exception;
 
-import com.branow.memoweb.model.VerificationToken;
+import java.time.LocalDateTime;
 
 public class VerificationTokenExpiredException extends RuntimeException{
 
-    public VerificationTokenExpiredException(VerificationToken token) {
-        super("Verification Token expired: " + token.getExpiration());
+    public VerificationTokenExpiredException(LocalDateTime expirationDate) {
+        super("Verification Token expired: " + expirationDate);
     }
 
 }

@@ -38,6 +38,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getByUserId(Integer userId) {
+        return repository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException(User.class, "id", userId));
+    }
+
+    @Override
     public UserDetailsDto getDetailsDtoByJwtToken(String jwtToken) {
         Integer id = jwtBelongingChecker.getUserId(jwtToken);
         return getDetailsDtoByUserId(id);

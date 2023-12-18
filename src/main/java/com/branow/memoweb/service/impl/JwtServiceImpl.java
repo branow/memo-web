@@ -11,6 +11,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -25,6 +26,18 @@ public class JwtServiceImpl implements JwtService {
         return getSubject(token).equals(subject);
     }
 
+    @Override
+    public boolean isExpired(String token) {
+        return getExpirationDateTime(token).isBefore(LocalDateTime.now());
+    }
+
+    @Override
+    public LocalDateTime getExpirationDateTime(String token) {
+        token = token.replaceFirst("bearer ", "");
+        Jwt jwt = jwtDecoder.decode(token);
+        return LocalDateTime.ofInstant(Objects.requireNonNull(jwt.getExpiresAt()), ZoneId.systemDefault());
+    }
+
     public String getSubject(String token) {
         token = token.replaceFirst("bearer ", "");
         Jwt jwt = jwtDecoder.decode(token);
@@ -32,9 +45,17 @@ public class JwtServiceImpl implements JwtService {
     }
 
     public String generateJwt(User user) {
+        return generateJwt(user, LocalDateTime.now().plus(5, ChronoUnit.DAYS));
+    }
+
+    @Override
+    public String generateVerificationJwt(User user) {
+        return generateJwt(user, LocalDateTime.now().plus(10, ChronoUnit.MINUTES));
+    }
+
+    private String generateJwt(User user, LocalDateTime expiration) {
         Instant now = Instant.now();
-        Instant expired = LocalDateTime.now().plus(5, ChronoUnit.DAYS)
-                .atZone(ZoneId.systemDefault()).toInstant();
+        Instant expired = expiration.atZone(ZoneId.systemDefault()).toInstant();
 
         String scope = user.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)

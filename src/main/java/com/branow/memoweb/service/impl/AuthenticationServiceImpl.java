@@ -8,10 +8,7 @@ import com.branow.memoweb.exception.VerificationTokenExpiredException;
 import com.branow.memoweb.mapper.UserMapper;
 import com.branow.memoweb.model.User;
 import com.branow.memoweb.model.VerificationToken;
-import com.branow.memoweb.service.AuthenticationService;
-import com.branow.memoweb.service.EmailSenderService;
-import com.branow.memoweb.service.UserService;
-import com.branow.memoweb.service.VerificationTokenService;
+import com.branow.memoweb.service.*;
 import com.branow.memoweb.util.RandomPasswordGenerator;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
@@ -28,13 +25,13 @@ import java.time.LocalDateTime;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserService userService;
-    private final VerificationTokenService verificationTokenService;
-    private final JwtServiceImpl jwtTokenService;
+    private final JwtService jwtService;
     private final EmailSenderService emailSenderService;
     private final RandomPasswordGenerator randomPasswordGenerator;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
     private final AuthenticationManager authenticationManager;
+    private final JwtBelongingChecker jwtBelongingChecker;
 
     @Override
     public UserJwtDto login(UserLoginDto dto) {
@@ -42,40 +39,39 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword());
         Authentication auth = authenticationManager.authenticate(token);
         User user = (User) auth.getPrincipal();
-        String jwt = jwtTokenService.generateJwt(user);
+        String jwt = jwtService.generateJwt(user);
         return userMapper.toUserJwtDto(user, jwt);
     }
 
     @Override
     public VerificationTokenDto register(UserRegisterDto dto) {
         User user = userService.save(userMapper.toUser(dto));
-        VerificationToken token = verificationTokenService.createToken(user);
+        String jwt = jwtService.generateVerificationJwt(user);
         return VerificationTokenDto.builder()
-                .token(token.getToken())
+                .token(jwt)
                 .build();
     }
 
     @Override
     public UserJwtDto enableUser(VerificationTokenDto dto) {
-        VerificationToken token = verificationTokenService.getByToken(dto.getToken());
-        if (token.getExpiration().isBefore(LocalDateTime.now())) {
-            throw new VerificationTokenExpiredException(token);
-        }
-        User user = token.getUser();
-        verificationTokenService.delete(token);
+        String token = dto.getToken();
+        if (jwtService.isExpired(token))
+            throw new VerificationTokenExpiredException(jwtService.getExpirationDateTime(token));
+        jwtService.getSubject(token);
+        Integer userId = jwtBelongingChecker.getUserId(token);
+        User user = userService.getByUserId(userId);
         user.setEnabled(true);
         userService.save(user);
-        String jwt = jwtTokenService.generateJwt(user);
+        String jwt = jwtService.generateJwt(user);
         return userMapper.toUserJwtDto(user, jwt);
     }
 
     @Override
     public VerificationTokenDto regenerateToken(EmailTokenDto dto) {
         User user = userService.getByEmail(dto.getEmail());
-        verificationTokenService.deleteByToken(dto.getToken());
-        VerificationToken token = verificationTokenService.createToken(user);
+        String token = jwtService.generateVerificationJwt(user);
         return VerificationTokenDto.builder()
-                .token(token.getToken())
+                .token(token)
                 .build();
     }
 
