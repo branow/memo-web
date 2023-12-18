@@ -2,7 +2,7 @@
 create table if not exists user (
     user_id int primary key auto_increment,
     username varchar(50) not null unique,
-    description varchar(300),
+    description varchar(500),
     email varchar(320) not null unique,
     password varchar(60) not null,
     enabled bit not null default 0
@@ -43,7 +43,7 @@ create table if not exists media (
 create table if not exists formatted_text(
     text_id int primary key auto_increment,
     text varchar(1000) not null,
-    format varchar(2000),
+    format varchar(500),
     audio int,
     image int,
     constraint fk_formatted_text_media_audio foreign key (audio) references media(media_id)
