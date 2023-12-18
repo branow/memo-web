@@ -8,14 +8,6 @@ create table if not exists user (
     enabled bit not null default 0
 );
 
-create table if not exists verification_token (
-    user_id int primary key,
-    expiration datetime not null,
-    token varchar(36) not null,
-    constraint fk_verification_token_user foreign key (user_id) references user(user_id)
-        on update cascade on delete cascade
-);
-
 create table if not exists access_type (
     access_id int primary key auto_increment,
     access varchar(50) not null unique

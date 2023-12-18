@@ -1,18 +1,6 @@
 
 
 delimiter $$
-create trigger delete_token_after_user_enabling
-    after update on user
-    for each row
-begin
-    if old.enabled != new.enabled and new.enabled = 1 then
-        delete from verification_token
-        where verification_token.user_id = new.user_id;
-    end if;
-end $$
-
-
-delimiter $$
 create trigger delete_formatted_text_after_flashcard_deleting
     after delete on flashcard
     for each row

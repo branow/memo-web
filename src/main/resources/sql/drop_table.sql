@@ -1,3 +1,9 @@
+delete from user;
+delete from study_type;
+delete from access_type;
+delete from media;
+
+
 drop table if exists score;
 drop table if exists study_type;
 drop table if exists flashcard;
