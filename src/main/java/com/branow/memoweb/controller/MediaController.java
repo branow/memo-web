@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import static com.branow.memoweb.controller.response.ResponseWrapper.wrapGet;
 
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/media")
 @RestController
 public class MediaController {

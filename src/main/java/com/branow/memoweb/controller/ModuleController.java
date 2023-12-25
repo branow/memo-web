@@ -15,7 +15,6 @@ import static com.branow.memoweb.controller.response.ResponseWrapper.wrapGet;
 import static com.branow.memoweb.controller.response.ResponseWrapper.wrapPost;
 
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/module")
 @RestController
 public class ModuleController {

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import static com.branow.memoweb.controller.response.ResponseWrapper.wrapPost;
 
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class AuthenticationController {
 

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import static com.branow.memoweb.controller.response.ResponseWrapper.wrapPost;
 
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/email")
 @RestController
 public class EmailController {

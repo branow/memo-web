@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import static com.branow.memoweb.controller.response.ResponseWrapper.wrapGet;
 
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/collection")
 @RestController
 public class CollectionController {
