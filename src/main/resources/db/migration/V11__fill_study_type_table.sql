@@ -1,0 +1,1 @@
+insert into memo.study_type values (1, 'ORALLY'), (2, 'WRITING');
