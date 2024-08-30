@@ -18,19 +18,9 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>com.brano</groupId>
-            <artifactId>formatted-print</artifactId>
-            <version>1.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.branow</groupId>
-            <artifactId>memo-web-search</artifactId>
-            <version>0.5.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.branow</groupId>
-            <artifactId>memo-score-calculator</artifactId>
-            <version>1.1.3</version>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.15.3</version>
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
