@@ -1,10 +1,10 @@
 package com.branow.memoweb.service;
 
-import com.branow.memoweb.dto.websearch.EnglishBuiltWord;
-import com.branow.memowebsearch.WebContainer;
-import com.branow.memowebsearch.search.items.EnglishWordSenseUnit;
-
 import java.util.List;
+
+import com.branow.memoweb.dto.websearch.EnglishBuiltWord;
+import com.branow.memoweb.websearch.WebContainer;
+import com.branow.memoweb.websearch.search.items.EnglishWordSenseUnit;
 
 public interface WebSearcher {
 

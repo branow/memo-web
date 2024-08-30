@@ -1,8 +1,9 @@
 package com.branow.memoweb.mapper;
 
-import com.branow.memoweb.dto.websearch.EnglishBuiltWord;
-import com.branow.memowebsearch.search.items.EnglishSolidWord;
 import org.springframework.stereotype.Service;
+
+import com.branow.memoweb.dto.websearch.EnglishBuiltWord;
+import com.branow.memoweb.websearch.search.items.EnglishSolidWord;
 
 @Service
 public class WebSearchMapper {

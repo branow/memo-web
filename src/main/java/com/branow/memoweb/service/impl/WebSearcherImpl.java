@@ -1,17 +1,19 @@
 package com.branow.memoweb.service.impl;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.branow.memoweb.dto.websearch.EnglishBuiltWord;
 import com.branow.memoweb.mapper.WebSearchMapper;
 import com.branow.memoweb.service.WebSearcher;
-import com.branow.memowebsearch.WebContainer;
-import com.branow.memowebsearch.search.OxfordLearnersDictionariesSearcher;
-import com.branow.memowebsearch.search.VeectezySearcher;
-import com.branow.memowebsearch.search.items.EnglishSolidWord;
-import com.branow.memowebsearch.search.items.EnglishWordSenseUnit;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.branow.memoweb.websearch.WebContainer;
+import com.branow.memoweb.websearch.search.OxfordLearnersDictionariesSearcher;
+import com.branow.memoweb.websearch.search.VeectezySearcher;
+import com.branow.memoweb.websearch.search.items.EnglishSolidWord;
+import com.branow.memoweb.websearch.search.items.EnglishWordSenseUnit;
 
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor

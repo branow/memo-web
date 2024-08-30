@@ -1,12 +1,13 @@
 package com.branow.memoweb.dto.websearch;
 
-import com.branow.memowebsearch.search.items.EnglishPartWord;
+import java.util.List;
+
+import com.branow.memoweb.websearch.search.items.EnglishPartWord;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @AllArgsConstructor
