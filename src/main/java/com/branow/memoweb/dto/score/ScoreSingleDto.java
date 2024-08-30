@@ -1,12 +1,13 @@
 package com.branow.memoweb.dto.score;
 
-import com.branow.memoscorecalculator.Score;
+import java.time.LocalDateTime;
+
+import com.branow.memoweb.scorecalculator.Score;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor

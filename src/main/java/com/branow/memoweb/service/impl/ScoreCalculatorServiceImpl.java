@@ -1,14 +1,16 @@
 package com.branow.memoweb.service.impl;
 
-import com.branow.memoscorecalculator.simple.SimpleScoreCalculator;
+import java.time.LocalDateTime;
+
+import org.springframework.stereotype.Service;
+
 import com.branow.memoweb.dto.score.ScoreParamsDto;
 import com.branow.memoweb.dto.score.ScoreSingleDto;
 import com.branow.memoweb.mapper.ScoreMapper;
+import com.branow.memoweb.scorecalculator.simple.SimpleScoreCalculator;
 import com.branow.memoweb.service.ScoreCalculatorService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service

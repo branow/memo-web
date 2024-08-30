@@ -1,9 +1,8 @@
 package com.branow.memoweb.service;
 
-import com.branow.memoscorecalculator.ScoreFullParams;
-import com.branow.memoscorecalculator.ScoreParams;
-import com.branow.memoweb.dto.score.ScoreParamsDto;
 import org.springframework.stereotype.Service;
+
+import com.branow.memoweb.dto.score.ScoreParamsDto;
 
 @Service
 public interface ScoreCalculatorService {

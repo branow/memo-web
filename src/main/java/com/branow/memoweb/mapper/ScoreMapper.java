@@ -1,18 +1,18 @@
 package com.branow.memoweb.mapper;
 
-import com.branow.memoscorecalculator.ScoreFullParams;
+import org.springframework.stereotype.Service;
+
 import com.branow.memoweb.dto.flashcard.FlashcardScoreParamsRepositoryDto;
 import com.branow.memoweb.dto.score.ScoreAggregatedDto;
-import com.branow.memoweb.dto.score.ScoreParamsRepositoryDto;
 import com.branow.memoweb.dto.score.ScoreParamsDto;
+import com.branow.memoweb.dto.score.ScoreParamsRepositoryDto;
 import com.branow.memoweb.dto.score.ScoreSingleDto;
 import com.branow.memoweb.dto.studytype.StudyTypeDto;
 import com.branow.memoweb.model.Score;
 import com.branow.memoweb.model.StudyType;
-import com.branow.memoweb.service.ScoreCalculatorService;
-import com.branow.memoweb.service.StudyTypeService;
+import com.branow.memoweb.scorecalculator.ScoreFullParams;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
